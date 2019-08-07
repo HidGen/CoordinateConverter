@@ -1,0 +1,10 @@
+C:\Users\Лаврушов\source\repos\ConverterConsole\ConverterConsole\bin\Debug\ConverterConsole.exe.config
+C:\Users\Лаврушов\source\repos\ConverterConsole\ConverterConsole\bin\Debug\ConverterConsole.exe
+C:\Users\Лаврушов\source\repos\ConverterConsole\ConverterConsole\bin\Debug\ConverterConsole.pdb
+C:\Users\Лаврушов\source\repos\ConverterConsole\ConverterConsole\bin\Debug\DotSpatial.Projections.dll
+C:\Users\Лаврушов\source\repos\ConverterConsole\ConverterConsole\bin\Debug\DotSpatial.Projections.xml
+C:\Users\Лаврушов\source\repos\ConverterConsole\ConverterConsole\obj\Debug\ConverterConsole.csprojAssemblyReference.cache
+C:\Users\Лаврушов\source\repos\ConverterConsole\ConverterConsole\obj\Debug\ConverterConsole.csproj.CoreCompileInputs.cache
+C:\Users\Лаврушов\source\repos\ConverterConsole\ConverterConsole\obj\Debug\ConverterConsole.csproj.CopyComplete
+C:\Users\Лаврушов\source\repos\ConverterConsole\ConverterConsole\obj\Debug\ConverterConsole.exe
+C:\Users\Лаврушов\source\repos\ConverterConsole\ConverterConsole\obj\Debug\ConverterConsole.pdb
