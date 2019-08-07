@@ -79,7 +79,7 @@
                     </dxb:BarEditItem.EditSettings>
                 </dxb:BarEditItem>
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarButtonItem x:Name="biRowAdd" ToolTip="Добавить строку" Glyph="{dx:DXImage Image=Add_16x16.png}" LargeGlyph="{dx:DXImage Image=Add_32x32.png}" />
+                <dxb:BarButtonItem x:Name="biRowAdd" ToolTip="Добавить строку" Glyph="{dx:DXImage Image=Add_16x16.png}" LargeGlyph="{dx:DXImage Image=Add_32x32.png}" Command="{Binding AddRow}" />
                 <dxb:BarButtonItem x:Name="biRowDelete" ToolTip="Удалить" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" />
                 <dxb:BarButtonItem x:Name="biRowUp" ToolTip="Перенести строку вверх" Glyph="{dx:DXImage Image=MoveUp_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveUp_32x32.png}" />
                 <dxb:BarButtonItem x:Name="biRowDown" ToolTip="Перенести строку вниз" Glyph="{dx:DXImage Image=MoveDown_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveDown_32x32.png}" />
@@ -93,9 +93,10 @@
 
             </dxb:ToolBarControl>
         </dxb:BarContainerControl>
-        <dxg:GridControl Grid.Row="1" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" ItemsSource="{Binding TestList, Mode=TwoWay}">
+        <dxg:GridControl Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True"
+                         ItemsSource="{Binding TestList, Mode=TwoWay}" SelectedItem="{Binding SelectedRow}">
             <dxg:GridControl.View>
-                <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" NewItemRowPosition="Bottom"/>
+                <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" NewItemRowPosition="Bottom" ShowFilterPanelMode="Never" ShowGroupPanel="False"/>
             </dxg:GridControl.View>
         </dxg:GridControl>
         <dxb:StatusBarControl Caption="StatusBar" Grid.Row="2"  ShowSizeGrip="True" GlyphSize="Small" AllowCustomizationMenu="False">

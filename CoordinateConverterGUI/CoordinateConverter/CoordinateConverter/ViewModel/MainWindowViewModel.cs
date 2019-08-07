@@ -68,6 +68,18 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
+
+        public TestData selectedRow;
+
+        public TestData SelectedRow
+        {
+            get { return selectedRow; }
+            set
+            {
+                selectedRow = value;
+            }
+        }
+
         public void Init()
         {
             //  
@@ -177,6 +189,37 @@ namespace CoordinateConverter.ViewModel
                   }));
             }
         }
+
+
+        private ICommand addRow;
+
+        public ICommand AddRow
+        {
+            get
+            {
+                return addRow ??
+                  (addRow = new DelegateCommand(() =>
+                  {
+
+                      Console.WriteLine(SelectedRow);
+                      Console.WriteLine(TestList);
+                      int foundIndex = default;
+                      for (int i = 0; i < TestList.Count; i++)
+                      {
+                          if (TestList[i] == SelectedRow)
+                          {
+                              foundIndex = i;
+                              break; }
+                         
+                      }
+                      Console.WriteLine(foundIndex);
+                  
+
+
+                  }));
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
