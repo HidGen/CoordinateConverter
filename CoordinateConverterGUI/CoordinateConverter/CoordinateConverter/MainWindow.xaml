@@ -80,9 +80,9 @@
                 </dxb:BarEditItem>
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarButtonItem x:Name="biRowAdd" ToolTip="Добавить строку" Glyph="{dx:DXImage Image=Add_16x16.png}" LargeGlyph="{dx:DXImage Image=Add_32x32.png}" Command="{Binding AddRow}" />
-                <dxb:BarButtonItem x:Name="biRowDelete" ToolTip="Удалить" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" />
-                <dxb:BarButtonItem x:Name="biRowUp" ToolTip="Перенести строку вверх" Glyph="{dx:DXImage Image=MoveUp_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveUp_32x32.png}" />
-                <dxb:BarButtonItem x:Name="biRowDown" ToolTip="Перенести строку вниз" Glyph="{dx:DXImage Image=MoveDown_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveDown_32x32.png}" />
+                <dxb:BarButtonItem x:Name="biRowDelete" ToolTip="Удалить" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" Command="{Binding DeleteRow}"/>
+                <dxb:BarButtonItem x:Name="biRowUp" ToolTip="Перенести строку вверх" Glyph="{dx:DXImage Image=MoveUp_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveUp_32x32.png}" Command="{Binding MoveRowUp}"/>
+                <dxb:BarButtonItem x:Name="biRowDown" ToolTip="Перенести строку вниз" Glyph="{dx:DXImage Image=MoveDown_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveDown_32x32.png}" Command="{Binding MoveRowDown}"/>
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarEditItem EditWidth="170"  ToolTip="Сортировка строк">
                     <dxb:BarEditItem.EditSettings>

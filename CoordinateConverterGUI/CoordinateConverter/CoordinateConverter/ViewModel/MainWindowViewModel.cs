@@ -191,6 +191,7 @@ namespace CoordinateConverter.ViewModel
         }
 
 
+
         private ICommand addRow;
 
         public ICommand AddRow
@@ -213,7 +214,115 @@ namespace CoordinateConverter.ViewModel
                          
                       }
                       Console.WriteLine(foundIndex);
-                  
+
+                          TestList.Insert(foundIndex, new TestData());          //   почему-то заменяет значение выбранной ячейки на 0 вне фокуса!!!
+
+                      
+
+
+                  }));
+            }
+        }
+
+
+        private ICommand deleteRow;
+
+        public ICommand DeleteRow
+        {
+            get
+            {
+                return deleteRow ??
+                  (deleteRow = new DelegateCommand(() =>
+                  {
+
+                      Console.WriteLine(SelectedRow);
+                      Console.WriteLine(TestList);
+                      int foundIndex = default;
+                      for (int i = 0; i < TestList.Count; i++)
+                      {
+                          if (TestList[i] == SelectedRow)
+                          {
+                              foundIndex = i;
+                              break;
+                          }
+
+                      }
+                      Console.WriteLine(foundIndex);
+
+                      TestList.RemoveAt(foundIndex);         
+
+
+
+
+                  }));
+            }
+        }
+
+        private ICommand moveRowUp;
+
+        public ICommand MoveRowUp
+        {
+            get
+            {
+                return moveRowUp ??
+                  (moveRowUp = new DelegateCommand(() =>
+                  {
+
+                      Console.WriteLine(SelectedRow);
+                      Console.WriteLine(TestList);
+                      int foundIndex = default;
+                      for (int i = 0; i < TestList.Count; i++)
+                      {
+                          if (TestList[i] == SelectedRow)
+                          {
+                              foundIndex = i;
+                              break;
+                          }
+
+                      }
+                      Console.WriteLine(foundIndex);
+
+                      TestList.Move(foundIndex, foundIndex-1);
+
+
+
+
+                  }));
+            }
+        }
+
+        private ICommand moveRowDown;
+
+        public ICommand MoveRowDown
+        {
+            get
+            {
+                return moveRowDown ??
+                  (moveRowDown = new DelegateCommand(() =>
+                  {
+
+                      Console.WriteLine(SelectedRow);
+                      Console.WriteLine(TestList);
+                      int foundIndex = default;
+                      for (int i = 0; i < TestList.Count; i++)
+                      {
+                          if (TestList[i] == SelectedRow)
+                          {
+                              foundIndex = i;
+                              break;
+                          }
+
+                      }
+                      Console.WriteLine(foundIndex);
+                      try
+                      {
+                          TestList.Move(foundIndex, foundIndex + 1);
+                      }
+                      catch (System.ArgumentOutOfRangeException)
+                      {
+                          System.Windows.Forms.MessageBox.Show("Последняя строка!");
+                      }
+
 
 
                   }));
@@ -227,4 +336,6 @@ namespace CoordinateConverter.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
+
 }
