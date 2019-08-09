@@ -1,0 +1,15 @@
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\bin\Debug\OpenSaveDialogs.exe.config
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\bin\Debug\OpenSaveDialogs.exe
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\bin\Debug\OpenSaveDialogs.pdb
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\OpenSaveDialogs.csprojAssemblyReference.cache
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\MainWindow.g.cs
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\App.g.cs
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\OpenSaveDialogs_MarkupCompile.cache
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\OpenSaveDialogs_MarkupCompile.lref
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\MainWindow.baml
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\OpenSaveDialogs.g.resources
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\OpenSaveDialogs.Properties.Resources.resources
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\OpenSaveDialogs.csproj.GenerateResource.cache
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\OpenSaveDialogs.csproj.CoreCompileInputs.cache
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\OpenSaveDialogs.exe
+C:\Users\Лаврушов\source\repos\OpenSaveDialogs\OpenSaveDialogs\obj\Debug\OpenSaveDialogs.pdb

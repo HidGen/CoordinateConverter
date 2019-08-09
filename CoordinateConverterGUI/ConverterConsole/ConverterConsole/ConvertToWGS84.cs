@@ -40,7 +40,7 @@ namespace ConverterConsole
         {
             ChangeType(basicCoordinateSystem);
             ProjectionInfo src = ProjectionInfo.FromProj4String(BasicTypeString);
-            ProjectionInfo trg =ProjectionInfo.FromProj4String("+proj=longlat +datum=WGS84 +no_defs");
+            ProjectionInfo trg = ProjectionInfo.FromProj4String("+proj=longlat +datum=WGS84 +no_defs");
             //xy = new double[2 * x.Length];
             int ixy = 0;
             for (int i = 0; i <= x.Length - 1; i++)
