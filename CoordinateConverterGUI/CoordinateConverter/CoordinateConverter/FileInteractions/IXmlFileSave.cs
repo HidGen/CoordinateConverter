@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoordinateConverter.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace CoordinateConverter.FileInteractions
 {
     interface IXmlFileSave
     {
-        bool Save(string path);
+        void Save(List<GeoCoord> geoCoords);
     }
 }
