@@ -16,6 +16,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using CoordinateConverter.Model;
+using CoordinateConverter.FileInteractions;
 
 namespace CoordinateConverter.ViewModel
 {
@@ -36,15 +37,9 @@ namespace CoordinateConverter.ViewModel
     {
         public bool RangeCheck { get; set; }
 
-        public ObservableCollection<TestData> testList;
-        public ObservableCollection<TestData> TestList {
-             get { return testList; }
-            set
-            {
-                testList = value;
-                NotifyPropertyChanged();
-            }
-        }
+        public ObservableCollection<CompleteRow> CompleteRows { get; }
+
+
         
 
 
@@ -68,56 +63,47 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-        public void Init()
+
+        public CompleteRow selectedRow;
+
+        public CompleteRow SelectedRow
         {
-            //  
-            TestList = new ObservableCollection<TestData>();
-
-            TestList.Add(new TestData
+            get { return selectedRow; }
+            set
             {
-                CoordinateX = 123.58,
-                CoordinateY = 853.21,
-                HightH = 20,
-                NewCoordinateX = 12.58,
-                NewCoordinateY = 85.21,
-                NewHightH = 2,
-                Description = "First element"
-            });
-
-            TestList.Add(new TestData
-            {
-                CoordinateX = 1543.58,
-                CoordinateY = 363.21,
-                HightH = 14,
-                NewCoordinateX = 1.8,
-                NewCoordinateY = 8.1,
-                NewHightH = 40,
-                Description = "Second element"
-            });
-
-            TestList.Add(new TestData
-            {
-                CoordinateX = 123.58,
-                CoordinateY = 853.21,
-                HightH = 20,
-                NewCoordinateX = 12.58,
-                NewCoordinateY = 85.21,
-                NewHightH = 2,
-                Description = "Third element"
-            });
-
-           
+                selectedRow = value;
+            }
         }
 
+        public void Init()
+        {
+          
+        }
 
+        public ICommand OpenCommand { get; private set; }
+        public ICommand SaveCommand { get; private set; }
 
+        public ICommand AddRowCommand { get; private set; }
+        public ICommand DeleteRowCommand { get; private set; }
+        public ICommand MoveUpCommand { get; private set; }
+
+        public ICommand MoveDownCommand { get; private set; }
 
 
         public MainWindowViewModel()
         {
          //   coordinate_system = new ObservableCollection<string>();
             Init();
+            CompleteRows = new ObservableCollection<CompleteRow>();
+            OpenCommand = new DelegateCommand(OpenExecute, OpenCanExecute);
+            SaveCommand = new DelegateCommand(SaveExecute, SaveCanExecute);
+
+            AddRowCommand = new DelegateCommand(AddExecute, AddCanExecute);
+            DeleteRowCommand = new DelegateCommand(DeleteExecute, DeleteCanExecute);
+            MoveUpCommand = new DelegateCommand(MoveUpExecute, MoveUpCanExecute);
+            MoveDownCommand = new DelegateCommand(MoveDownExecute, MoveDownCanExecute);
         }
+
 
 
         private ICommand settingsCommand;
@@ -129,7 +115,7 @@ namespace CoordinateConverter.ViewModel
                 return settingsCommand ??
                   (settingsCommand = new DelegateCommand(() =>
                   {
-                      Console.WriteLine(TestList);
+             
 
                        var viewModel = new SettingsWindowViewModel(RangeCheck, SelectedCoordinateEnumType);
                       var opensettings = new SettingsWindow { DataContext = viewModel};
@@ -178,10 +164,176 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
+
+
+        private void OpenExecute()
+        {
+            FileInteraction file = new FileInteraction();
+            List<CompleteRow> completeRows = new List<CompleteRow>();
+            completeRows = file.OpenFile();           
+            foreach (var completeRow in completeRows)
+            
+                CompleteRows.Add(completeRow);
+        }
+        private bool OpenCanExecute()
+        {
+            return true;
+        }
+        private void SaveExecute()
+        {
+            FileInteraction file = new FileInteraction();
+            file.Save(new List<GeoCoord>());
+        }
+        private bool SaveCanExecute()
+        {
+            return true;
+        }
+
+
+
+        private void AddExecute()
+        {
+            int foundIndex = default;
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                if (CompleteRows[i] == SelectedRow)
+                {
+                    foundIndex = i;
+                    break;
+                }
+               
+
+            }
+            CompleteRows.Insert(foundIndex, new CompleteRow());
+        }
+
+        private bool AddCanExecute()
+        {
+            return true;
+        }
+
+
+                    
+
+private void DeleteExecute()
+{
+            int foundIndex = default;
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                if (CompleteRows[i] == SelectedRow)
+                {
+                    foundIndex = i;
+                    break;
+                }
+
+            }
+            CompleteRows.RemoveAt(foundIndex);
+
+        }
+
+        private bool DeleteCanExecute()
+        {
+            return SelectedRow != null;
+        }
+
+
+
+
+
+
+
+        private void MoveUpExecute()
+        {
+            int foundIndex = default;
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                if (CompleteRows[i] == SelectedRow)
+                {
+                    foundIndex = i;
+                    break;
+                }
+
+            }
+            CompleteRows.Move(foundIndex, foundIndex - 1);
+        }
+
+        private bool MoveUpCanExecute()
+        {
+            int foundIndex = default;
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                if (CompleteRows[i] == SelectedRow)
+                {
+                    foundIndex = i;
+                    break;
+                }
+
+            }
+            if (foundIndex != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        private void MoveDownExecute()
+        {
+            int foundIndex = default;
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                if (CompleteRows[i] == SelectedRow)
+                {
+                    foundIndex = i;
+                    break;
+                }
+
+            }
+            CompleteRows.Move(foundIndex, foundIndex + 1);
+
+        }
+
+        private bool MoveDownCanExecute()
+        {
+            int foundIndex = default;
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                if (CompleteRows[i] == SelectedRow)
+                {
+                    foundIndex = i;
+                    break;
+                }
+
+            }
+            if (foundIndex != CompleteRows.Count - 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+      
+                     
+
+
+                        
+
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
+
 }
