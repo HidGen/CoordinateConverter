@@ -67,7 +67,7 @@
                 <dxb:BarButtonItem x:Name="biFileOpen" Content="Открыть" ToolTip="Открыть" Glyph="{dx:DXImage Image=Open_16x16.png}" LargeGlyph="{dx:DXImage Image=Open_32x32.png}" BarItemDisplayMode="ContentAndGlyph" Command="{Binding OpenCommand}" />
                 <dxb:BarButtonItem x:Name="biFileSave" Content="Сохранить" ToolTip="Сохранить" Glyph="{dx:DXImage Image=Save_16x16.png}" LargeGlyph="{dx:DXImage Image=Save_32x32.png}" BarItemDisplayMode="ContentAndGlyph"  Command="{Binding SaveCommand}"/>
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarButtonItem x:Name="biCut" ToolTip="Вырезать" Glyph="{dx:DXImage Image=Cut_16x16.png}" LargeGlyph="{dx:DXImage Image=Cut_32x32.png}"  />
+                <dxb:BarButtonItem x:Name="biCut" ToolTip="Вырезать" Glyph="{dx:DXImage Image=Cut_16x16.png}" LargeGlyph="{dx:DXImage Image=Cut_32x32.png}"  Command="{Binding ChooseRangeCommand}"/>
                 <dxb:BarButtonItem x:Name="biCopy" ToolTip="Копировать" Glyph="{dx:DXImage Image=Copy_16x16.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}"  />
                 <dxb:BarButtonItem x:Name="biPaste" ToolTip="Вставить" Glyph="{dx:DXImage Image=Paste_16x16.png}" LargeGlyph="{dx:DXImage Image=Paste_32x32.png}"  />
                 <dxb:BarItemLinkSeparator />
@@ -99,7 +99,11 @@
             </dxb:ToolBarControl>
         </dxb:BarContainerControl>
         <dxg:GridControl Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row"  EnableSmartColumnsGeneration="False"
-                         ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True}" SelectedItem="{Binding SelectedRow}">
+                         ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True}" SelectedItems="{Binding Selection}" >
+                         
+                         <!--SelectedItem="{Binding SelectedRow}"-->
+                         
+                       
             <dxg:GridControl.Columns>
                 <dxg:GridColumn Header="X" FieldName="rectCoord.x" />
                 <dxg:GridColumn Header="Y" FieldName="rectCoord.y" />
@@ -114,7 +118,8 @@
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
                 
-                <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" NewItemRowPosition="Bottom" ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False"/>
+                <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" NewItemRowPosition="Bottom" 
+                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False"/>
             </dxg:GridControl.View>
            
            

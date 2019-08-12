@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,14 +44,13 @@ namespace CoordinateConverter.FileInteractions
             Excel.Workbook xlWorkBook;
             Excel.Worksheet xlWorkSheet;
             object misValue = System.Reflection.Missing.Value;
-            xlApp = new Excel.Application();
+            xlApp = new Excel.Application();          
             xlWorkBook = xlApp.Workbooks.Open(reference, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
             xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
             var range = xlWorkSheet.UsedRange;
             int rw = range.Rows.Count;
             int cl = range.Columns.Count;
             List<RectCoord> rectCoords = new List<RectCoord>();
-
             for (int rCnt = 1; rCnt <= rw; rCnt++)
             {
                 if (ValidateRow(range.Rows[rCnt], cl))
@@ -70,9 +70,7 @@ namespace CoordinateConverter.FileInteractions
             saveFileDialog.Filter = "Xml documents (.xml)|*.xml|All files (*.*)|*.*";
             if (saveFileDialog.ShowDialog() == true)
             {
-                //FileDialog.
                 SaveToXml(saveFileDialog.FileName, geoCoords);
-
             }
         }
         private void SaveToXml(string path, List<GeoCoord> geoCoords)
@@ -93,7 +91,6 @@ namespace CoordinateConverter.FileInteractions
                     writer.WriteElementString("long", geoCoord.lon.ToString());
                     writer.WriteEndElement();
                 }
-
                 writer.WriteEndElement();
                 writer.WriteEndDocument();
             }

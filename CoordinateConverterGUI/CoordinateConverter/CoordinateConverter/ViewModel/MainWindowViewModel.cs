@@ -39,10 +39,9 @@ namespace CoordinateConverter.ViewModel
 
         public ObservableCollection<CompleteRow> CompleteRows { get; }
 
+        private readonly ObservableCollection<CompleteRow> selection = new ObservableCollection<CompleteRow>();
 
-        
-
-
+        public ObservableCollection<CompleteRow> Selection { get { return this.selection; } }
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
         {
             get
@@ -63,7 +62,6 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-
         public CompleteRow selectedRow;
 
         public CompleteRow SelectedRow
@@ -82,13 +80,10 @@ namespace CoordinateConverter.ViewModel
 
         public ICommand OpenCommand { get; private set; }
         public ICommand SaveCommand { get; private set; }
-
         public ICommand AddRowCommand { get; private set; }
         public ICommand DeleteRowCommand { get; private set; }
         public ICommand MoveUpCommand { get; private set; }
-
         public ICommand MoveDownCommand { get; private set; }
-
 
         public MainWindowViewModel()
         {
@@ -97,17 +92,13 @@ namespace CoordinateConverter.ViewModel
             CompleteRows = new ObservableCollection<CompleteRow>();
             OpenCommand = new DelegateCommand(OpenExecute, OpenCanExecute);
             SaveCommand = new DelegateCommand(SaveExecute, SaveCanExecute);
-
             AddRowCommand = new DelegateCommand(AddExecute, AddCanExecute);
             DeleteRowCommand = new DelegateCommand(DeleteExecute, DeleteCanExecute);
             MoveUpCommand = new DelegateCommand(MoveUpExecute, MoveUpCanExecute);
             MoveDownCommand = new DelegateCommand(MoveDownExecute, MoveDownCanExecute);
         }
 
-
-
         private ICommand settingsCommand;
-
         public ICommand SettingsCommand
         {
             get
@@ -115,38 +106,21 @@ namespace CoordinateConverter.ViewModel
                 return settingsCommand ??
                   (settingsCommand = new DelegateCommand(() =>
                   {
-             
-
                        var viewModel = new SettingsWindowViewModel(RangeCheck, SelectedCoordinateEnumType);
                       var opensettings = new SettingsWindow { DataContext = viewModel};
                       viewModel.EditEnded += ViewModel_EditEnded;
                       opensettings.Show();
-
-
                   }));
             }
         }
 
-
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
         {
-            Debug.WriteLine(e);
-
-            //  dbWorker.AddBook(e.Entity.Book_Name, e.Entity.Author, e.Entity.Papers, e.Entity.Genre, e.Entity.Publisher.ID);
-
-
             SelectedCoordinateEnumType = e.SelectedType;
-
             RangeCheck = e.RangeCheck;
-
-
-
-          
-
         }
 
         private ICommand chooseRangeCommand;
-
         public ICommand ChooseRangeCommand
         {
             get
@@ -154,26 +128,19 @@ namespace CoordinateConverter.ViewModel
                 return chooseRangeCommand ??
                   (chooseRangeCommand = new DelegateCommand(() =>
                   {
-                      // var viewModel = new ChangeAuthorViewModel(selectedBooks);
-                      var chooserange = new RangeChoiceWindow(); // { DataContext = viewModel };
-                                                              //  viewModel.EditEnded += AuthorChange_EditEnded;
+                      var chooserange = new RangeChoiceWindow();
                       chooserange.Show();
-
-
                   }));
             }
         }
-
-
 
         private void OpenExecute()
         {
             FileInteraction file = new FileInteraction();
             List<CompleteRow> completeRows = new List<CompleteRow>();
-            completeRows = file.OpenFile();           
-            foreach (var completeRow in completeRows)
-            
-                CompleteRows.Add(completeRow);
+            completeRows = file.OpenFile();        
+            foreach (var completeRow in completeRows)            
+            CompleteRows.Add(completeRow);
         }
         private bool OpenCanExecute()
         {
@@ -196,7 +163,7 @@ namespace CoordinateConverter.ViewModel
             int foundIndex = default;
             for (int i = 0; i < CompleteRows.Count; i++)
             {
-                if (CompleteRows[i] == SelectedRow)
+                if (CompleteRows[i] == Selection[0])
                 {
                     foundIndex = i;
                     break;
@@ -217,23 +184,25 @@ namespace CoordinateConverter.ViewModel
 
 private void DeleteExecute()
 {
-            int foundIndex = default;
-            for (int i = 0; i < CompleteRows.Count; i++)
-            {
-                if (CompleteRows[i] == SelectedRow)
-                {
-                    foundIndex = i;
-                    break;
-                }
+            //int foundIndex = default;
+            //for (int i = 0; i < CompleteRows.Count; i++)
+            //{
+            //    if (CompleteRows[i] == SelectedRow)
+            //    {
+            //        foundIndex = i;
+            //        break;
+            //    }
 
-            }
-            CompleteRows.RemoveAt(foundIndex);
+            //}
+            //CompleteRows.RemoveAt(foundIndex);
+
+            Selection.ToList().ForEach(item => CompleteRows.Remove(item));
 
         }
 
         private bool DeleteCanExecute()
         {
-            return SelectedRow != null;
+            return Selection.Count != 0;
         }
 
 
@@ -244,30 +213,43 @@ private void DeleteExecute()
 
         private void MoveUpExecute()
         {
-            int foundIndex = default;
-            for (int i = 0; i < CompleteRows.Count; i++)
-            {
-                if (CompleteRows[i] == SelectedRow)
-                {
-                    foundIndex = i;
-                    break;
-                }
 
+            for (int n = 0; n < Selection.Count; n++)
+            {
+                int foundIndex = default;
+                for (int i = 0; i < CompleteRows.Count; i++)
+                {
+                    if (CompleteRows[i] == Selection[n])
+                    {
+                        foundIndex = i;
+                        break;
+                    }
+
+                }
+                CompleteRows.Move(foundIndex, foundIndex - 1);
             }
-            CompleteRows.Move(foundIndex, foundIndex - 1);
         }
 
         private bool MoveUpCanExecute()
         {
             int foundIndex = default;
-            for (int i = 0; i < CompleteRows.Count; i++)
+            for (int j = 0; j < Selection.Count; j++)
             {
-                if (CompleteRows[i] == SelectedRow)
+                for (int i = 0; i < CompleteRows.Count; i++)
                 {
-                    foundIndex = i;
-                    break;
-                }
+                    if (Selection.Count != 0)
+                    {
 
+                        if (CompleteRows[i] == Selection[j])
+                        {
+                            foundIndex = i;
+
+                            break;
+                        }
+
+                    }
+
+                }
             }
             if (foundIndex != 0)
             {
@@ -282,18 +264,22 @@ private void DeleteExecute()
 
         private void MoveDownExecute()
         {
-            int foundIndex = default;
-            for (int i = 0; i < CompleteRows.Count; i++)
+            for (int n = Selection.Count-1; n >= 0; n--)
             {
-                if (CompleteRows[i] == SelectedRow)
+                int foundIndex = default;
+                for (int i = 0; i < CompleteRows.Count; i++)
                 {
-                    foundIndex = i;
-                    break;
+                    
+                        if (CompleteRows[i] == Selection[n])
+                        {
+                            foundIndex = i;
+                            break;
+                        }
+                    
+
                 }
-
+                CompleteRows.Move(foundIndex, foundIndex + 1);
             }
-            CompleteRows.Move(foundIndex, foundIndex + 1);
-
         }
 
         private bool MoveDownCanExecute()
@@ -301,10 +287,13 @@ private void DeleteExecute()
             int foundIndex = default;
             for (int i = 0; i < CompleteRows.Count; i++)
             {
-                if (CompleteRows[i] == SelectedRow)
+            if (Selection.Count != 0)
+            {
+                if (CompleteRows[i] == Selection[Selection.Count-1])
                 {
                     foundIndex = i;
                     break;
+                }
                 }
 
             }
