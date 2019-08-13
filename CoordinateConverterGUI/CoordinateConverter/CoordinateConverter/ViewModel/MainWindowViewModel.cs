@@ -39,9 +39,9 @@ namespace CoordinateConverter.ViewModel
 
         public ObservableCollection<CompleteRow> CompleteRows { get; }
 
-        private readonly ObservableCollection<CompleteRow> selection = new ObservableCollection<CompleteRow>();
+        public ObservableCollection<CompleteRow> selection = new ObservableCollection<CompleteRow>();
 
-        public ObservableCollection<CompleteRow> Selection { get { return this.selection; } }
+        public ObservableCollection<CompleteRow> Selection { get { return this.selection; }  }
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
         {
             get
@@ -182,22 +182,9 @@ namespace CoordinateConverter.ViewModel
 
                     
 
-private void DeleteExecute()
-{
-            //int foundIndex = default;
-            //for (int i = 0; i < CompleteRows.Count; i++)
-            //{
-            //    if (CompleteRows[i] == SelectedRow)
-            //    {
-            //        foundIndex = i;
-            //        break;
-            //    }
-
-            //}
-            //CompleteRows.RemoveAt(foundIndex);
-
+        private void DeleteExecute()
+        {
             Selection.ToList().ForEach(item => CompleteRows.Remove(item));
-
         }
 
         private bool DeleteCanExecute()
@@ -205,14 +192,9 @@ private void DeleteExecute()
             return Selection.Count != 0;
         }
 
-
-
-
-
-
-
         private void MoveUpExecute()
         {
+            SortSelection(CompleteRows, Selection);
 
             for (int n = 0; n < Selection.Count; n++)
             {
@@ -224,34 +206,102 @@ private void DeleteExecute()
                         foundIndex = i;
                         break;
                     }
-
                 }
                 CompleteRows.Move(foundIndex, foundIndex - 1);
             }
         }
 
-        private bool MoveUpCanExecute()
+        public void SortSelection(ObservableCollection<CompleteRow> allRows, ObservableCollection<CompleteRow> selectedRows)
         {
-            int foundIndex = default;
-            for (int j = 0; j < Selection.Count; j++)
-            {
-                for (int i = 0; i < CompleteRows.Count; i++)
+            ObservableCollection<RowToSort> CorrectList = new ObservableCollection<RowToSort>();
+            ObservableCollection<CompleteRow> Outputlist = new ObservableCollection<CompleteRow>();
+
+
+                int foundIndex = default;
+                for (int j = 0; j < selectedRows.Count; j++)
                 {
-                    if (Selection.Count != 0)
+                    for (int i = 0; i < allRows.Count; i++)
                     {
-
-                        if (CompleteRows[i] == Selection[j])
+                        if (selectedRows.Count != 0)
                         {
-                            foundIndex = i;
 
-                            break;
+                            if (allRows[i] == selectedRows[j])
+                            {
+                                foundIndex = i;
+
+                                RowToSort SomeRow = new RowToSort();
+                                SomeRow.CompleteRow = selectedRows[j];
+                                SomeRow.Place = foundIndex;
+
+                                if (CorrectList == null)
+                                {
+                                    CorrectList.Add(SomeRow);
+                                }
+                                else if (CorrectList.Count == 1)
+                                {
+                                    if (CorrectList[0].Place > SomeRow.Place)
+                                    {
+                                        CorrectList.Insert(0, SomeRow);
+                                    }
+                                    else
+                                    { CorrectList.Insert(1, SomeRow); }
+                                }
+                                else
+                                {
+                                    for (int k = 0; k > CorrectList.Count; k++)
+                                    {
+                                        if (SomeRow.Place < CorrectList[k].Place)
+                                        {
+                                            CorrectList.Insert(k, SomeRow);
+                                        }
+                                    }
+                                }
+
+
+
+                                foreach (var item in CorrectList)
+                                {
+                                    Selection.Clear();
+
+
+                                    Selection.Add(item.CompleteRow);
+                                 }
+                               // break;
+                            }
+
                         }
 
                     }
-
                 }
-            }
-            if (foundIndex != 0)
+
+
+         
+
+
+        }
+
+        private bool MoveUpCanExecute()
+        {
+            //int foundIndex = default;
+            //for (int j = 0; j < Selection.Count; j++)
+            //{
+            //    for (int i = 0; i < CompleteRows.Count; i++)
+            //    {
+            //        if (Selection.Count != 0)
+            //        {
+
+            //            if (CompleteRows[i] == Selection[j])
+            //            {
+            //                foundIndex = i;
+
+            //                break;
+            //            }
+
+            //        }
+
+            //    }
+            //}
+            if ((Selection.Count != 0) && (Selection[0] != CompleteRows[0]))
             {
                 return true;
             }
@@ -264,6 +314,8 @@ private void DeleteExecute()
 
         private void MoveDownExecute()
         {
+            SortSelection(CompleteRows, Selection);
+
             for (int n = Selection.Count-1; n >= 0; n--)
             {
                 int foundIndex = default;

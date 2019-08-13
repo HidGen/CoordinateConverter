@@ -126,10 +126,10 @@
         </dxg:GridControl>
         <dxb:StatusBarControl Caption="StatusBar" Grid.Row="2"  ShowSizeGrip="True" GlyphSize="Small" AllowCustomizationMenu="False">
             <dxb:BarStaticItem x:Name="biTotalRows" Content="Кол-во строк:" ShowBorder="False"/>
-            <dxb:BarStaticItem x:Name="biTotalRowsValue" Content="1" ShowBorder="False"/>
+            <dxb:BarStaticItem x:Name="biTotalRowsValue" Content= "{Binding  CompleteRows.Count}" ShowBorder="False"/>
             <dxb:BarItemLinkSeparator />
             <dxb:BarStaticItem x:Name="biSelectedRows" Content="Кол-во выделенных строк:" ShowBorder="False"/>
-            <dxb:BarStaticItem x:Name="biSelectedRowsValue" Content="0" ShowBorder="False"/>
+            <dxb:BarStaticItem x:Name="biSelectedRowsValue" Content="{Binding  Selection.Count}" ShowBorder="False"/>
             <dxb:BarItemLinkSeparator />
         </dxb:StatusBarControl>
     </Grid>
