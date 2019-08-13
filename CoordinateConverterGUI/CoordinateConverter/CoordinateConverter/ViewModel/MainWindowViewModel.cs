@@ -122,7 +122,7 @@ namespace CoordinateConverter.ViewModel
 
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
         {
-            Debug.WriteLine(e);
+            //Debug.WriteLine(e);
 
             //  dbWorker.AddBook(e.Entity.Book_Name, e.Entity.Author, e.Entity.Papers, e.Entity.Genre, e.Entity.Publisher.ID);
 
@@ -150,8 +150,6 @@ namespace CoordinateConverter.ViewModel
                       var chooserange = new RangeChoiceWindow(); // { DataContext = viewModel };
                                                               //  viewModel.EditEnded += AuthorChange_EditEnded;
                       chooserange.Show();
-
-
                   }));
             }
         }
@@ -161,7 +159,7 @@ namespace CoordinateConverter.ViewModel
         private void OpenExecute()
         {
             var open = new OpenDialog();
-            List<CompleteRow> completeRows = new List<CompleteRow>();
+            List<CompleteRow> completeRows;
             completeRows = open.OpenFile(CoordConverter.CoordinateSystem.LCS46_1);           
             foreach (var completeRow in completeRows)            
                 CompleteRows.Add(completeRow);
@@ -183,8 +181,6 @@ namespace CoordinateConverter.ViewModel
             return true;
         }
 
-
-
         private void AddExecute()
         {
             int foundIndex = default;
@@ -204,13 +200,10 @@ namespace CoordinateConverter.ViewModel
         private bool AddCanExecute()
         {
             return true;
-        }
+        }                    
 
-
-                    
-
-private void DeleteExecute()
-{
+        private void DeleteExecute()
+        {
             int foundIndex = default;
             for (int i = 0; i < CompleteRows.Count; i++)
             {

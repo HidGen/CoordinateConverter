@@ -25,9 +25,6 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-
-
-
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
         {
             get
@@ -87,6 +84,5 @@ namespace CoordinateConverter.ViewModel
             public CoordinateType SelectedType { get; }
             public bool RangeCheck { get; }
         }
-
     }
 }

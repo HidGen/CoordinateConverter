@@ -12,31 +12,6 @@ namespace CoordinateConverter.FileInteractions
 {
     class FileInteraction : IExcelFileOpen, IXmlFileSave
     {
-        //public List<CompleteRow> OpenFile()
-        //{
-        //    List<RectCoord> rectCoords = new List<RectCoord>();
-        //    OpenFileDialog dlg = new OpenFileDialog();
-        //    List<CompleteRow> completeRows = new List<CompleteRow>();
-
-        //    dlg.FileName = "Document"; // Default file name
-        //    dlg.DefaultExt = ".xls"; // Default file extension
-        //    dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx|All files (*.*)|*.*"; // Filter files by extension
-        //    dlg.Multiselect = true;
-        //    // Show open file dialog box
-        //    bool? result = dlg.ShowDialog();
-
-        //    if (result == true)
-        //    {
-        //        // Open document
-        //        foreach (string filename in dlg.FileNames)
-        //        {
-        //            //FileName.Add(filename);
-        //            foreach (RectCoord rectCoord in Read(filename))
-        //                completeRows.Add(new CompleteRow {rectCoord=rectCoord });
-        //        }
-        //    }
-        //    return completeRows;
-        //}
         public List<RectCoord> Read(string path)
         {
             Excel.Application xlApp;
@@ -58,22 +33,7 @@ namespace CoordinateConverter.FileInteractions
             }
             return rectCoords;
         }
-
-        //public void Save(List<GeoCoord> geoCoords)
-        //{
-        //    SaveFileDialog saveFileDialog = new SaveFileDialog();
-        //    geoCoords.Add(new GeoCoord { lat = 20, lon = 30, h = 0 });
-        //    geoCoords.Add(new GeoCoord { lat = 30, lon = 40, h = 0 });
-        //    geoCoords.Add(new GeoCoord { lat = 40, lon = 50, h = 0 });
-        //    saveFileDialog.FileName = "Document"; // Default file name
-        //    saveFileDialog.DefaultExt = ".xml"; // Default file extension
-        //    saveFileDialog.Filter = "Xml documents (.xml)|*.xml|All files (*.*)|*.*";
-        //    if (saveFileDialog.ShowDialog() == true)
-        //    {
-        //        //FileDialog.
-        //        SaveToXml(saveFileDialog.FileName, geoCoords);
-        //    }
-        //}
+       
         public void SaveToXml(string path, List<GeoCoord> geoCoords)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
