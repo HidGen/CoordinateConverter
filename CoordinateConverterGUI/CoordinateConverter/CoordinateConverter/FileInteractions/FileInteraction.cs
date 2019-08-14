@@ -62,9 +62,9 @@ namespace CoordinateConverter.FileInteractions
         public void Save(List<GeoCoord> geoCoords)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            geoCoords.Add(new GeoCoord { lat = 20, lon = 30, h = 0 });
-            geoCoords.Add(new GeoCoord { lat = 30, lon = 40, h = 0 });
-            geoCoords.Add(new GeoCoord { lat = 40, lon = 50, h = 0 });
+            geoCoords.Add(new GeoCoord { Lat = 20, Lon = 30, H = 0 });
+            geoCoords.Add(new GeoCoord { Lat = 30, Lon = 40, H = 0 });
+            geoCoords.Add(new GeoCoord { Lat = 40, Lon = 50, H = 0 });
             saveFileDialog.FileName = "Document"; // Default file name
             saveFileDialog.DefaultExt = ".xml"; // Default file extension
             saveFileDialog.Filter = "Xml documents (.xml)|*.xml|All files (*.*)|*.*";
@@ -87,8 +87,8 @@ namespace CoordinateConverter.FileInteractions
                 foreach (GeoCoord geoCoord in geoCoords)
                 {
                     writer.WriteStartElement("GeoCoord");
-                    writer.WriteElementString("lat", geoCoord.lat.ToString());
-                    writer.WriteElementString("long", geoCoord.lon.ToString());
+                    writer.WriteElementString("lat", geoCoord.Lat.ToString());
+                    writer.WriteElementString("long", geoCoord.Lon.ToString());
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
@@ -122,7 +122,7 @@ namespace CoordinateConverter.FileInteractions
                     x = 0;
                 if (x == 3)
                 {
-                    RectCoord rectCoord = new RectCoord { x = (range.Cells[1, cCnt - 2] as Excel.Range).Value2, y = (range.Cells[1, cCnt - 1] as Excel.Range).Value2, h = (range.Cells[1, cCnt] as Excel.Range).Value2 };
+                    RectCoord rectCoord = new RectCoord { X = (range.Cells[1, cCnt - 2] as Excel.Range).Value2, Y = (range.Cells[1, cCnt - 1] as Excel.Range).Value2, H = (range.Cells[1, cCnt] as Excel.Range).Value2 };
                     return rectCoord;
                 }
             }

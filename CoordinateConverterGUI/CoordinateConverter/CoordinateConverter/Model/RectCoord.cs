@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CoordinateConverter.Model
 {
-    public struct RectCoord
+    public class RectCoord
     {
-        public double x { get; set; }
-        public double y { get; set; }
-        public double h { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double H { get; set; }
     }
 }

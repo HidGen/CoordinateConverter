@@ -12,6 +12,6 @@ namespace CoordinateConverter.Model
 
         public GeoCoord geoCoord { get; set; }
 
-        public string Descriptoin { get; set; }
+        public string Description { get; set; }
     }
 }

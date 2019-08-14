@@ -41,7 +41,19 @@ namespace CoordinateConverter.ViewModel
 
         public ObservableCollection<CompleteRow> selection = new ObservableCollection<CompleteRow>();
 
-        public ObservableCollection<CompleteRow> Selection { get { return this.selection; }  }
+        public ObservableCollection<CompleteRow> Selection
+        {
+            get
+            {
+                return this.selection;
+            }
+            set
+            {
+                selection = value;
+              
+               
+            }
+        }
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
         {
             get
@@ -160,18 +172,28 @@ namespace CoordinateConverter.ViewModel
 
         private void AddExecute()
         {
-            int foundIndex = default;
-            for (int i = 0; i < CompleteRows.Count; i++)
+            if (Selection.Count != 0)
             {
-                if (CompleteRows[i] == Selection[0])
+               // int foundIndex = default;
+                for (int i = 0; i < CompleteRows.Count ; i++)
                 {
-                    foundIndex = i;
-                    break;
-                }
-               
 
+                    if (CompleteRows[i] == Selection[0])
+                    {
+                      //  foundIndex = i;
+                        CompleteRows.Insert(i, new CompleteRow());
+                        break;
+                    }
+
+
+
+                }
+                
             }
-            CompleteRows.Insert(foundIndex, new CompleteRow());
+            else
+            {
+                CompleteRows.Insert(CompleteRows.Count, new CompleteRow());
+            }
         }
 
         private bool AddCanExecute()
@@ -194,21 +216,32 @@ namespace CoordinateConverter.ViewModel
 
         private void MoveUpExecute()
         {
-            SortSelection(CompleteRows, Selection);
+            //  SortSelection(CompleteRows, Selection);
 
-            for (int n = 0; n < Selection.Count; n++)
+            for (int i = 0; i < CompleteRows.Count ; i++)
             {
-                int foundIndex = default;
-                for (int i = 0; i < CompleteRows.Count; i++)
+                for (int j = 0; j < Selection.Count ; j++)
                 {
-                    if (CompleteRows[i] == Selection[n])
+                    if (Selection[j] == CompleteRows[i])
                     {
-                        foundIndex = i;
-                        break;
+                        CompleteRows.Move(i, i - 1);
                     }
                 }
-                CompleteRows.Move(foundIndex, foundIndex - 1);
             }
+
+            //for (int n = 0; n < Selection.Count; n++)
+            //{
+            //    int foundIndex = default;
+            //    for (int i = 0; i < CompleteRows.Count; i++)
+            //    {
+            //        if (CompleteRows[i] == Selection[n])
+            //        {
+            //            foundIndex = i;
+            //            break;
+            //        }
+            //    }
+            //    CompleteRows.Move(foundIndex, foundIndex - 1);
+            //}
         }
 
         public void SortSelection(ObservableCollection<CompleteRow> allRows, ObservableCollection<CompleteRow> selectedRows)
@@ -233,7 +266,7 @@ namespace CoordinateConverter.ViewModel
                                 SomeRow.CompleteRow = selectedRows[j];
                                 SomeRow.Place = foundIndex;
 
-                                if (CorrectList == null)
+                                if (CorrectList.Count == 0)
                                 {
                                     CorrectList.Add(SomeRow);
                                 }
@@ -250,22 +283,20 @@ namespace CoordinateConverter.ViewModel
                                 {
                                     for (int k = 0; k > CorrectList.Count; k++)
                                     {
-                                        if (SomeRow.Place < CorrectList[k].Place)
-                                        {
-                                            CorrectList.Insert(k, SomeRow);
-                                        }
+                                    if (SomeRow.Place < CorrectList[k].Place)
+                                    {
+                                        CorrectList.Insert(k, SomeRow);
+                                    }
+                                    //else
+                                    //{
+                                    //    CorrectList.Insert(k + 1, SomeRow);
+                                    //}
                                     }
                                 }
 
 
 
-                                foreach (var item in CorrectList)
-                                {
-                                    Selection.Clear();
-
-
-                                    Selection.Add(item.CompleteRow);
-                                 }
+                               
                                // break;
                             }
 
@@ -273,35 +304,38 @@ namespace CoordinateConverter.ViewModel
 
                     }
                 }
+            Selection.Clear();
+            foreach (var item in CorrectList)
+            {
+              
 
 
-         
+                Selection.Add(item.CompleteRow);
+            }
+
+
+
 
 
         }
 
         private bool MoveUpCanExecute()
         {
-            //int foundIndex = default;
-            //for (int j = 0; j < Selection.Count; j++)
-            //{
-            //    for (int i = 0; i < CompleteRows.Count; i++)
-            //    {
-            //        if (Selection.Count != 0)
-            //        {
+            bool checkDown = default;
+            foreach (var row in Selection)
+            {
+                if (row == CompleteRows[0])
+                {
+                    checkDown = false;
+                    break;
+                }
+                else
+                {
+                    checkDown = true;
+                }
+            }
 
-            //            if (CompleteRows[i] == Selection[j])
-            //            {
-            //                foundIndex = i;
-
-            //                break;
-            //            }
-
-            //        }
-
-            //    }
-            //}
-            if ((Selection.Count != 0) && (Selection[0] != CompleteRows[0]))
+            if (checkDown == true)
             {
                 return true;
             }
@@ -309,47 +343,59 @@ namespace CoordinateConverter.ViewModel
             {
                 return false;
             }
-
         }
 
         private void MoveDownExecute()
         {
-            SortSelection(CompleteRows, Selection);
+            //SortSelection(CompleteRows, Selection);
 
-            for (int n = Selection.Count-1; n >= 0; n--)
+            //for (int n = Selection.Count-1; n >= 0; n--)
+            //{
+            //    int foundIndex = default;
+            //    for (int i = 0; i < CompleteRows.Count; i++)
+            //    {
+
+            //            if (CompleteRows[i] == Selection[n])
+            //            {
+            //                foundIndex = i;
+            //                break;
+            //            }
+
+
+            //    }
+            //    CompleteRows.Move(foundIndex, foundIndex + 1);
+            //}
+
+            for (int i = CompleteRows.Count-1; i >= 0; i--)
             {
-                int foundIndex = default;
-                for (int i = 0; i < CompleteRows.Count; i++)
+                for (int j = 0; j < Selection.Count  ; j++)
                 {
-                    
-                        if (CompleteRows[i] == Selection[n])
-                        {
-                            foundIndex = i;
-                            break;
-                        }
-                    
-
+                    if (Selection[j] == CompleteRows[i])
+                    {
+                        CompleteRows.Move(i, i + 1);
+                    }
                 }
-                CompleteRows.Move(foundIndex, foundIndex + 1);
             }
         }
 
         private bool MoveDownCanExecute()
         {
-            int foundIndex = default;
-            for (int i = 0; i < CompleteRows.Count; i++)
+            //   SortSelection(CompleteRows, Selection);
+            bool checkDown = default;
+            foreach (var row in Selection)
             {
-            if (Selection.Count != 0)
-            {
-                if (CompleteRows[i] == Selection[Selection.Count-1])
+                if (row == CompleteRows[CompleteRows.Count - 1])
                 {
-                    foundIndex = i;
+                    checkDown =  false;
                     break;
                 }
+                else
+                {
+                    checkDown = true;
                 }
-
             }
-            if (foundIndex != CompleteRows.Count - 1)
+
+            if (checkDown == true)
             {
                 return true;
             }
@@ -357,6 +403,7 @@ namespace CoordinateConverter.ViewModel
             {
                 return false;
             }
+
         }
 
 
