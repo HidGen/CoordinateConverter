@@ -96,12 +96,12 @@
         <dxg:GridControl Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row"  EnableSmartColumnsGeneration="False"
                          ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True}" SelectedItem="{Binding SelectedRow}">
             <dxg:GridControl.Columns>
-                <dxg:GridColumn Header="X" FieldName="rectCoord.x" />
-                <dxg:GridColumn Header="Y" FieldName="rectCoord.y" />
-                <dxg:GridColumn Header="H" FieldName="rectCoord.h" />
-                <dxg:GridColumn Header="latitude" FieldName="geoCoord.lat" />
-                <dxg:GridColumn Header="longitude" FieldName="geoCoord.lon" />
-                <dxg:GridColumn Header="H" FieldName="geoCoord.h" />
+                <dxg:GridColumn Header="X" FieldName="RectCoord.X" />
+                <dxg:GridColumn Header="Y" FieldName="RectCoord.Y" />
+                <dxg:GridColumn Header="H" FieldName="RectCoord.H" />
+                <dxg:GridColumn Header="latitude" FieldName="geoCoord.Lat" />
+                <dxg:GridColumn Header="longitude" FieldName="geoCoord.Lon" />
+                <dxg:GridColumn Header="H" FieldName="geoCoord.H" />
                 <dxg:GridColumn Header="Описание" FieldName="Description" />
 
 

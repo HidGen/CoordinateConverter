@@ -12,7 +12,7 @@ namespace CoordinateConverter.OpenSaveDialogs
 {
     public class OpenDialog
     {
-        public List<CompleteRow> OpenFile(CoordConverter.CoordinateSystem coordinateSystem)
+        public List<CompleteRow> OpenFile()
         {
             var fileInteraction = new FileInteraction();
             OpenFileDialog dlg = new OpenFileDialog();
@@ -22,7 +22,7 @@ namespace CoordinateConverter.OpenSaveDialogs
             dlg.DefaultExt = ".xls"; // Default file extension
             dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx|All files (*.*)|*.*"; // Filter files by extension
             dlg.Multiselect = true;
-            var coordConverter = new CoordConverter();
+            //var coordConverter = new CoordConverter();
             //coordConverter.ChangeType(CoordConverter.CoordinateSystem.LCS46_1);
             // Show open file dialog box
             bool? result = dlg.ShowDialog();
@@ -34,7 +34,7 @@ namespace CoordinateConverter.OpenSaveDialogs
                 {
                     //FileName.Add(filename);
                     foreach (RectCoord rectCoord in fileInteraction.Read(filename))
-                        completeRows.Add(new CompleteRow { rectCoord = rectCoord, geoCoord=coordConverter.Convert(coordinateSystem, rectCoord),Description=filename });
+                        completeRows.Add(new CompleteRow { RectCoord = rectCoord, Description=filename });
                 }
             }
             return completeRows;

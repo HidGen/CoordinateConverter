@@ -106,8 +106,7 @@ namespace CoordinateConverter.ViewModel
             {
                 return settingsCommand ??
                   (settingsCommand = new DelegateCommand(() =>
-                  {
-             
+                  {             
 
                        var viewModel = new SettingsWindowViewModel(RangeCheck, SelectedCoordinateEnumType);
                       var opensettings = new SettingsWindow { DataContext = viewModel};
@@ -129,11 +128,7 @@ namespace CoordinateConverter.ViewModel
 
             SelectedCoordinateEnumType = e.SelectedType;
 
-            RangeCheck = e.RangeCheck;
-
-
-
-          
+            RangeCheck = e.RangeCheck;         
 
         }
 
@@ -153,6 +148,15 @@ namespace CoordinateConverter.ViewModel
                   }));
             }
         }
+        private void RowCalc(CompleteRow completeRow,CoordConverter.CoordinateSystem coordinateSystem)
+        {
+            var coordConverter = new CoordConverter();
+            completeRow.geoCoord = coordConverter.Convert(coordinateSystem, completeRow.RectCoord);
+        }
+        private void RowChanged(object sender, EventArgs e)
+        {
+            //RowCalc()
+        }
 
 
 
@@ -160,7 +164,9 @@ namespace CoordinateConverter.ViewModel
         {
             var open = new OpenDialog();
             List<CompleteRow> completeRows;
-            completeRows = open.OpenFile(CoordConverter.CoordinateSystem.LCS46_1);           
+            completeRows = open.OpenFile();
+            foreach (var completeRow in CompleteRows)
+                RowCalc(completeRow, CoordConverter.CoordinateSystem.LCS46_1);
             foreach (var completeRow in completeRows)            
                 CompleteRows.Add(completeRow);
         }
@@ -232,7 +238,6 @@ namespace CoordinateConverter.ViewModel
                     foundIndex = i;
                     break;
                 }
-
             }
             CompleteRows.Move(foundIndex, foundIndex - 1);
         }

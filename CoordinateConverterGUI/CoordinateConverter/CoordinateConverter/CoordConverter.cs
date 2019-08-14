@@ -19,7 +19,7 @@ namespace CoordinateConverter
             CS42,
             CS63
         }
-        public void ChangeType(CoordinateSystem coordinateSystem)
+        private void ChangeType(CoordinateSystem coordinateSystem)
         {
             switch (coordinateSystem)
             {
@@ -46,10 +46,10 @@ namespace CoordinateConverter
             ChangeType(basicCoordinateSystem);
             ProjectionInfo src = ProjectionInfo.FromProj4String(BasicTypeString);
             ProjectionInfo trg = ProjectionInfo.FromProj4String("+proj=longlat +datum=WGS84 +no_defs");
-            double[] xy =  { rectCoord.x, rectCoord.y };
-            double[] h = { rectCoord.h };
+            double[] xy =  { rectCoord.X, rectCoord.Y };
+            double[] h = { rectCoord.H };
             Reproject.ReprojectPoints(xy,h , src, trg, 0, 1);
-            var geoCoord = new GeoCoord {lon = xy[0],lat= xy[1],h=h[0] };
+            var geoCoord = new GeoCoord {Lon = xy[0],Lat= xy[1],H=h[0] };
             return geoCoord;
         }
     }// NuGet DotSpatial.Projections

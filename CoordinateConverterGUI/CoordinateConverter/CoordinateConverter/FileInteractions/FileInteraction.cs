@@ -48,8 +48,8 @@ namespace CoordinateConverter.FileInteractions
                 foreach (GeoCoord geoCoord in geoCoords)
                 {
                     writer.WriteStartElement("GeoCoord");
-                    writer.WriteElementString("lat", geoCoord.lat.ToString());
-                    writer.WriteElementString("long", geoCoord.lon.ToString());
+                    writer.WriteElementString("lat", geoCoord.Lat.ToString());
+                    writer.WriteElementString("long", geoCoord.Lon.ToString());
                     writer.WriteEndElement();
                 }
 
@@ -84,7 +84,7 @@ namespace CoordinateConverter.FileInteractions
                     x = 0;
                 if (x == 3)
                 {
-                    RectCoord rectCoord = new RectCoord { x = (range.Cells[1, cCnt - 2] as Excel.Range).Value2, y = (range.Cells[1, cCnt - 1] as Excel.Range).Value2, h = (range.Cells[1, cCnt] as Excel.Range).Value2 };
+                    RectCoord rectCoord = new RectCoord { X = (range.Cells[1, cCnt - 2] as Excel.Range).Value2, Y = (range.Cells[1, cCnt - 1] as Excel.Range).Value2, H = (range.Cells[1, cCnt] as Excel.Range).Value2 };
                     return rectCoord;
                 }
             }
