@@ -9,6 +9,7 @@ namespace CoordinateConverter.FileInteractions
 {
     interface IExcelFileOpen
     {
-        List<CompleteRow> OpenFile();
+        List<RectCoord> Read(string path);
+        Task<List<RectCoord>> ReadAsync(string path);
     }
 }

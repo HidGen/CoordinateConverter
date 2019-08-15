@@ -98,16 +98,16 @@
 
             </dxb:ToolBarControl>
         </dxb:BarContainerControl>
-        <dxg:GridControl Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row"  EnableSmartColumnsGeneration="False"
+        <dxg:GridControl Name="GC" Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row"  EnableSmartColumnsGeneration="False"
                          ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True}" SelectedItems="{Binding Selection}" >
                          
                          <!--SelectedItem="{Binding SelectedRow}"-->
                          
                        
             <dxg:GridControl.Columns>
-                <dxg:GridColumn Header="X" FieldName="rectCoord.X" />
-                <dxg:GridColumn Header="Y" FieldName="rectCoord.Y" />
-                <dxg:GridColumn Header="H" FieldName="rectCoord.H" />
+                <dxg:GridColumn Header="X" FieldName="RectCoord.X" />
+                <dxg:GridColumn Header="Y" FieldName="RectCoord.Y" />
+                <dxg:GridColumn Header="H" FieldName="RectCoord.H" />
                 <dxg:GridColumn Header="latitude" FieldName="geoCoord.Lat"  />
                 <dxg:GridColumn Header="longitude" FieldName="geoCoord.Lon" />
                 <dxg:GridColumn Header="H" FieldName="geoCoord.H" />
@@ -119,7 +119,7 @@
             <dxg:GridControl.View>
                 
                 <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" NewItemRowPosition="Bottom" 
-                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False"/>
+                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" />
             </dxg:GridControl.View>
            
            

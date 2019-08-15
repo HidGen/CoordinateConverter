@@ -8,10 +8,33 @@ namespace CoordinateConverter.Model
 {
     public class CompleteRow
     {
-        public RectCoord rectCoord { get; set; }
+        public CompleteRow()
+        {
+            //rectCoord = new RectCoord();
+            //geoCoord = new GeoCoord();
+            //if(rectCoord!= null)
+
+        }
+        private RectCoord rectCoord;
+        public RectCoord RectCoord
+        {
+            get => rectCoord;
+            set
+            {
+                if(rectCoord!=null)
+                rectCoord.PropertyChanged -= RectCoordChanged;
+                rectCoord = value;                
+                rectCoord.PropertyChanged += RectCoordChanged;
+                RectCoordChanged(this, EventArgs.Empty);
+            }
+        }
 
         public GeoCoord geoCoord { get; set; }
 
         public string Description { get; set; }
+        public void RectCoordChanged(object sender, EventArgs e)
+        {
+          
+        }
     }
 }

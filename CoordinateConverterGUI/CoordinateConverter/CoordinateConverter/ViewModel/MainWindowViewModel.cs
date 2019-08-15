@@ -17,6 +17,8 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using CoordinateConverter.Model;
 using CoordinateConverter.FileInteractions;
+using CoordinateConverter.OpenSaveDialogs;
+using Microsoft.Win32;
 
 namespace CoordinateConverter.ViewModel
 {
@@ -35,6 +37,12 @@ namespace CoordinateConverter.ViewModel
 
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        private CoordinateType selectedCoordinateEnumType;
+        private CompleteRow selectedRow;
+        private IExcelFileOpen excelImporter;
+        private IXmlFileSave xmlExporter;
+        private CoordConverter coordConverter;
+
         public bool RangeCheck { get; set; }
 
         public ObservableCollection<CompleteRow> CompleteRows { get; }
@@ -54,6 +62,7 @@ namespace CoordinateConverter.ViewModel
                
             }
         }
+
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
         {
             get
@@ -62,8 +71,7 @@ namespace CoordinateConverter.ViewModel
                     .Cast<CoordinateType>();
             }
         }
-
-        public CoordinateType selectedCoordinateEnumType;
+                
         public CoordinateType SelectedCoordinateEnumType
         {
             get { return selectedCoordinateEnumType; }
@@ -74,8 +82,6 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-        public CompleteRow selectedRow;
-
         public CompleteRow SelectedRow
         {
             get { return selectedRow; }
@@ -83,11 +89,6 @@ namespace CoordinateConverter.ViewModel
             {
                 selectedRow = value;
             }
-        }
-
-        public void Init()
-        {
-          
         }
 
         public ICommand OpenCommand { get; private set; }
@@ -99,8 +100,11 @@ namespace CoordinateConverter.ViewModel
 
         public MainWindowViewModel()
         {
-         //   coordinate_system = new ObservableCollection<string>();
-            Init();
+            var interaction = new FileInteraction();
+            excelImporter = interaction;
+            xmlExporter = interaction;
+            coordConverter = new CoordConverter();
+
             CompleteRows = new ObservableCollection<CompleteRow>();
             OpenCommand = new DelegateCommand(OpenExecute, OpenCanExecute);
             SaveCommand = new DelegateCommand(SaveExecute, SaveCanExecute);
@@ -145,30 +149,52 @@ namespace CoordinateConverter.ViewModel
                   }));
             }
         }
+           
 
-        private void OpenExecute()
+        private async void OpenExecute()
         {
-            FileInteraction file = new FileInteraction();
-            List<CompleteRow> completeRows = new List<CompleteRow>();
-            completeRows = file.OpenFile();        
-            foreach (var completeRow in completeRows)            
-            CompleteRows.Add(completeRow);
+
+            var dlg = new OpenFileDialog();
+            dlg.FileName = "Document"; 
+            dlg.DefaultExt = ".xls"; 
+            dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx|All files (*.*)|*.*"; // Filter files by extension
+            dlg.Multiselect = true;       
+            var result = dlg.ShowDialog();
+            if (result.HasValue == false || result.Value == false)
+                return;
+            // true
+
+            foreach (string filename in dlg.FileNames)
+            {
+                var rectCoords = await excelImporter.ReadAsync(filename);
+                foreach (RectCoord rectCoord in rectCoords)
+                {
+                     var geoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
+                    CompleteRows.Add(new CompleteRow { RectCoord = rectCoord, geoCoord = geoCoord, Description = filename });
+                }                  
+            }
+
+            // false
         }
+
+
+
         private bool OpenCanExecute()
         {
             return true;
         }
         private void SaveExecute()
         {
-            FileInteraction file = new FileInteraction();
-            file.Save(new List<GeoCoord>());
+            var save = new SaveDialog();
+            var geoCoords = new List<GeoCoord>();
+            foreach (CompleteRow completeRow in CompleteRows)
+                geoCoords.Add(completeRow.geoCoord);
+            save.Save(geoCoords);
         }
         private bool SaveCanExecute()
         {
             return true;
         }
-
-
 
         private void AddExecute()
         {
@@ -184,9 +210,6 @@ namespace CoordinateConverter.ViewModel
                         CompleteRows.Insert(i, new CompleteRow());
                         break;
                     }
-
-
-
                 }
                 
             }
@@ -201,9 +224,6 @@ namespace CoordinateConverter.ViewModel
             return true;
         }
 
-
-                    
-
         private void DeleteExecute()
         {
             Selection.ToList().ForEach(item => CompleteRows.Remove(item));
@@ -216,7 +236,6 @@ namespace CoordinateConverter.ViewModel
 
         private void MoveUpExecute()
         {
-            //  SortSelection(CompleteRows, Selection);
 
             for (int i = 0; i < CompleteRows.Count ; i++)
             {
@@ -228,94 +247,6 @@ namespace CoordinateConverter.ViewModel
                     }
                 }
             }
-
-            //for (int n = 0; n < Selection.Count; n++)
-            //{
-            //    int foundIndex = default;
-            //    for (int i = 0; i < CompleteRows.Count; i++)
-            //    {
-            //        if (CompleteRows[i] == Selection[n])
-            //        {
-            //            foundIndex = i;
-            //            break;
-            //        }
-            //    }
-            //    CompleteRows.Move(foundIndex, foundIndex - 1);
-            //}
-        }
-
-        public void SortSelection(ObservableCollection<CompleteRow> allRows, ObservableCollection<CompleteRow> selectedRows)
-        {
-            ObservableCollection<RowToSort> CorrectList = new ObservableCollection<RowToSort>();
-            ObservableCollection<CompleteRow> Outputlist = new ObservableCollection<CompleteRow>();
-
-
-                int foundIndex = default;
-                for (int j = 0; j < selectedRows.Count; j++)
-                {
-                    for (int i = 0; i < allRows.Count; i++)
-                    {
-                        if (selectedRows.Count != 0)
-                        {
-
-                            if (allRows[i] == selectedRows[j])
-                            {
-                                foundIndex = i;
-
-                                RowToSort SomeRow = new RowToSort();
-                                SomeRow.CompleteRow = selectedRows[j];
-                                SomeRow.Place = foundIndex;
-
-                                if (CorrectList.Count == 0)
-                                {
-                                    CorrectList.Add(SomeRow);
-                                }
-                                else if (CorrectList.Count == 1)
-                                {
-                                    if (CorrectList[0].Place > SomeRow.Place)
-                                    {
-                                        CorrectList.Insert(0, SomeRow);
-                                    }
-                                    else
-                                    { CorrectList.Insert(1, SomeRow); }
-                                }
-                                else
-                                {
-                                    for (int k = 0; k > CorrectList.Count; k++)
-                                    {
-                                    if (SomeRow.Place < CorrectList[k].Place)
-                                    {
-                                        CorrectList.Insert(k, SomeRow);
-                                    }
-                                    //else
-                                    //{
-                                    //    CorrectList.Insert(k + 1, SomeRow);
-                                    //}
-                                    }
-                                }
-
-
-
-                               
-                               // break;
-                            }
-
-                        }
-
-                    }
-                }
-            Selection.Clear();
-            foreach (var item in CorrectList)
-            {
-              
-
-
-                Selection.Add(item.CompleteRow);
-            }
-
-
-
-
 
         }
 
@@ -347,25 +278,6 @@ namespace CoordinateConverter.ViewModel
 
         private void MoveDownExecute()
         {
-            //SortSelection(CompleteRows, Selection);
-
-            //for (int n = Selection.Count-1; n >= 0; n--)
-            //{
-            //    int foundIndex = default;
-            //    for (int i = 0; i < CompleteRows.Count; i++)
-            //    {
-
-            //            if (CompleteRows[i] == Selection[n])
-            //            {
-            //                foundIndex = i;
-            //                break;
-            //            }
-
-
-            //    }
-            //    CompleteRows.Move(foundIndex, foundIndex + 1);
-            //}
-
             for (int i = CompleteRows.Count-1; i >= 0; i--)
             {
                 for (int j = 0; j < Selection.Count  ; j++)
@@ -380,7 +292,6 @@ namespace CoordinateConverter.ViewModel
 
         private bool MoveDownCanExecute()
         {
-            //   SortSelection(CompleteRows, Selection);
             bool checkDown = default;
             foreach (var row in Selection)
             {
@@ -403,17 +314,7 @@ namespace CoordinateConverter.ViewModel
             {
                 return false;
             }
-
         }
-
-
-      
-                     
-
-
-                        
-
-
 
 
         public event PropertyChangedEventHandler PropertyChanged;
