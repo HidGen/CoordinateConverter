@@ -40,6 +40,9 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
+       
+
         <dxb:BarContainerControl>
             <dxb:MainMenuControl AllowCustomizationMenu="False">
                 <dxb:BarSubItem x:Name="biFile" Content="Файл" >
@@ -128,9 +131,23 @@
             <dxb:BarStaticItem x:Name="biTotalRows" Content="Кол-во строк:" ShowBorder="False"/>
             <dxb:BarStaticItem x:Name="biTotalRowsValue" Content= "{Binding  CompleteRows.Count}" ShowBorder="False"/>
             <dxb:BarItemLinkSeparator />
-            <dxb:BarStaticItem x:Name="biSelectedRows" Content="Кол-во выделенных строк:" ShowBorder="False"/>
-            <dxb:BarStaticItem x:Name="biSelectedRowsValue" Content="{Binding  Selection.Count}" ShowBorder="False"/>
+            <dxb:BarStaticItem x:Name="biSelectedRowsCount" Content="Кол-во выделенных строк:" ShowBorder="False"/>
+            <dxb:BarStaticItem x:Name="biSelectedRowsCountValue" Content="{Binding  Selection.Count}" ShowBorder="False" />
             <dxb:BarItemLinkSeparator />
+            <dxb:BarStaticItem x:Name="biSelectedRows" Content="Выделенные строки:" ShowBorder="False"/>
+            <dxb:BarStaticItem x:Name="biSelectedRowsValue" Content="{Binding Indexes}" ShowBorder="False"/>
+            
         </dxb:StatusBarControl>
+
+        <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
+            <dx:WaitIndicator.ContentTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Please Wait" FontSize="20"/>
+                        <TextBlock Text="{Binding}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </dx:WaitIndicator.ContentTemplate>
+        </dx:WaitIndicator>
     </Grid>
 </Window>

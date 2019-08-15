@@ -10,9 +10,10 @@ namespace CoordinateConverter.Model
     {
         public CompleteRow()
         {
-            //rectCoord = new RectCoord();
-            //geoCoord = new GeoCoord();
-            //if(rectCoord!= null)
+            rectCoord = new RectCoord();
+            geoCoord = new GeoCoord();
+            
+
 
         }
         private RectCoord rectCoord;

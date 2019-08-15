@@ -41,9 +41,31 @@ namespace CoordinateConverter.ViewModel
         private CompleteRow selectedRow;
         private IExcelFileOpen excelImporter;
         private IXmlFileSave xmlExporter;
+        private bool busy;
         private CoordConverter coordConverter;
+        private ObservableCollection<int> indexes = new ObservableCollection<int>();
 
         public bool RangeCheck { get; set; }
+
+        public ObservableCollection<int> Indexes
+        {
+            get => indexes;
+            set
+            {
+                indexes = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public bool Busy
+        {
+            get => busy;
+            set
+            {
+                busy = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public ObservableCollection<CompleteRow> CompleteRows { get; }
 
@@ -53,14 +75,17 @@ namespace CoordinateConverter.ViewModel
         {
             get
             {
-                return this.selection;
-            }
-            set
-            {
-                selection = value;
               
+                return this.selection;
                
             }
+            //set
+            //{
+            //    selection = value;
+            //    Indexes = GetSelectedIndexes();
+
+
+            //}
         }
 
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
@@ -104,6 +129,8 @@ namespace CoordinateConverter.ViewModel
             excelImporter = interaction;
             xmlExporter = interaction;
             coordConverter = new CoordConverter();
+            Busy = false;
+            
 
             CompleteRows = new ObservableCollection<CompleteRow>();
             OpenCommand = new DelegateCommand(OpenExecute, OpenCanExecute);
@@ -163,6 +190,7 @@ namespace CoordinateConverter.ViewModel
             if (result.HasValue == false || result.Value == false)
                 return;
             // true
+            Busy = true;
 
             foreach (string filename in dlg.FileNames)
             {
@@ -174,6 +202,7 @@ namespace CoordinateConverter.ViewModel
                 }                  
             }
 
+            Busy = false;
             // false
         }
 
@@ -244,6 +273,7 @@ namespace CoordinateConverter.ViewModel
                     if (Selection[j] == CompleteRows[i])
                     {
                         CompleteRows.Move(i, i - 1);
+                        break;
                     }
                 }
             }
@@ -285,6 +315,7 @@ namespace CoordinateConverter.ViewModel
                     if (Selection[j] == CompleteRows[i])
                     {
                         CompleteRows.Move(i, i + 1);
+                        break;
                     }
                 }
             }
@@ -316,6 +347,28 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
+        public ObservableCollection<int> GetSelectedIndexes()
+        {
+            var SelectedIndexes = new ObservableCollection<int>();
+
+            for (int i = CompleteRows.Count - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < Selection.Count; j++)
+                {
+                    if (Selection[j] == CompleteRows[i])
+                    {
+                        // CompleteRows.Move(i, i + 1);
+                        SelectedIndexes.Add(i+1);
+                        break;
+                    }
+                }
+            }
+
+
+
+
+            return SelectedIndexes;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
