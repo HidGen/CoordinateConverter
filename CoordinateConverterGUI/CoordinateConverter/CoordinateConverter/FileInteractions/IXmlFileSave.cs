@@ -9,6 +9,6 @@ namespace CoordinateConverter.FileInteractions
 {
     interface IXmlFileSave
     {
-        void Save(List<GeoCoord> geoCoords);
+        void SaveToXml(string path, List<GeoCoord> geoCoords);
     }
 }

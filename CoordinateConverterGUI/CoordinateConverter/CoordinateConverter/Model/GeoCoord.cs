@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CoordinateConverter.Model
 {
-    public struct GeoCoord
+    public class GeoCoord
     {
-        public double lat { get; set; }
-        public double lon { get; set; }
-        public double h { get; set; }
+        public double Lat { get; set; }
+        public double Lon { get; set; }
+        public double H { get; set; }
     }
 }

@@ -12,40 +12,12 @@ namespace CoordinateConverter.FileInteractions
 {
     class FileInteraction : IExcelFileOpen, IXmlFileSave
     {
-        public List<CompleteRow> OpenFile()
+        public List<RectCoord> Read(string path)
         {
-            List<RectCoord> rectCoords = new List<RectCoord>();
-            OpenFileDialog dlg = new OpenFileDialog();
-            List<CompleteRow> completeRows = new List<CompleteRow>();
+            var xlApp = new Excel.Application();
+            var xlWorkBook = xlApp.Workbooks.Open(path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+            var xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
 
-            dlg.FileName = "Document"; // Default file name
-            dlg.DefaultExt = ".xls"; // Default file extension
-            dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx|All files (*.*)|*.*"; // Filter files by extension
-            dlg.Multiselect = true;
-            // Show open file dialog box
-            bool? result = dlg.ShowDialog();
-
-            if (result == true)
-            {
-                // Open document
-                foreach (string filename in dlg.FileNames)
-                {
-                    //FileName.Add(filename);
-                    foreach (RectCoord rectCoord in Read(filename))
-                        completeRows.Add(new CompleteRow {rectCoord=rectCoord });
-                }
-            }
-            return completeRows;
-        }
-        private List<RectCoord> Read(string reference)
-        {
-            Excel.Application xlApp;
-            Excel.Workbook xlWorkBook;
-            Excel.Worksheet xlWorkSheet;
-            object misValue = System.Reflection.Missing.Value;
-            xlApp = new Excel.Application();
-            xlWorkBook = xlApp.Workbooks.Open(reference, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
-            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
             var range = xlWorkSheet.UsedRange;
             int rw = range.Rows.Count;
             int cl = range.Columns.Count;
@@ -54,28 +26,21 @@ namespace CoordinateConverter.FileInteractions
             for (int rCnt = 1; rCnt <= rw; rCnt++)
             {
                 if (ValidateRow(range.Rows[rCnt], cl))
-                    rectCoords.Add(AddRow(range.Rows[rCnt], cl));
+                    rectCoords.Add(ReadRow(range.Rows[rCnt], cl));
             }
+
             return rectCoords;
         }
 
-        public void Save(List<GeoCoord> geoCoords)
+        public Task<List<RectCoord>> ReadAsync(string path)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            geoCoords.Add(new GeoCoord { lat = 20, lon = 30, h = 0 });
-            geoCoords.Add(new GeoCoord { lat = 30, lon = 40, h = 0 });
-            geoCoords.Add(new GeoCoord { lat = 40, lon = 50, h = 0 });
-            saveFileDialog.FileName = "Document"; // Default file name
-            saveFileDialog.DefaultExt = ".xml"; // Default file extension
-            saveFileDialog.Filter = "Xml documents (.xml)|*.xml|All files (*.*)|*.*";
-            if (saveFileDialog.ShowDialog() == true)
+            return Task<List<RectCoord>>.Run(() =>
             {
-                //FileDialog.
-                SaveToXml(saveFileDialog.FileName, geoCoords);
-
-            }
+                return Read(path);
+            });
         }
-        private void SaveToXml(string path, List<GeoCoord> geoCoords)
+
+        public void SaveToXml(string path, List<GeoCoord> geoCoords)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -89,8 +54,8 @@ namespace CoordinateConverter.FileInteractions
                 foreach (GeoCoord geoCoord in geoCoords)
                 {
                     writer.WriteStartElement("GeoCoord");
-                    writer.WriteElementString("lat", geoCoord.lat.ToString());
-                    writer.WriteElementString("long", geoCoord.lon.ToString());
+                    writer.WriteElementString("lat", geoCoord.Lat.ToString());
+                    writer.WriteElementString("long", geoCoord.Lon.ToString());
                     writer.WriteEndElement();
                 }
 
@@ -98,6 +63,7 @@ namespace CoordinateConverter.FileInteractions
                 writer.WriteEndDocument();
             }
         }
+
         private bool ValidateRow(Excel.Range range, int clm)
         {
             int x = 0;
@@ -114,7 +80,8 @@ namespace CoordinateConverter.FileInteractions
             }
             return false;
         }
-        private RectCoord AddRow(Excel.Range range, int clm)
+
+        private RectCoord ReadRow(Excel.Range range, int clm)
         {
             int x = 0;
             for (int cCnt = 1; cCnt <= clm; cCnt++)
@@ -125,11 +92,11 @@ namespace CoordinateConverter.FileInteractions
                     x = 0;
                 if (x == 3)
                 {
-                    RectCoord rectCoord = new RectCoord { x = (range.Cells[1, cCnt - 2] as Excel.Range).Value2, y = (range.Cells[1, cCnt - 1] as Excel.Range).Value2, h = (range.Cells[1, cCnt] as Excel.Range).Value2 };
+                    RectCoord rectCoord = new RectCoord { X = (range.Cells[1, cCnt - 2] as Excel.Range).Value2, Y = (range.Cells[1, cCnt - 1] as Excel.Range).Value2, H = (range.Cells[1, cCnt] as Excel.Range).Value2 };
                     return rectCoord;
                 }
             }
-            return new RectCoord();
+            throw new Exception("Строка в таблице имеет не верный форомат");
         }
     }
 }

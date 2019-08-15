@@ -173,7 +173,6 @@ C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\Coordin
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\es\DevExpress.Pdf.v17.2.Core.resources.dll
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\ja\DevExpress.Pdf.v17.2.Core.resources.dll
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\ru\DevExpress.Pdf.v17.2.Core.resources.dll
-C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csprojAssemblyReference.cache
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\MainWindow.g.cs
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\View\RangeChoiceWindow.g.cs
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\View\SettingsWindow.g.cs
