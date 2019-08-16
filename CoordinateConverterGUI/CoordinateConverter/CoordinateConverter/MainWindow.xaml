@@ -111,9 +111,9 @@
                 <dxg:GridColumn Header="X" FieldName="RectCoord.X" />
                 <dxg:GridColumn Header="Y" FieldName="RectCoord.Y" />
                 <dxg:GridColumn Header="H" FieldName="RectCoord.H" />
-                <dxg:GridColumn Header="latitude" FieldName="geoCoord.Lat"  />
-                <dxg:GridColumn Header="longitude" FieldName="geoCoord.Lon" />
-                <dxg:GridColumn Header="H" FieldName="geoCoord.H" />
+                <dxg:GridColumn Header="latitude" FieldName="GeoCoord.Lat"  />
+                <dxg:GridColumn Header="longitude" FieldName="GeoCoord.Lon" />
+                <dxg:GridColumn Header="H" FieldName="GeoCoord.H" />
                 <dxg:GridColumn Header="Описание" FieldName="Description" />
 
 
@@ -135,11 +135,13 @@
             <dxb:BarStaticItem x:Name="biSelectedRowsCountValue" Content="{Binding  Selection.Count}" ShowBorder="False" />
             <dxb:BarItemLinkSeparator />
             <dxb:BarStaticItem x:Name="biSelectedRows" Content="Выделенные строки:" ShowBorder="False"/>
-            <dxb:BarStaticItem x:Name="biSelectedRowsValue" Content="{Binding Indexes}" ShowBorder="False"/>
-            
+            <dxb:BarStaticItem x:Name="biSelectedRowsValue" Content="{Binding IndexList}" ShowBorder="False"/>
+
+
+
         </dxb:StatusBarControl>
 
-        <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
+        <!--<dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
             <dx:WaitIndicator.ContentTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -148,6 +150,6 @@
                     </StackPanel>
                 </DataTemplate>
             </dx:WaitIndicator.ContentTemplate>
-        </dx:WaitIndicator>
+        </dx:WaitIndicator>-->
     </Grid>
 </Window>

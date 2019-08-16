@@ -19,6 +19,7 @@ using CoordinateConverter.Model;
 using CoordinateConverter.FileInteractions;
 using CoordinateConverter.OpenSaveDialogs;
 using Microsoft.Win32;
+using System.Collections.Specialized;
 
 namespace CoordinateConverter.ViewModel
 {
@@ -44,8 +45,19 @@ namespace CoordinateConverter.ViewModel
         private bool busy;
         private CoordConverter coordConverter;
         private ObservableCollection<int> indexes = new ObservableCollection<int>();
+        public string indexList;
 
         public bool RangeCheck { get; set; }
+
+        public string IndexList
+        {
+            get => indexList;
+            set
+            {
+                indexList = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public ObservableCollection<int> Indexes
         {
@@ -103,6 +115,8 @@ namespace CoordinateConverter.ViewModel
             set
             {
                 selectedCoordinateEnumType = value;
+                //сюда
+
                 NotifyPropertyChanged();
             }
         }
@@ -132,6 +146,7 @@ namespace CoordinateConverter.ViewModel
             Busy = false;
             
 
+
             CompleteRows = new ObservableCollection<CompleteRow>();
             OpenCommand = new DelegateCommand(OpenExecute, OpenCanExecute);
             SaveCommand = new DelegateCommand(SaveExecute, SaveCanExecute);
@@ -139,7 +154,10 @@ namespace CoordinateConverter.ViewModel
             DeleteRowCommand = new DelegateCommand(DeleteExecute, DeleteCanExecute);
             MoveUpCommand = new DelegateCommand(MoveUpExecute, MoveUpCanExecute);
             MoveDownCommand = new DelegateCommand(MoveDownExecute, MoveDownCanExecute);
+            Indexes = new ObservableCollection<int>();
+               Selection.CollectionChanged += GetSelectedIndexes;
         }
+
 
         private ICommand settingsCommand;
         public ICommand SettingsCommand
@@ -176,7 +194,13 @@ namespace CoordinateConverter.ViewModel
                   }));
             }
         }
-           
+
+        public void CoordChanged(object sender, EventArgs e)
+        {
+            //coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
+            var row = sender as CompleteRow;
+            row.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, row.RectCoord);
+        }
 
         private async void OpenExecute()
         {
@@ -197,8 +221,12 @@ namespace CoordinateConverter.ViewModel
                 var rectCoords = await excelImporter.ReadAsync(filename);
                 foreach (RectCoord rectCoord in rectCoords)
                 {
-                     var geoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
-                    CompleteRows.Add(new CompleteRow { RectCoord = rectCoord, geoCoord = geoCoord, Description = filename });
+                    var completeRow = new CompleteRow();
+                    completeRow.RectCoordPropertyChanged += CoordChanged;
+                    completeRow.RectCoord = rectCoord;
+                    completeRow.Description = filename;
+                    completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
+                    CompleteRows.Add(completeRow);
                 }                  
             }
 
@@ -214,11 +242,21 @@ namespace CoordinateConverter.ViewModel
         }
         private void SaveExecute()
         {
-            var save = new SaveDialog();
+            //var save = new SaveDialog();
             var geoCoords = new List<GeoCoord>();
+            //var fileInteraction = new FileInteraction();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = "Document"; // Default file name
+            saveFileDialog.DefaultExt = ".xml"; // Default file extension
+            saveFileDialog.Filter = "Xml documents (.xml)|*.xml|All files (*.*)|*.*";
             foreach (CompleteRow completeRow in CompleteRows)
-                geoCoords.Add(completeRow.geoCoord);
-            save.Save(geoCoords);
+                geoCoords.Add(completeRow.GeoCoord);
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                xmlExporter.SaveToXml(saveFileDialog.FileName, geoCoords);
+            }
+
+            //save.Save(geoCoords);
         }
         private bool SaveCanExecute()
         {
@@ -235,8 +273,10 @@ namespace CoordinateConverter.ViewModel
 
                     if (CompleteRows[i] == Selection[0])
                     {
-                      //  foundIndex = i;
-                        CompleteRows.Insert(i, new CompleteRow());
+                        //  foundIndex = i;
+                        var completeRow = new CompleteRow();
+                        completeRow.RectCoordPropertyChanged += CoordChanged;
+                        CompleteRows.Insert(i, completeRow);
                         break;
                     }
                 }
@@ -244,7 +284,9 @@ namespace CoordinateConverter.ViewModel
             }
             else
             {
-                CompleteRows.Insert(CompleteRows.Count, new CompleteRow());
+                var completeRow = new CompleteRow();
+                completeRow.RectCoordPropertyChanged += CoordChanged;
+                CompleteRows.Insert(CompleteRows.Count, completeRow);
             }
         }
 
@@ -255,6 +297,7 @@ namespace CoordinateConverter.ViewModel
 
         private void DeleteExecute()
         {
+            Selection.ToList().ForEach(item => item.RectCoordPropertyChanged -= CoordChanged);
             Selection.ToList().ForEach(item => CompleteRows.Remove(item));
         }
 
@@ -347,27 +390,38 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-        public ObservableCollection<int> GetSelectedIndexes()
+        public void GetSelectedIndexes(object sender, NotifyCollectionChangedEventArgs e)
         {
-            var SelectedIndexes = new ObservableCollection<int>();
-
-            for (int i = CompleteRows.Count - 1; i >= 0; i--)
+            //   var SelectedIndexes = new ObservableCollection<int>();
+            Indexes.Clear();
+            for (int i = 0; i < CompleteRows.Count; i++)
             {
                 for (int j = 0; j < Selection.Count; j++)
                 {
                     if (Selection[j] == CompleteRows[i])
                     {
                         // CompleteRows.Move(i, i + 1);
-                        SelectedIndexes.Add(i+1);
+                        Indexes.Add(i+1);
                         break;
                     }
                 }
             }
 
+            IndexList = "";
 
+            for (int i = 0; i< Indexes.Count; i++)
+            {
+                if (i != (Indexes.Count -1))
+                {
+                    IndexList += Indexes[i] + "; ";
+                }
+                else
+                {
+                    IndexList += Indexes[i];
+                }
+            }
 
-
-            return SelectedIndexes;
+          //  return SelectedIndexes;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
