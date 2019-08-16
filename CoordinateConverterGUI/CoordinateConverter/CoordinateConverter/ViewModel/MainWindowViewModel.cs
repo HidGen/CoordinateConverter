@@ -17,9 +17,11 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using CoordinateConverter.Model;
 using CoordinateConverter.FileInteractions;
-using CoordinateConverter.OpenSaveDialogs;
+
 using Microsoft.Win32;
 using System.Collections.Specialized;
+using CoordinateConverter.ClipboardInteractions;
+using System.Windows;
 
 namespace CoordinateConverter.ViewModel
 {
@@ -42,6 +44,8 @@ namespace CoordinateConverter.ViewModel
         private CompleteRow selectedRow;
         private IExcelFileOpen excelImporter;
         private IXmlFileSave xmlExporter;
+        private Copy copy;
+        private Paste paste;
         private bool busy;
         private CoordConverter coordConverter;
         private ObservableCollection<int> indexes = new ObservableCollection<int>();
@@ -91,13 +95,7 @@ namespace CoordinateConverter.ViewModel
                 return this.selection;
                
             }
-            //set
-            //{
-            //    selection = value;
-            //    Indexes = GetSelectedIndexes();
 
-
-            //}
         }
 
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
@@ -136,17 +134,19 @@ namespace CoordinateConverter.ViewModel
         public ICommand DeleteRowCommand { get; private set; }
         public ICommand MoveUpCommand { get; private set; }
         public ICommand MoveDownCommand { get; private set; }
+        public ICommand PasteCommand { get; private set; }
+        public ICommand CopyCommand { get; private set; }
+        public ICommand CutCommand { get; private set; }
 
         public MainWindowViewModel()
         {
             var interaction = new FileInteraction();
             excelImporter = interaction;
             xmlExporter = interaction;
+            copy = new Copy();
+            paste = new Paste();
             coordConverter = new CoordConverter();
-            Busy = false;
-            
-
-
+            Busy = false;         
             CompleteRows = new ObservableCollection<CompleteRow>();
             OpenCommand = new DelegateCommand(OpenExecute, OpenCanExecute);
             SaveCommand = new DelegateCommand(SaveExecute, SaveCanExecute);
@@ -154,8 +154,11 @@ namespace CoordinateConverter.ViewModel
             DeleteRowCommand = new DelegateCommand(DeleteExecute, DeleteCanExecute);
             MoveUpCommand = new DelegateCommand(MoveUpExecute, MoveUpCanExecute);
             MoveDownCommand = new DelegateCommand(MoveDownExecute, MoveDownCanExecute);
+            PasteCommand = new DelegateCommand(PasteExecute, PasteCanExecute);
+            CopyCommand = new DelegateCommand(CopyExecute, CopyCanExecute);
+            CutCommand = new DelegateCommand(CutExecute, CutCanExecute);
             Indexes = new ObservableCollection<int>();
-               Selection.CollectionChanged += GetSelectedIndexes;
+            Selection.CollectionChanged += GetSelectedIndexes;
         }
 
 
@@ -388,6 +391,58 @@ namespace CoordinateConverter.ViewModel
             {
                 return false;
             }
+        }
+        private void PasteExecute()
+        {
+
+
+            var rectCoords = paste.PasteDataFromExcel();
+            foreach (var rectCoord in rectCoords)
+            {
+                var completeRow = new CompleteRow();
+                completeRow.RectCoordPropertyChanged += CoordChanged;
+                completeRow.RectCoord = rectCoord;
+                completeRow.Description = "From Clipboard";
+                completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
+
+                if (Selection.Count == 1)
+                {
+                    for (int i = 0; i < CompleteRows.Count; i++)
+                    {
+
+                        if (CompleteRows[i] == Selection[0])
+                        {
+                            CompleteRows.Insert(i, completeRow);
+                            break;
+                        }
+                    }
+                }
+
+                else
+                    CompleteRows.Add(completeRow);
+            }
+        }
+        private bool PasteCanExecute()
+        {
+            return Clipboard.ContainsText();
+        }
+        private void CopyExecute()
+        {
+            copy.CopyFromTable(Selection);
+        }
+        private bool CopyCanExecute()
+        {
+            return Selection.Count != 0;
+        }
+        private void CutExecute()
+        {
+            copy.CopyFromTable(Selection);
+            Selection.ToList().ForEach(item => CompleteRows.Remove(item));
+        }
+        private bool CutCanExecute()
+        {
+            return Selection.Count != 0;
+
         }
 
         public void GetSelectedIndexes(object sender, NotifyCollectionChangedEventArgs e)

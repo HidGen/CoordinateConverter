@@ -82,17 +82,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClipboardInteractions\Copy.cs" />
+    <Compile Include="ClipboardInteractions\Paste.cs" />
     <Compile Include="CoordConverter.cs" />
     <Compile Include="EnumToStringConverter.cs" />
     <Compile Include="FileInteractions\FileInteraction.cs" />
     <Compile Include="FileInteractions\IExcelFileOpen.cs" />
     <Compile Include="FileInteractions\IXmlFileSave.cs" />
+    <Compile Include="InputBindingsBehavior.cs" />
     <Compile Include="Model\CompleteRow.cs" />
     <Compile Include="Model\GeoCoord.cs" />
     <Compile Include="Model\RectCoord.cs" />
     <Compile Include="Model\TestData.cs" />
-    <Compile Include="OpenSaveDialogs\SaveDialog.cs" />
     <Compile Include="ViewModel\CloseBehavior.cs" />
+    <Compile Include="ViewModel\NumberConverter.cs" />
     <Compile Include="ViewModel\EnumConverter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\SettingsWindowViewModel.cs" />
