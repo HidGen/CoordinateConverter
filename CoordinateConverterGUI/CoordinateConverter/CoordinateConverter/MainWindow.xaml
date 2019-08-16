@@ -11,6 +11,7 @@
         xmlns:local="clr-namespace:CoordinateConverter"
         xmlns:dxnav="http://schemas.devexpress.com/winfx/2008/xaml/navigation"
     xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
+     local:InputBindingsBehavior.TakesInputBindingPrecedence="True"
 
     x:Class="CoordinateConverter.MainWindow"
         mc:Ignorable="d"
@@ -18,7 +19,11 @@
     MinHeight="350px"
         Title="CoordinateConverter" Background="Azure" Height="450" Width="800" >
 
-
+    <Window.InputBindings>
+        <KeyBinding Key="C" Modifiers="Control" Command="{Binding CopyCommand}" />
+        <KeyBinding Key="V" Modifiers="Control" Command="{Binding PasteCommand}" />
+        <KeyBinding Key="X" Modifiers="Control" Command="{Binding CutCommand}" />
+    </Window.InputBindings>
 
     <Window.DataContext>
         <viewmodel:MainWindowViewModel/>
@@ -52,9 +57,9 @@
                     <dxb:BarButtonItem x:Name="FileSave" Content="Сохранить" Glyph="{dx:DXImage Image=Save_16x16.png}" LargeGlyph="{dx:DXImage Image=Save_32x32.png}" Command="{Binding SaveCommand}"/>
                 </dxb:BarSubItem>
                 <dxb:BarSubItem x:Name="biCopyPaste" Content="Правка">
-                    <dxb:BarButtonItem x:Name="Cut" Content="Вырезать" Glyph="{dx:DXImage Image=Cut_16x16.png}" LargeGlyph="{dx:DXImage Image=Cut_32x32.png}" />
-                    <dxb:BarButtonItem x:Name="Copy" Content="Скопировать" Glyph="{dx:DXImage Image=Copy_16x16.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}" />
-                    <dxb:BarButtonItem x:Name="Paste" Content="Вставить" Glyph="{dx:DXImage Image=Paste_16x16.png}" LargeGlyph="{dx:DXImage Image=Paste_32x32.png}"  />
+                    <dxb:BarButtonItem x:Name="Cut" Content="Вырезать" Glyph="{dx:DXImage Image=Cut_16x16.png}" LargeGlyph="{dx:DXImage Image=Cut_32x32.png}"  Command="{Binding CutCommand}" />
+                    <dxb:BarButtonItem x:Name="Copy" Content="Скопировать" Glyph="{dx:DXImage Image=Copy_16x16.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}" Command="{Binding CopyCommand}"/>
+                    <dxb:BarButtonItem x:Name="Paste" Content="Вставить" Glyph="{dx:DXImage Image=Paste_16x16.png}" LargeGlyph="{dx:DXImage Image=Paste_32x32.png}"  Command="{Binding PasteCommand}"/>
                     <dxb:BarItemLinkSeparator />
                     <dxb:BarButtonItem x:Name="RowAdd" Content="Добавить строку" Glyph="{dx:DXImage Image=Add_16x16.png}" LargeGlyph="{dx:DXImage Image=Add_32x32.png}" Command="{Binding AddRowCommand}" />
                     <dxb:BarButtonItem x:Name="RowDelete" Content="Удалить строку" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" Command="{Binding DeleteRowCommand}"/>
@@ -72,9 +77,9 @@
                 <dxb:BarButtonItem x:Name="biFileOpen" Content="Открыть" ToolTip="Открыть" Glyph="{dx:DXImage Image=Open_16x16.png}" LargeGlyph="{dx:DXImage Image=Open_32x32.png}" BarItemDisplayMode="ContentAndGlyph" Command="{Binding OpenCommand}" />
                 <dxb:BarButtonItem x:Name="biFileSave" Content="Сохранить" ToolTip="Сохранить" Glyph="{dx:DXImage Image=Save_16x16.png}" LargeGlyph="{dx:DXImage Image=Save_32x32.png}" BarItemDisplayMode="ContentAndGlyph"  Command="{Binding SaveCommand}"/>
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarButtonItem x:Name="biCut" ToolTip="Вырезать" Glyph="{dx:DXImage Image=Cut_16x16.png}" LargeGlyph="{dx:DXImage Image=Cut_32x32.png}"  Command="{Binding ChooseRangeCommand}"/>
-                <dxb:BarButtonItem x:Name="biCopy" ToolTip="Копировать" Glyph="{dx:DXImage Image=Copy_16x16.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}"  />
-                <dxb:BarButtonItem x:Name="biPaste" ToolTip="Вставить" Glyph="{dx:DXImage Image=Paste_16x16.png}" LargeGlyph="{dx:DXImage Image=Paste_32x32.png}"  />
+                <dxb:BarButtonItem x:Name="biCut" ToolTip="Вырезать" Glyph="{dx:DXImage Image=Cut_16x16.png}" LargeGlyph="{dx:DXImage Image=Cut_32x32.png}"  Command="{Binding CutCommand}" />
+                <dxb:BarButtonItem x:Name="biCopy" ToolTip="Копировать" Glyph="{dx:DXImage Image=Copy_16x16.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}" Command="{Binding CopyCommand}"/>
+                <dxb:BarButtonItem x:Name="biPaste" ToolTip="Вставить" Glyph="{dx:DXImage Image=Paste_16x16.png}" LargeGlyph="{dx:DXImage Image=Paste_32x32.png}" Command="{Binding PasteCommand}" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarEditItem EditWidth="170" ToolTip="Начальная система координат" EditValue="{Binding Path=SelectedCoordinateEnumType, Converter={StaticResource EnumConvert}}">
                     <dxb:BarEditItem.EditSettings>
