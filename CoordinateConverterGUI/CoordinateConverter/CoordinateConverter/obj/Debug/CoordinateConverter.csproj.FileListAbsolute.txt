@@ -193,4 +193,3 @@ C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\Coordin
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.pdb
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\DotSpatial.Projections.dll
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\DotSpatial.Projections.xml
-C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csprojAssemblyReference.cache

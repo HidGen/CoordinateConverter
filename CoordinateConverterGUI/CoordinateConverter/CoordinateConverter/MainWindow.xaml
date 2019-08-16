@@ -26,6 +26,8 @@
 
     <Window.Resources>
         <viewmodel:EnumConverter x:Key="EnumConvert"/>
+        <viewmodel:NumberConverter x:Key="decimalconverter"/>
+        
         <DataTemplate x:Key="contactDataTemplate" >
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Path=RectCoord.x}"/>                
@@ -102,18 +104,34 @@
             </dxb:ToolBarControl>
         </dxb:BarContainerControl>
         <dxg:GridControl Name="GC" Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row"  EnableSmartColumnsGeneration="False"
-                         ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True}" SelectedItems="{Binding Selection}" >
+                         ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True}" SelectedItems="{Binding Selection}"  >
                          
                          <!--SelectedItem="{Binding SelectedRow}"-->
                          
                        
             <dxg:GridControl.Columns>
-                <dxg:GridColumn Header="X" FieldName="RectCoord.X" />
+                <dxg:GridColumn Header="№" Width="50px" FieldName="Counter" UnboundType="Integer" >
+                   
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                            <TextBlock HorizontalAlignment="Right" Margin="5,2,5,2" Text="{Binding RowData.RowHandle.Value, Converter={StaticResource  decimalconverter} }"/>
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                 
+
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="X" FieldName="RectCoord.X" >
+                    <!--<dxg:GridColumn.DisplayTemplate>
+                        <ControlTemplate>
+                            <TextBlock Text="{Binding Value,  Converter={StaticResource  decimalconverter}}"/>
+                        </ControlTemplate>
+                    </dxg:GridColumn.DisplayTemplate>-->
+                </dxg:GridColumn>
                 <dxg:GridColumn Header="Y" FieldName="RectCoord.Y" />
                 <dxg:GridColumn Header="H" FieldName="RectCoord.H" />
-                <dxg:GridColumn Header="latitude" FieldName="GeoCoord.Lat"  />
-                <dxg:GridColumn Header="longitude" FieldName="GeoCoord.Lon" />
-                <dxg:GridColumn Header="H" FieldName="GeoCoord.H" />
+                <dxg:GridColumn Header="latitude" FieldName="GeoCoord.Lat" ReadOnly="True" />
+                <dxg:GridColumn Header="longitude" FieldName="GeoCoord.Lon" ReadOnly="True"/>
+                <dxg:GridColumn Header="H" FieldName="GeoCoord.H" ReadOnly="True" />
                 <dxg:GridColumn Header="Описание" FieldName="Description" />
 
 
@@ -122,7 +140,7 @@
             <dxg:GridControl.View>
                 
                 <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" NewItemRowPosition="Bottom" 
-                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" />
+                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" />
             </dxg:GridControl.View>
            
            
@@ -141,7 +159,7 @@
 
         </dxb:StatusBarControl>
 
-        <!--<dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
+        <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
             <dx:WaitIndicator.ContentTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -150,6 +168,6 @@
                     </StackPanel>
                 </DataTemplate>
             </dx:WaitIndicator.ContentTemplate>
-        </dx:WaitIndicator>-->
+        </dx:WaitIndicator>
     </Grid>
 </Window>

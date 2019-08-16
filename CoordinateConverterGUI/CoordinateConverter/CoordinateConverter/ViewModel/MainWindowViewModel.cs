@@ -17,7 +17,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using CoordinateConverter.Model;
 using CoordinateConverter.FileInteractions;
-using CoordinateConverter.OpenSaveDialogs;
+
 using Microsoft.Win32;
 using System.Collections.Specialized;
 
@@ -91,13 +91,7 @@ namespace CoordinateConverter.ViewModel
                 return this.selection;
                
             }
-            //set
-            //{
-            //    selection = value;
-            //    Indexes = GetSelectedIndexes();
 
-
-            //}
         }
 
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
@@ -143,10 +137,7 @@ namespace CoordinateConverter.ViewModel
             excelImporter = interaction;
             xmlExporter = interaction;
             coordConverter = new CoordConverter();
-            Busy = false;
-            
-
-
+            Busy = false;         
             CompleteRows = new ObservableCollection<CompleteRow>();
             OpenCommand = new DelegateCommand(OpenExecute, OpenCanExecute);
             SaveCommand = new DelegateCommand(SaveExecute, SaveCanExecute);
@@ -155,7 +146,7 @@ namespace CoordinateConverter.ViewModel
             MoveUpCommand = new DelegateCommand(MoveUpExecute, MoveUpCanExecute);
             MoveDownCommand = new DelegateCommand(MoveDownExecute, MoveDownCanExecute);
             Indexes = new ObservableCollection<int>();
-               Selection.CollectionChanged += GetSelectedIndexes;
+            Selection.CollectionChanged += GetSelectedIndexes;
         }
 
 
