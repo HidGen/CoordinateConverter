@@ -91,7 +91,6 @@
     <Compile Include="Model\GeoCoord.cs" />
     <Compile Include="Model\RectCoord.cs" />
     <Compile Include="Model\TestData.cs" />
-    <Compile Include="OpenSaveDialogs\OpenDialog.cs" />
     <Compile Include="OpenSaveDialogs\SaveDialog.cs" />
     <Compile Include="ViewModel\CloseBehavior.cs" />
     <Compile Include="ViewModel\EnumConverter.cs" />

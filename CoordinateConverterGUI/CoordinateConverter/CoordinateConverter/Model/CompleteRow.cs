@@ -8,29 +8,34 @@ namespace CoordinateConverter.Model
 {
     public class CompleteRow
     {
+        public event EventHandler RectCoordPropertyChanged;
         public CompleteRow()
         {
-            //rectCoord = new RectCoord();
-            //geoCoord = new GeoCoord();
-            //if(rectCoord!= null)
-           
+            rectCoord = new RectCoord();
+            geoCoord = new GeoCoord();          
+
         }
+
         private RectCoord rectCoord;
-        public RectCoord RectCoord { get => rectCoord;
-            set { rectCoord = value;
-                rectCoord.PropertyChanged -= CoordPropertyChanged;
-                rectCoord.PropertyChanged += CoordPropertyChanged;
-                CoordPropertyChanged(this, EventArgs.Empty);
-            } }
+        public RectCoord RectCoord
+        {
+            get => rectCoord;
+            set
+            {
+                if (rectCoord != null)
+                    rectCoord.PropertyChanged -= RectCoordChanged;
+                rectCoord = value;                     
+                rectCoord.PropertyChanged += RectCoordChanged;                
+            }
+        }
 
         public GeoCoord geoCoord { get; set; }
 
         public string Description { get; set; }
-        public void CoordPropertyChanged(object sender, EventArgs e)
+
+        public void RectCoordChanged(object sender, EventArgs e)
         {
-            var coordConverter = new CoordConverter();
-            geoCoord = coordConverter.Convert(CoordConverter.CoordinateSystem.LCS46_1,rectCoord);
-            //rectCoord.PropertyChanged.Invoke(this, EventArgs.Empty);
+            RectCoordPropertyChanged?.Invoke(this,EventArgs.Empty);
         }
     }
 }
