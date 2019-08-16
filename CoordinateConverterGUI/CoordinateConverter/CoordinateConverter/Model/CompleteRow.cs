@@ -8,11 +8,14 @@ namespace CoordinateConverter.Model
 {
     public class CompleteRow
     {
+
+        public event EventHandler RectCoordPropertyChanged;
         public CompleteRow()
         {
-            //rectCoord = new RectCoord();
-            //geoCoord = new GeoCoord();
-            //if(rectCoord!= null)
+            rectCoord = new RectCoord();
+            GeoCoord = new GeoCoord();
+            
+
 
         }
         private RectCoord rectCoord;
@@ -25,16 +28,16 @@ namespace CoordinateConverter.Model
                 rectCoord.PropertyChanged -= RectCoordChanged;
                 rectCoord = value;                
                 rectCoord.PropertyChanged += RectCoordChanged;
-                RectCoordChanged(this, EventArgs.Empty);
+              //  RectCoordChanged(this, EventArgs.Empty);
             }
         }
 
-        public GeoCoord geoCoord { get; set; }
+        public GeoCoord GeoCoord { get; set; }
 
         public string Description { get; set; }
         public void RectCoordChanged(object sender, EventArgs e)
         {
-          
+            RectCoordPropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
