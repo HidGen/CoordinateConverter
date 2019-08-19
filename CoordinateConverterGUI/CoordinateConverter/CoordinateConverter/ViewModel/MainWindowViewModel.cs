@@ -248,7 +248,6 @@ namespace CoordinateConverter.ViewModel
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
         {
             SelectedCoordinateEnumType = e.SelectedType;
-            //ClearCheck = e.RangeCheck;
             ClearCheck = Properties.Settings.Default.ClearCheck;
         }
 
@@ -268,7 +267,6 @@ namespace CoordinateConverter.ViewModel
 
         public void CoordChanged(object sender, EventArgs e)
         {
-            //coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
             var row = sender as CompleteRow;
             row.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, row.RectCoord);
         }
@@ -277,10 +275,19 @@ namespace CoordinateConverter.ViewModel
         {
             if (Keyboard.IsKeyDown (Key.LeftShift) || Keyboard.IsKeyDown  (Key.RightShift))
             {
-                var chooserange = new RangeChoiceWindow();
-                //var ds=chooserange.Show();
+                var viewModel = new ClearGridViewModel();
+                var cleargrid = new ClearGridModel { DataContext = viewModel };
+
+                cleargrid.Show();
             }
 
+            if (CompleteRows.Count != 0 && ClearCheck==false)
+            {
+                var viewModel = new ClearGridViewModel();
+                var cleargrid = new ClearGridModel { DataContext = viewModel };
+
+                cleargrid.Show();
+            }
 
                 var dlg = new OpenFileDialog();
             dlg.FileName = "Document"; 
@@ -319,8 +326,6 @@ namespace CoordinateConverter.ViewModel
             
         }
 
-
-
         private bool OpenCanExecute()
         {
             return true;
@@ -340,12 +345,10 @@ namespace CoordinateConverter.ViewModel
             {
                 xmlExporter.SaveToXml(saveFileDialog.FileName, geoCoords);
             }
-
-            //save.Save(geoCoords);
         }
         private bool SaveCanExecute()
         {
-            return true;
+            return CompleteRows.Count!=0;
         }
 
         private void AddExecute()

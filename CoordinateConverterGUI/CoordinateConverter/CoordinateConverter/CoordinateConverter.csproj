@@ -93,12 +93,15 @@
     <Compile Include="Model\CompleteRow.cs" />
     <Compile Include="Model\GeoCoord.cs" />
     <Compile Include="Model\RectCoord.cs" />
-    <Compile Include="Model\TestData.cs" />
+    <Compile Include="ViewModel\ClearGridViewModel.cs" />
     <Compile Include="ViewModel\CloseBehavior.cs" />
     <Compile Include="ViewModel\NumberConverter.cs" />
     <Compile Include="ViewModel\EnumConverter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\SettingsWindowViewModel.cs" />
+    <Compile Include="View\ClearGridModel.xaml.cs">
+      <DependentUpon>ClearGridModel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RangeChoiceWindow.xaml.cs">
       <DependentUpon>RangeChoiceWindow.xaml</DependentUpon>
     </Compile>
@@ -117,6 +120,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ClearGridModel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\RangeChoiceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\App.xaml
-3-1034083471
+41367439430
 
-24-727500754
+25-1333545250
 31-1266404029
-MainWindow.xaml;View\RangeChoiceWindow.xaml;View\SettingsWindow.xaml;
+MainWindow.xaml;View\ClearGridModel.xaml;View\RangeChoiceWindow.xaml;View\SettingsWindow.xaml;
 
 False
 
