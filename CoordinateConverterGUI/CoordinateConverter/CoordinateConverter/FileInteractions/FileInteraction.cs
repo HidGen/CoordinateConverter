@@ -30,28 +30,29 @@ namespace CoordinateConverter.FileInteractions
             //    if (ValidateRow(range.Rows[rCnt], cl))
             //        rectCoords.Add(ReadRow(range.Rows[rCnt], cl));
             //}
-            var package = new ExcelPackage(new FileInfo(path));
-            ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
+            using (var package = new ExcelPackage(new FileInfo(path)))
+            {
+                ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
 
-            for (int i = workSheet.Dimension.Start.Row;
+                for (int i = workSheet.Dimension.Start.Row;
                      i <= workSheet.Dimension.End.Row;
                      i++)
-            {
-                int x = 0;
-                for (int j = workSheet.Dimension.Start.Column;
+                {
+                    int x = 0;
+                    for (int j = workSheet.Dimension.Start.Column;
                          j <= workSheet.Dimension.End.Column;
                          j++)
-                {
+                    {
                     //object cellValue = workSheet.Cells[i, j].Value;
                     if (workSheet.Cells[i, j].Value is double)
                         x++;
                     else
                         x = 0;
                     if (x == 3)
-                        rectCoords.Add(new RectCoord {X=(double)workSheet.Cells[i,j-2].Value,Y= (double)workSheet.Cells[i, j - 1].Value,H= (double)workSheet.Cells[i, j ].Value });
+                        rectCoords.Add(new RectCoord { X = (double)workSheet.Cells[i, j - 2].Value, Y = (double)workSheet.Cells[i, j - 1].Value, H = (double)workSheet.Cells[i, j].Value });
+                    }
                 }
             }
-
                 return rectCoords;
         }
 
