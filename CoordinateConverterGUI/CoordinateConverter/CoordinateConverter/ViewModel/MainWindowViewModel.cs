@@ -38,9 +38,28 @@ namespace CoordinateConverter.ViewModel
         SK63
     }
 
+
+    [TypeConverter(typeof(EnumToStringConverter))]
+    public enum SortType
+    {
+        [Description("X по возрастанию")]
+        MinMaxX,
+        [Description("X по убыванию")]
+        MaxMinX,
+        [Description("Y по возрастанию")]
+        MinMaxY,
+        [Description("Y по убыванию")]
+        MaxMinY,
+        [Description("H по возрастанию")]
+        MinMaxH,
+        [Description("H по убыванию")]
+        MaxMinH
+    }
+
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private CoordinateType selectedCoordinateEnumType;
+        private SortType selectedSortEnumType;
         private CompleteRow selectedRow;
         private IExcelFileOpen excelImporter;
         private IXmlFileSave xmlExporter;
@@ -51,7 +70,7 @@ namespace CoordinateConverter.ViewModel
         private ObservableCollection<int> indexes = new ObservableCollection<int>();
         public string indexList;
 
-        public bool RangeCheck { get; set; }
+        public bool ClearCheck { get; set; }
 
         public string IndexList
         {
@@ -119,6 +138,52 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
+
+        public IEnumerable<SortType> SortEnumTypeValues
+        {
+            get
+            {
+                return Enum.GetValues(typeof(SortType))
+                    .Cast<SortType>();
+            }
+        }
+
+        public SortType SelectedSortEnumType
+        {
+            get { return selectedSortEnumType; }
+            set
+            {
+                selectedSortEnumType = value;
+                if (SelectedSortEnumType == SortType.MinMaxX)
+                {
+                    SortByXMinMax();
+                }
+                else if (SelectedSortEnumType == SortType.MaxMinX)
+                {
+                    SortByXMaxMin();
+                }
+                else if (SelectedSortEnumType == SortType.MinMaxY)
+                {
+                    SortByYMinMax();
+                }
+                else if (SelectedSortEnumType == SortType.MaxMinY)
+                {
+                    SortByYMaxMin();
+                }
+                else if (SelectedSortEnumType == SortType.MinMaxH)
+                {
+                    SortByHMinMax();
+                }
+                else if (SelectedSortEnumType == SortType.MaxMinH)
+                {
+                    SortByHMaxMin();
+                }
+
+
+                NotifyPropertyChanged();
+            }
+        }
+
         public CompleteRow SelectedRow
         {
             get { return selectedRow; }
@@ -159,6 +224,7 @@ namespace CoordinateConverter.ViewModel
             CutCommand = new DelegateCommand(CutExecute, CutCanExecute);
             Indexes = new ObservableCollection<int>();
             Selection.CollectionChanged += GetSelectedIndexes;
+            
         }
 
 
@@ -170,7 +236,7 @@ namespace CoordinateConverter.ViewModel
                 return settingsCommand ??
                   (settingsCommand = new DelegateCommand(() =>
                   {
-                       var viewModel = new SettingsWindowViewModel(RangeCheck, SelectedCoordinateEnumType);
+                       var viewModel = new SettingsWindowViewModel(ClearCheck, SelectedCoordinateEnumType);
                       var opensettings = new SettingsWindow { DataContext = viewModel};
                       viewModel.EditEnded += ViewModel_EditEnded;
                       opensettings.Show();
@@ -181,7 +247,7 @@ namespace CoordinateConverter.ViewModel
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
         {
             SelectedCoordinateEnumType = e.SelectedType;
-            RangeCheck = e.RangeCheck;
+            ClearCheck = e.RangeCheck;
         }
 
         private ICommand chooseRangeCommand;
@@ -207,8 +273,14 @@ namespace CoordinateConverter.ViewModel
 
         private async void OpenExecute()
         {
+            if (Keyboard.IsKeyDown (Key.LeftShift) || Keyboard.IsKeyDown  (Key.RightShift))
+            {
+                var chooserange = new RangeChoiceWindow();
+                //var ds=chooserange.Show();
+            }
 
-            var dlg = new OpenFileDialog();
+
+                var dlg = new OpenFileDialog();
             dlg.FileName = "Document"; 
             dlg.DefaultExt = ".xls"; 
             dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx|All files (*.*)|*.*"; // Filter files by extension
@@ -222,15 +294,24 @@ namespace CoordinateConverter.ViewModel
             foreach (string filename in dlg.FileNames)
             {
                 var rectCoords = await excelImporter.ReadAsync(filename);
+                int index = 1;
                 foreach (RectCoord rectCoord in rectCoords)
                 {
+
                     var completeRow = new CompleteRow();
                     completeRow.RectCoordPropertyChanged += CoordChanged;
                     completeRow.RectCoord = rectCoord;
-                    completeRow.Description = filename;
+                    string temp = String.Empty;
+                    completeRow.Description += "Файл: ";
+                    for (int i = filename.Length - 1; filename[i] != '\\'; i--)
+                        temp += filename[i];
+                    for (int i = temp.Length - 1; i >= 0; i--)
+                        completeRow.Description += temp[i];
+                    completeRow.Description += "; Строка " + index.ToString();
                     completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
                     CompleteRows.Add(completeRow);
-                }                  
+                    index++;
+                }
             }
 
             Busy = false;
@@ -324,6 +405,7 @@ namespace CoordinateConverter.ViewModel
                 }
             }
 
+            GetSelectedIndexesMethod();
         }
 
         private bool MoveUpCanExecute()
@@ -365,6 +447,7 @@ namespace CoordinateConverter.ViewModel
                     }
                 }
             }
+            GetSelectedIndexesMethod();
         }
 
         private bool MoveDownCanExecute()
@@ -394,8 +477,6 @@ namespace CoordinateConverter.ViewModel
         }
         private void PasteExecute()
         {
-
-
             var rectCoords = paste.PasteDataFromExcel();
             foreach (var rectCoord in rectCoords)
             {
@@ -417,7 +498,6 @@ namespace CoordinateConverter.ViewModel
                         }
                     }
                 }
-
                 else
                     CompleteRows.Add(completeRow);
             }
@@ -447,7 +527,6 @@ namespace CoordinateConverter.ViewModel
 
         public void GetSelectedIndexes(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //   var SelectedIndexes = new ObservableCollection<int>();
             Indexes.Clear();
             for (int i = 0; i < CompleteRows.Count; i++)
             {
@@ -455,7 +534,6 @@ namespace CoordinateConverter.ViewModel
                 {
                     if (Selection[j] == CompleteRows[i])
                     {
-                        // CompleteRows.Move(i, i + 1);
                         Indexes.Add(i+1);
                         break;
                     }
@@ -475,8 +553,135 @@ namespace CoordinateConverter.ViewModel
                     IndexList += Indexes[i];
                 }
             }
+        }
 
-          //  return SelectedIndexes;
+        public void GetSelectedIndexesMethod()
+        {
+            Indexes.Clear();
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                for (int j = 0; j < Selection.Count; j++)
+                {
+                    if (Selection[j] == CompleteRows[i])
+                    {
+                        // CompleteRows.Move(i, i + 1);
+                        Indexes.Add(i + 1);
+                        break;
+                    }
+                }
+            }
+
+            IndexList = "";
+
+            for (int i = 0; i < Indexes.Count; i++)
+            {
+                if (i != (Indexes.Count - 1))
+                {
+                    IndexList += Indexes[i] + "; ";
+                }
+                else
+                {
+                    IndexList += Indexes[i];
+                }
+            }
+
+            //  return SelectedIndexes;
+        }
+
+        public void SortByXMinMax()
+        {
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                for (int j = 0; j < CompleteRows.Count - 1; j++)
+                {
+                    if (CompleteRows[j].RectCoord.X > CompleteRows[j + 1].RectCoord.X)
+                    {
+                       var z = CompleteRows[j];
+                        CompleteRows[j] = CompleteRows[j + 1];
+                        CompleteRows[j + 1] = z;
+                    }
+                }
+            }
+        }
+
+        public void SortByXMaxMin()
+        {
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                for (int j = 0; j < CompleteRows.Count - 1; j++)
+                {
+                    if (CompleteRows[j].RectCoord.X < CompleteRows[j + 1].RectCoord.X)
+                    {
+                        var z = CompleteRows[j];
+                        CompleteRows[j] = CompleteRows[j + 1];
+                        CompleteRows[j + 1] = z;
+                    }
+                }
+            }
+        }
+
+        public void SortByYMinMax()
+        {
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                for (int j = 0; j < CompleteRows.Count - 1; j++)
+                {
+                    if (CompleteRows[j].RectCoord.Y > CompleteRows[j + 1].RectCoord.Y)
+                    {
+                        var z = CompleteRows[j];
+                        CompleteRows[j] = CompleteRows[j + 1];
+                        CompleteRows[j + 1] = z;
+                    }
+                }
+            }
+        }
+
+        public void SortByYMaxMin()
+        {
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                for (int j = 0; j < CompleteRows.Count - 1; j++)
+                {
+                    if (CompleteRows[j].RectCoord.Y < CompleteRows[j + 1].RectCoord.Y)
+                    {
+                        var z = CompleteRows[j];
+                        CompleteRows[j] = CompleteRows[j + 1];
+                        CompleteRows[j + 1] = z;
+                    }
+                }
+            }
+        }
+
+        public void SortByHMinMax()
+        {
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                for (int j = 0; j < CompleteRows.Count - 1; j++)
+                {
+                    if (CompleteRows[j].RectCoord.H > CompleteRows[j + 1].RectCoord.H)
+                    {
+                        var z = CompleteRows[j];
+                        CompleteRows[j] = CompleteRows[j + 1];
+                        CompleteRows[j + 1] = z;
+                    }
+                }
+            }
+        }
+
+        public void SortByHMaxMin()
+        {
+            for (int i = 0; i < CompleteRows.Count; i++)
+            {
+                for (int j = 0; j < CompleteRows.Count - 1; j++)
+                {
+                    if (CompleteRows[j].RectCoord.H < CompleteRows[j + 1].RectCoord.H)
+                    {
+                        var z = CompleteRows[j];
+                        CompleteRows[j] = CompleteRows[j + 1];
+                        CompleteRows[j + 1] = z;
+                    }
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

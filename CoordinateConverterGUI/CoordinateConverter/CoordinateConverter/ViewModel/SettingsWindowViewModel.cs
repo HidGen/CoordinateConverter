@@ -25,9 +25,6 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-
-
-
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
         {
             get
