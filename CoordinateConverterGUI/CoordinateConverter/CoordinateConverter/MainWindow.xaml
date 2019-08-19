@@ -17,7 +17,7 @@
         mc:Ignorable="d"
     MinWidth="550px"
     MinHeight="350px"
-        Title="CoordinateConverter" Background="Azure" Height="450" Width="800" >
+        Title="CoordinateConverter" Background="Azure" Height="450" Width="850" >
 
     <Window.InputBindings>
         <KeyBinding Key="C" Modifiers="Control" Command="{Binding CopyCommand}" />
@@ -31,14 +31,7 @@
 
     <Window.Resources>
         <viewmodel:EnumConverter x:Key="EnumConvert"/>
-        <viewmodel:NumberConverter x:Key="decimalconverter"/>
-        
-        <DataTemplate x:Key="contactDataTemplate" >
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Path=RectCoord.x}"/>                
-            </StackPanel>
-        </DataTemplate>
-
+        <viewmodel:NumberConverter x:Key="decimalconverter"/>      
     </Window.Resources>
 
     <Grid>
@@ -99,9 +92,14 @@
                 <dxb:BarButtonItem x:Name="biRowUp" ToolTip="Перенести строку вверх" Glyph="{dx:DXImage Image=MoveUp_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveUp_32x32.png}" Command="{Binding MoveUpCommand}"/>
                 <dxb:BarButtonItem x:Name="biRowDown" ToolTip="Перенести строку вниз" Glyph="{dx:DXImage Image=MoveDown_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveDown_32x32.png}" Command="{Binding MoveDownCommand}"/>
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarEditItem EditWidth="170"  ToolTip="Сортировка строк">
+                <dxb:BarStaticItem x:Name="biSortRows" Content="Сортировать по:" ShowBorder="False"/>
+                <dxb:BarEditItem EditWidth="170"  ToolTip="Сортировка строк" EditValue="{Binding Path=SelectedSortEnumType, Converter={StaticResource EnumConvert}}">
                     <dxb:BarEditItem.EditSettings>
-                        <dxe:ComboBoxEditSettings ItemsSource="{Binding Path=Coordinate_system}" />
+                        <dxe:ComboBoxEditSettings
+                            x:Name="SortCombobox" 
+                            ItemsSource="{Binding Path=SortEnumTypeValues}" >
+                            
+                        </dxe:ComboBoxEditSettings>
                     </dxb:BarEditItem.EditSettings>
                 </dxb:BarEditItem>
 
@@ -126,11 +124,6 @@
 
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="X" FieldName="RectCoord.X" >
-                    <!--<dxg:GridColumn.DisplayTemplate>
-                        <ControlTemplate>
-                            <TextBlock Text="{Binding Value,  Converter={StaticResource  decimalconverter}}"/>
-                        </ControlTemplate>
-                    </dxg:GridColumn.DisplayTemplate>-->
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="Y" FieldName="RectCoord.Y" />
                 <dxg:GridColumn Header="H" FieldName="RectCoord.H" />
