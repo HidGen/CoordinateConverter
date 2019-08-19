@@ -326,14 +326,12 @@ namespace CoordinateConverter.ViewModel
             return true;
         }
         private void SaveExecute()
-        {
-            //var save = new SaveDialog();
-            var geoCoords = new List<GeoCoord>();
-            //var fileInteraction = new FileInteraction();
+        {            
+            var geoCoords = new List<GeoCoord>();           
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = "Document"; // Default file name
-            saveFileDialog.DefaultExt = ".xml"; // Default file extension
-            saveFileDialog.Filter = "Xml documents (.xml)|*.xml|All files (*.*)|*.*";
+            saveFileDialog.FileName = "Document"; 
+            saveFileDialog.DefaultExt = ".xml"; 
+            saveFileDialog.Filter = "Xml documents (.xml)|*.xml";
             foreach (CompleteRow completeRow in CompleteRows)
                 geoCoords.Add(completeRow.GeoCoord);
             if (saveFileDialog.ShowDialog() == true)
@@ -351,14 +349,12 @@ namespace CoordinateConverter.ViewModel
         private void AddExecute()
         {
             if (Selection.Count != 0)
-            {
-               // int foundIndex = default;
+            {               
                 for (int i = 0; i < CompleteRows.Count ; i++)
                 {
 
                     if (CompleteRows[i] == Selection[0])
-                    {
-                        //  foundIndex = i;
+                    {                        
                         var completeRow = new CompleteRow();
                         completeRow.RectCoordPropertyChanged += CoordChanged;
                         CompleteRows.Insert(i, completeRow);
