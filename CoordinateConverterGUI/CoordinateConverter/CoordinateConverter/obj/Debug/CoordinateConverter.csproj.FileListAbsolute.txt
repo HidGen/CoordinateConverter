@@ -261,3 +261,5 @@ C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConvert
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csproj.CopyComplete
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.exe
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.pdb
+C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\EPPlus.dll
+C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\EPPlus.xml

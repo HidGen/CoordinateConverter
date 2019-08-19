@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using CoordinateConverter.Model;
 using Microsoft.Win32;
+using OfficeOpenXml;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace CoordinateConverter.FileInteractions
@@ -14,22 +16,43 @@ namespace CoordinateConverter.FileInteractions
     {
         public List<RectCoord> Read(string path)
         {
-            var xlApp = new Excel.Application();
-            var xlWorkBook = xlApp.Workbooks.Open(path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
-            var xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+            //var xlApp = new Excel.Application();
+            //var xlWorkBook = xlApp.Workbooks.Open(path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+            //var xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
 
-            var range = xlWorkSheet.UsedRange;
-            int rw = range.Rows.Count;
-            int cl = range.Columns.Count;
+            //var range = xlWorkSheet.UsedRange;
+            //int rw = range.Rows.Count;
+            //int cl = range.Columns.Count;
             var rectCoords = new List<RectCoord>();
 
-            for (int rCnt = 1; rCnt <= rw; rCnt++)
+            //for (int rCnt = 1; rCnt <= rw; rCnt++)
+            //{
+            //    if (ValidateRow(range.Rows[rCnt], cl))
+            //        rectCoords.Add(ReadRow(range.Rows[rCnt], cl));
+            //}
+            var package = new ExcelPackage(new FileInfo(path));
+            ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
+
+            for (int i = workSheet.Dimension.Start.Row;
+                     i <= workSheet.Dimension.End.Row;
+                     i++)
             {
-                if (ValidateRow(range.Rows[rCnt], cl))
-                    rectCoords.Add(ReadRow(range.Rows[rCnt], cl));
+                int x = 0;
+                for (int j = workSheet.Dimension.Start.Column;
+                         j <= workSheet.Dimension.End.Column;
+                         j++)
+                {
+                    //object cellValue = workSheet.Cells[i, j].Value;
+                    if (workSheet.Cells[i, j].Value is double)
+                        x++;
+                    else
+                        x = 0;
+                    if (x == 3)
+                        rectCoords.Add(new RectCoord {X=(double)workSheet.Cells[i,j-2].Value,Y= (double)workSheet.Cells[i, j - 1].Value,H= (double)workSheet.Cells[i, j ].Value });
+                }
             }
 
-            return rectCoords;
+                return rectCoords;
         }
 
         public Task<List<RectCoord>> ReadAsync(string path)
