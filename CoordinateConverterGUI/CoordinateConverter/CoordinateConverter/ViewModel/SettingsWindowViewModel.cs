@@ -13,14 +13,14 @@ namespace CoordinateConverter.ViewModel
     {
         public event EventHandler<SettingsWindowArgs> EditEnded;
 
-        public bool rangeCheck;
+        public bool clearCheck;
 
-        public bool RangeCheck {
+        public bool ClearCheck {
 
-            get { return rangeCheck; }
+            get { return clearCheck; }
             set
             {
-                rangeCheck = value;
+                clearCheck = value;
                 // OnPropertyChanged("SelectedCoordinateEnumType");
             }
         }
@@ -45,16 +45,18 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-        private void OnEditEnded(CoordinateType coordinateType, bool rangeCheck)
+        private void OnEditEnded(CoordinateType coordinateType, bool clearCheck)
         {
-            EditEnded?.Invoke(this, new SettingsWindowArgs(coordinateType, rangeCheck));
+            Properties.Settings.Default.ClearCheck = clearCheck;
+            Properties.Settings.Default.Save();
+            EditEnded?.Invoke(this, new SettingsWindowArgs(coordinateType));
         }
 
         private ICommand returnCommand;
 
-        public SettingsWindowViewModel(bool rangeCheck, CoordinateType selectedCoordinateEnumType)
+        public SettingsWindowViewModel(CoordinateType selectedCoordinateEnumType)
         {
-            this.rangeCheck = rangeCheck;
+            this.clearCheck = Properties.Settings.Default.ClearCheck;
             this.SelectedCoordinateEnumType = selectedCoordinateEnumType;
         }
 
@@ -67,7 +69,7 @@ namespace CoordinateConverter.ViewModel
                   {
                       
                      
-                      OnEditEnded(selectedCoordinateEnumType, RangeCheck);
+                      OnEditEnded(selectedCoordinateEnumType, ClearCheck);
 
                   }));
             }
@@ -75,14 +77,13 @@ namespace CoordinateConverter.ViewModel
 
         public class SettingsWindowArgs : EventArgs
         {
-            public SettingsWindowArgs(CoordinateType selectedType, bool rangeCheck)
+            public SettingsWindowArgs(CoordinateType selectedType)
             {
                 SelectedType = selectedType;
-                RangeCheck = rangeCheck;
-            }
+             }
 
             public CoordinateType SelectedType { get; }
-            public bool RangeCheck { get; }
+            public bool ClearCheck { get; }
         }
 
     }

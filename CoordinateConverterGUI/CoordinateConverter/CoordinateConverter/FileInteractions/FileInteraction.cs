@@ -8,7 +8,6 @@ using System.Xml;
 using CoordinateConverter.Model;
 using Microsoft.Win32;
 using OfficeOpenXml;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace CoordinateConverter.FileInteractions
 {
@@ -49,30 +48,30 @@ namespace CoordinateConverter.FileInteractions
                 return Read(path);
             });
         }
-        public List<RectCoord> ReadRange(string path, string first, string last)
-        {
-            var xlApp = new Excel.Application();
-            var xlWorkBook = xlApp.Workbooks.Open(path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
-            var xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            var range = xlWorkSheet.get_Range(first, last);
-            int rw = range.Rows.Count;
-            int cl = range.Columns.Count;
-            var rectCoords = new List<RectCoord>();
+        //public List<RectCoord> ReadRange(string path, string first, string last)
+        //{
+        //    var xlApp = new Excel.Application();
+        //    var xlWorkBook = xlApp.Workbooks.Open(path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+        //    var xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+        //    var range = xlWorkSheet.get_Range(first, last);
+        //    int rw = range.Rows.Count;
+        //    int cl = range.Columns.Count;
+        //    var rectCoords = new List<RectCoord>();
 
-            for (int rCnt = 1; rCnt <= rw; rCnt++)
-            {
-                if (ValidateRow(range.Rows[rCnt], cl))
-                    rectCoords.Add(ReadRow(range.Rows[rCnt], cl));
-            }
-            return rectCoords;
-        }
-        public Task<List<RectCoord>> ReadRangeAsync(string path, string first, string last)
-        {
-            return Task<List<RectCoord>>.Run(() =>
-            {
-                return ReadRange(path, first, last);
-            });
-        }
+        //    for (int rCnt = 1; rCnt <= rw; rCnt++)
+        //    {
+        //        if (ValidateRow(range.Rows[rCnt], cl))
+        //            rectCoords.Add(ReadRow(range.Rows[rCnt], cl));
+        //    }
+        //    return rectCoords;
+        //}
+        //public Task<List<RectCoord>> ReadRangeAsync(string path, string first, string last)
+        //{
+        //    return Task<List<RectCoord>>.Run(() =>
+        //    {
+        //        return ReadRange(path, first, last);
+        //    });
+        //}
         public void SaveToXml(string path, List<GeoCoord> geoCoords)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -97,39 +96,39 @@ namespace CoordinateConverter.FileInteractions
             }
         }
 
-        private bool ValidateRow(Excel.Range range, int clm)
-        {
-            int x = 0;
-            for (int cCnt = 1; cCnt <= clm; cCnt++)
-            {
-                if ((range.Cells[1, cCnt] as Excel.Range).Value2 is double)
-                    x++;
-                else
-                    x = 0;
-                if (x == 3)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        //private bool ValidateRow(Excel.Range range, int clm)
+        //{
+        //    int x = 0;
+        //    for (int cCnt = 1; cCnt <= clm; cCnt++)
+        //    {
+        //        if ((range.Cells[1, cCnt] as Excel.Range).Value2 is double)
+        //            x++;
+        //        else
+        //            x = 0;
+        //        if (x == 3)
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
-        private RectCoord ReadRow(Excel.Range range, int clm)
-        {
-            int x = 0;
-            for (int cCnt = 1; cCnt <= clm; cCnt++)
-            {
-                if ((range.Cells[1, cCnt] as Excel.Range).Value2 is double)
-                    x++;
-                else
-                    x = 0;
-                if (x == 3)
-                {
-                    RectCoord rectCoord = new RectCoord { X = (range.Cells[1, cCnt - 2] as Excel.Range).Value2, Y = (range.Cells[1, cCnt - 1] as Excel.Range).Value2, H = (range.Cells[1, cCnt] as Excel.Range).Value2 };
-                    return rectCoord;
-                }
-            }
-            throw new Exception("Строка в таблице имеет неверный формат");
-        }
+        //private RectCoord ReadRow(Excel.Range range, int clm)
+        //{
+        //    int x = 0;
+        //    for (int cCnt = 1; cCnt <= clm; cCnt++)
+        //    {
+        //        if ((range.Cells[1, cCnt] as Excel.Range).Value2 is double)
+        //            x++;
+        //        else
+        //            x = 0;
+        //        if (x == 3)
+        //        {
+        //            RectCoord rectCoord = new RectCoord { X = (range.Cells[1, cCnt - 2] as Excel.Range).Value2, Y = (range.Cells[1, cCnt - 1] as Excel.Range).Value2, H = (range.Cells[1, cCnt] as Excel.Range).Value2 };
+        //            return rectCoord;
+        //        }
+        //    }
+        //    throw new Exception("Строка в таблице имеет неверный формат");
+        //}
     }
 }

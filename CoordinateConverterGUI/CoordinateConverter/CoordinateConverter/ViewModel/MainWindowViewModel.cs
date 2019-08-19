@@ -205,6 +205,7 @@ namespace CoordinateConverter.ViewModel
 
         public MainWindowViewModel()
         {
+            ClearCheck = Properties.Settings.Default.ClearCheck;
             var interaction = new FileInteraction();
             excelImporter = interaction;
             xmlExporter = interaction;
@@ -236,7 +237,7 @@ namespace CoordinateConverter.ViewModel
                 return settingsCommand ??
                   (settingsCommand = new DelegateCommand(() =>
                   {
-                       var viewModel = new SettingsWindowViewModel(ClearCheck, SelectedCoordinateEnumType);
+                       var viewModel = new SettingsWindowViewModel(SelectedCoordinateEnumType);
                       var opensettings = new SettingsWindow { DataContext = viewModel};
                       viewModel.EditEnded += ViewModel_EditEnded;
                       opensettings.Show();
@@ -247,7 +248,8 @@ namespace CoordinateConverter.ViewModel
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
         {
             SelectedCoordinateEnumType = e.SelectedType;
-            ClearCheck = e.RangeCheck;
+            //ClearCheck = e.RangeCheck;
+            ClearCheck = Properties.Settings.Default.ClearCheck;
         }
 
         private ICommand chooseRangeCommand;
@@ -283,12 +285,11 @@ namespace CoordinateConverter.ViewModel
                 var dlg = new OpenFileDialog();
             dlg.FileName = "Document"; 
             dlg.DefaultExt = ".xls"; 
-            dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx|All files (*.*)|*.*"; // Filter files by extension
+            dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx"; 
             dlg.Multiselect = true;       
             var result = dlg.ShowDialog();
             if (result.HasValue == false || result.Value == false)
                 return;
-            // true
             Busy = true;
 
             foreach (string filename in dlg.FileNames)
@@ -315,7 +316,7 @@ namespace CoordinateConverter.ViewModel
             }
 
             Busy = false;
-            // false
+            
         }
 
 

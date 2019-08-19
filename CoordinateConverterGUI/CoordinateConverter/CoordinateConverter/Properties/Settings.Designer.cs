@@ -22,5 +22,17 @@ namespace CoordinateConverter.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ClearCheck {
+            get {
+                return ((bool)(this["ClearCheck"]));
+            }
+            set {
+                this["ClearCheck"] = value;
+            }
+        }
     }
 }
