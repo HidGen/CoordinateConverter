@@ -27,8 +27,7 @@ namespace CoordinateConverter
                     break;
                 case CoordinateType.SK42:
                     //BasicTypeString =ConfigurationManager.AppSettings["CS42"];
-                    BasicTypeString = ConfigurationManager.AppSettings["GKzone2"];
-                    //throw new Exception("Coordinate system isn't supported yet");
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone2"];                   
                     break;
                 case CoordinateType.SK63:
                     throw new Exception("Coordinate system isn't supported yet");

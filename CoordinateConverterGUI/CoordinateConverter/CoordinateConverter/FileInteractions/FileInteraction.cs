@@ -21,7 +21,7 @@ namespace CoordinateConverter.FileInteractions
             var range = xlWorkSheet.UsedRange;
             int rw = range.Rows.Count;
             int cl = range.Columns.Count;
-            List<RectCoord> rectCoords = new List<RectCoord>();
+            var rectCoords = new List<RectCoord>();
 
             for (int rCnt = 1; rCnt <= rw; rCnt++)
             {
@@ -39,7 +39,30 @@ namespace CoordinateConverter.FileInteractions
                 return Read(path);
             });
         }
+        public List<RectCoord> ReadRange(string path, string first, string last)
+        {
+            var xlApp = new Excel.Application();
+            var xlWorkBook = xlApp.Workbooks.Open(path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+            var xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+            var range = xlWorkSheet.get_Range(first,last);
+            int rw = range.Rows.Count;
+            int cl = range.Columns.Count;
+            var rectCoords = new List<RectCoord>();
 
+            for (int rCnt = 1; rCnt <= rw; rCnt++)
+            {
+                if (ValidateRow(range.Rows[rCnt], cl))
+                    rectCoords.Add(ReadRow(range.Rows[rCnt], cl));
+            }
+            return rectCoords;
+        }
+        public Task<List<RectCoord>> ReadRangeAsync(string path, string first, string last)
+        {
+            return Task<List<RectCoord>>.Run(() =>
+            {
+                return ReadRange(path,first,last);
+            });
+        }
         public void SaveToXml(string path, List<GeoCoord> geoCoords)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -96,7 +119,7 @@ namespace CoordinateConverter.FileInteractions
                     return rectCoord;
                 }
             }
-            throw new Exception("Строка в таблице имеет не верный форомат");
+            throw new Exception("Строка в таблице имеет неверный формат");
         }
     }
 }

@@ -51,7 +51,7 @@ namespace CoordinateConverter.ViewModel
         private ObservableCollection<int> indexes = new ObservableCollection<int>();
         public string indexList;
 
-        public bool RangeCheck { get; set; }
+        public bool ClearCheck { get; set; }
 
         public string IndexList
         {
@@ -170,7 +170,7 @@ namespace CoordinateConverter.ViewModel
                 return settingsCommand ??
                   (settingsCommand = new DelegateCommand(() =>
                   {
-                       var viewModel = new SettingsWindowViewModel(RangeCheck, SelectedCoordinateEnumType);
+                       var viewModel = new SettingsWindowViewModel(ClearCheck, SelectedCoordinateEnumType);
                       var opensettings = new SettingsWindow { DataContext = viewModel};
                       viewModel.EditEnded += ViewModel_EditEnded;
                       opensettings.Show();
@@ -181,7 +181,7 @@ namespace CoordinateConverter.ViewModel
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
         {
             SelectedCoordinateEnumType = e.SelectedType;
-            RangeCheck = e.RangeCheck;
+            ClearCheck = e.RangeCheck;
         }
 
         private ICommand chooseRangeCommand;
@@ -207,7 +207,7 @@ namespace CoordinateConverter.ViewModel
 
         private async void OpenExecute()
         {
-
+       
             var dlg = new OpenFileDialog();
             dlg.FileName = "Document"; 
             dlg.DefaultExt = ".xls"; 
@@ -222,14 +222,25 @@ namespace CoordinateConverter.ViewModel
             foreach (string filename in dlg.FileNames)
             {
                 var rectCoords = await excelImporter.ReadAsync(filename);
+                int index = 1;
+                //var rectCoordsRange = await excelImporter.ReadRangeAsync(filename,"A2","C3");
                 foreach (RectCoord rectCoord in rectCoords)
                 {
+                    
                     var completeRow = new CompleteRow();
                     completeRow.RectCoordPropertyChanged += CoordChanged;
                     completeRow.RectCoord = rectCoord;
-                    completeRow.Description = filename;
+                    string temp = String.Empty;
+                    completeRow.Description += "Файл: ";
+                    //completeRow.Description = filename;
+                    for (int i = filename.Length-1; filename[i] != '\\'; i--)
+                        temp+= filename[i];
+                    for (int i = temp.Length - 1; i >= 0; i--)
+                        completeRow.Description += temp[i];
+                    completeRow.Description +="; Строка " + index.ToString();
                     completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
                     CompleteRows.Add(completeRow);
+                    index++;
                 }                  
             }
 
@@ -325,7 +336,6 @@ namespace CoordinateConverter.ViewModel
             }
 
         }
-
         private bool MoveUpCanExecute()
         {
             bool checkDown = default;

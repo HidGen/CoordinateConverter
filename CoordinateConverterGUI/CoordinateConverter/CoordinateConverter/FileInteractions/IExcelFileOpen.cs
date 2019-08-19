@@ -11,5 +11,7 @@ namespace CoordinateConverter.FileInteractions
     {
         List<RectCoord> Read(string path);
         Task<List<RectCoord>> ReadAsync(string path);
+        List<RectCoord> ReadRange(string path, string first, string last);
+        Task<List<RectCoord>> ReadRangeAsync(string path, string first, string last);
     }
 }
