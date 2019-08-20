@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml;
 using CoordinateConverter.Model;
 using Microsoft.Win32;
@@ -48,30 +49,52 @@ namespace CoordinateConverter.FileInteractions
                 return Read(path);
             });
         }
-        //public List<RectCoord> ReadRange(string path, string first, string last)
-        //{
-        //    var xlApp = new Excel.Application();
-        //    var xlWorkBook = xlApp.Workbooks.Open(path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
-        //    var xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-        //    var range = xlWorkSheet.get_Range(first, last);
-        //    int rw = range.Rows.Count;
-        //    int cl = range.Columns.Count;
-        //    var rectCoords = new List<RectCoord>();
+        public List<RectCoord> ReadRange(string path, string first, string last)
+        {
+            var rectCoords = new List<RectCoord>();
+            try
+            {
+                using (var package = new ExcelPackage(new FileInfo(path)))
+                {
+                    ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
 
-        //    for (int rCnt = 1; rCnt <= rw; rCnt++)
-        //    {
-        //        if (ValidateRow(range.Rows[rCnt], cl))
-        //            rectCoords.Add(ReadRow(range.Rows[rCnt], cl));
-        //    }
-        //    return rectCoords;
-        //}
-        //public Task<List<RectCoord>> ReadRangeAsync(string path, string first, string last)
-        //{
-        //    return Task<List<RectCoord>>.Run(() =>
-        //    {
-        //        return ReadRange(path, first, last);
-        //    });
-        //}
+                    var data = workSheet.Cells[string.Format("{0}:{1}", first, last)].Value as object[,];
+                    var clns = data.GetLength(1);
+                    var rws = data.GetLength(0);
+                    for (int i = 0;
+                         i <= rws - 1;
+                         i++)
+                    {
+                        int x = 0;
+                        for (int j = 0;
+                             j <= clns - 1;
+                             j++)
+                        {
+                            if (data[i, j] is double)
+                                x++;
+                            else
+                                x = 0;
+                            if (x == 3)
+                                rectCoords.Add(new RectCoord { X = (double)data[i, j - 2], Y = (double)data[i, j - 1], H = (double)data[i, j] });
+                        }
+                    }
+                }
+                return rectCoords;
+            }
+            catch
+            {
+                MessageBox.Show("Неверный диапазон данных или имя файла.");
+                return new List<RectCoord>();
+            }
+
+        }
+        public Task<List<RectCoord>> ReadRangeAsync(string path, string first, string last)
+        {
+            return Task<List<RectCoord>>.Run(() =>
+            {
+                return ReadRange(path, first, last);
+            });
+        }
         public void SaveToXml(string path, List<GeoCoord> geoCoords)
         {
             XmlWriterSettings settings = new XmlWriterSettings();

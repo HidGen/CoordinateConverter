@@ -11,18 +11,34 @@
         xmlns:local="clr-namespace:CoordinateConverter"
         xmlns:dxnav="http://schemas.devexpress.com/winfx/2008/xaml/navigation"
     xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
-     local:InputBindingsBehavior.TakesInputBindingPrecedence="True"
+    xmlns:view="clr-namespace:CoordinateConverter.View"
+    local:InputBindingsBehavior.TakesInputBindingPrecedence="True"
 
-    x:Class="CoordinateConverter.MainWindow"
-        mc:Ignorable="d"
-    MinWidth="550px"
-    MinHeight="350px"
-        Title="CoordinateConverter" Background="Azure" Height="450" Width="850" >
+    x:Class="CoordinateConverter.MainWindow" mc:Ignorable="d"
+    MinWidth="550px" MinHeight="350px"
+    Title="CoordinateConverter" Background="Azure" Height="450" Width="850" >
+
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DialogService x:Name="ClearGridDialogService">
+            <dx:DialogService.DialogStyle>
+                <Style TargetType="Window">
+                    <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                    <Setter Property="WindowStyle" Value="ToolWindow" />
+                </Style>
+            </dx:DialogService.DialogStyle>
+            <dx:DialogService.ViewTemplate>
+                <DataTemplate>
+                    <view:ClearGridView/>
+                </DataTemplate>
+            </dx:DialogService.ViewTemplate>
+        </dx:DialogService>
+    </dxmvvm:Interaction.Behaviors>
+
 
     <Window.InputBindings>
-        <KeyBinding Key="C" Modifiers="Control" Command="{Binding CopyCommand}" />
-        <KeyBinding Key="V" Modifiers="Control" Command="{Binding PasteCommand}" />
         <KeyBinding Key="X" Modifiers="Control" Command="{Binding CutCommand}" />
+        <KeyBinding Key="C" Modifiers="Control" Command="{Binding CopyCommand}" />
+        <KeyBinding Key="V" Modifiers="Control" Command="{Binding PasteCommand}" />        
     </Window.InputBindings>
 
     <Window.DataContext>
@@ -39,9 +55,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-       
+        </Grid.RowDefinitions>      
 
         <dxb:BarContainerControl>
             <dxb:MainMenuControl AllowCustomizationMenu="False">
@@ -107,7 +121,7 @@
             </dxb:ToolBarControl>
         </dxb:BarContainerControl>
         <dxg:GridControl Name="GC" Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row"  EnableSmartColumnsGeneration="False"
-                         ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True}" SelectedItems="{Binding Selection}"  >
+                         ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItems="{Binding Selection}"  >
                          
                          <!--SelectedItem="{Binding SelectedRow}"-->
                          
@@ -127,7 +141,7 @@
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="Y" FieldName="RectCoord.Y" />
                 <dxg:GridColumn Header="H" FieldName="RectCoord.H" />
-                <dxg:GridColumn Header="latitude" FieldName="GeoCoord.Lat" ReadOnly="True" />
+                <dxg:GridColumn Header="latitude" FieldName="GeoCoord.Lat"  ReadOnly="True"/>
                 <dxg:GridColumn Header="longitude" FieldName="GeoCoord.Lon" ReadOnly="True"/>
                 <dxg:GridColumn Header="H" FieldName="GeoCoord.H" ReadOnly="True" />
                 <dxg:GridColumn Header="Описание" FieldName="Description" />
@@ -157,7 +171,7 @@
 
         </dxb:StatusBarControl>
 
-        <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
+        <!--<dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
             <dx:WaitIndicator.ContentTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -166,6 +180,6 @@
                     </StackPanel>
                 </DataTemplate>
             </dx:WaitIndicator.ContentTemplate>
-        </dx:WaitIndicator>
+        </dx:WaitIndicator>-->
     </Grid>
 </Window>

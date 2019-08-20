@@ -49,9 +49,7 @@ namespace CoordinateConverter
         {
             return _srcType == typeof(string);
         }
-
-        /// <summary>        
-        /// </summary>
+       
         public override object ConvertFrom(ITypeDescriptorContext _context, CultureInfo _culture, object _value)
         {
             if (!(_value is string))

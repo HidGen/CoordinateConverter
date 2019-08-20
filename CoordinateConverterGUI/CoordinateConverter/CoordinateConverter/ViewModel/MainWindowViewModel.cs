@@ -56,7 +56,7 @@ namespace CoordinateConverter.ViewModel
         MaxMinH
     }
 
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : ViewModelBase
     {
         private CoordinateType selectedCoordinateEnumType;
         private SortType selectedSortEnumType;
@@ -69,8 +69,12 @@ namespace CoordinateConverter.ViewModel
         private CoordConverter coordConverter;
         private ObservableCollection<int> indexes = new ObservableCollection<int>();
         public string indexList;
+        //private bool dresult;
 
-        public bool ClearCheck { get; set; }
+
+        protected IDialogService ClearGridDialogService { get { return this.GetService<IDialogService>("ClearGridDialogService"); } }
+
+        public bool ClearRule { get; set; }
 
         public string IndexList
         {
@@ -133,8 +137,14 @@ namespace CoordinateConverter.ViewModel
             {
                 selectedCoordinateEnumType = value;
                 //сюда
-
-                NotifyPropertyChanged();
+                if (CompleteRows.Count != 0)
+                {
+                    foreach (var completeRow in CompleteRows)
+                        completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, completeRow.RectCoord);
+                   // NotifyPropertyChanged();
+                }
+                
+                NotifyPropertyChanged();                
             }
         }
 
@@ -205,7 +215,7 @@ namespace CoordinateConverter.ViewModel
 
         public MainWindowViewModel()
         {
-            ClearCheck = Properties.Settings.Default.ClearCheck;
+
             var interaction = new FileInteraction();
             excelImporter = interaction;
             xmlExporter = interaction;
@@ -214,9 +224,9 @@ namespace CoordinateConverter.ViewModel
             coordConverter = new CoordConverter();
             Busy = false;         
             CompleteRows = new ObservableCollection<CompleteRow>();
-            OpenCommand = new DelegateCommand(OpenExecute, OpenCanExecute);
+            OpenCommand = new DelegateCommand(OpenExecute);
             SaveCommand = new DelegateCommand(SaveExecute, SaveCanExecute);
-            AddRowCommand = new DelegateCommand(AddExecute, AddCanExecute);
+            AddRowCommand = new DelegateCommand(AddExecute);
             DeleteRowCommand = new DelegateCommand(DeleteExecute, DeleteCanExecute);
             MoveUpCommand = new DelegateCommand(MoveUpExecute, MoveUpCanExecute);
             MoveDownCommand = new DelegateCommand(MoveDownExecute, MoveDownCanExecute);
@@ -247,8 +257,45 @@ namespace CoordinateConverter.ViewModel
 
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
         {
-            SelectedCoordinateEnumType = e.SelectedType;
-            ClearCheck = Properties.Settings.Default.ClearCheck;
+            SelectedCoordinateEnumType = e.SelectedType;           
+        }
+
+
+        private async void RangeModel_EditEnded(object sender, RangeChoiceViewModel.RangeArgs e)
+        {
+            var dlg = new OpenFileDialog();
+            dlg.FileName = "Document";
+            dlg.DefaultExt = ".xls";
+            dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
+            dlg.Multiselect = true;
+            var result = dlg.ShowDialog();
+            if (result.HasValue == false || result.Value == false)
+                return;
+            Busy = true;
+
+            foreach (string filename in dlg.FileNames)
+            {
+                var rectCoords = await excelImporter.ReadRangeAsync(filename,e.First,e.Last);
+                int index = 1;
+                foreach (RectCoord rectCoord in rectCoords)
+                {
+                    var completeRow = new CompleteRow();
+                    completeRow.RectCoordPropertyChanged += CoordChanged;
+                    completeRow.RectCoord = rectCoord;
+                    string temp = String.Empty;
+                    completeRow.Description += "Файл: ";
+                    for (int i = filename.Length - 1; filename[i] != '\\'; i--)
+                        temp += filename[i];
+                    for (int i = temp.Length - 1; i >= 0; i--)
+                        completeRow.Description += temp[i];
+                    completeRow.Description += "; Строка " + index.ToString();
+                    completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
+                    CompleteRows.Add(completeRow);
+                    index++;
+                }
+            }
+
+            Busy = false;
         }
 
         private ICommand chooseRangeCommand;
@@ -273,63 +320,92 @@ namespace CoordinateConverter.ViewModel
 
         private async void OpenExecute()
         {
-            if (Keyboard.IsKeyDown (Key.LeftShift) || Keyboard.IsKeyDown  (Key.RightShift))
+
+            if (ClearGridDialogService == null)
             {
-                var viewModel = new ClearGridViewModel();
-                var cleargrid = new ClearGridModel { DataContext = viewModel };
-
-                cleargrid.Show();
-            }
-
-            if (CompleteRows.Count != 0 && ClearCheck==false)
-            {
-                var viewModel = new ClearGridViewModel();
-                var cleargrid = new ClearGridModel { DataContext = viewModel };
-
-                cleargrid.Show();
-            }
-
-                var dlg = new OpenFileDialog();
-            dlg.FileName = "Document"; 
-            dlg.DefaultExt = ".xls"; 
-            dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx"; 
-            dlg.Multiselect = true;       
-            var result = dlg.ShowDialog();
-            if (result.HasValue == false || result.Value == false)
                 return;
-            Busy = true;
-
-            foreach (string filename in dlg.FileNames)
-            {
-                var rectCoords = await excelImporter.ReadAsync(filename);
-                int index = 1;
-                foreach (RectCoord rectCoord in rectCoords)
-                {
-
-                    var completeRow = new CompleteRow();
-                    completeRow.RectCoordPropertyChanged += CoordChanged;
-                    completeRow.RectCoord = rectCoord;
-                    string temp = String.Empty;
-                    completeRow.Description += "Файл: ";
-                    for (int i = filename.Length - 1; filename[i] != '\\'; i--)
-                        temp += filename[i];
-                    for (int i = temp.Length - 1; i >= 0; i--)
-                        completeRow.Description += temp[i];
-                    completeRow.Description += "; Строка " + index.ToString();
-                    completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
-                    CompleteRows.Add(completeRow);
-                    index++;
-                }
             }
 
-            Busy = false;
-            
+
+            var clearGridViewmodel = new ClearGridViewModel();
+            var ressswssa = ClearGridDialogService.ShowDialog(
+                dialogCommands: clearGridViewmodel.GetCommands(),
+                title: "Registration Dialog",
+                viewModel: clearGridViewmodel);
+
+
+
+
+            return;
+
+
+            //if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+            //{
+
+
+            //    var viewModel = new RangeChoiceViewModel();
+            //    var rangeWindow = new RangeChoiceWindow { DataContext = viewModel };
+            //    viewModel.EditEnded += RangeModel_EditEnded;
+            //    rangeWindow.ShowDialog();
+            //    return;
+            //}
+
+            //    if (CompleteRows.Count != 0 && Properties.Settings.Default.ClearCheck == false)
+            //    {
+            //        var viewModel1 = new ClearGridViewModel();
+            //        var cleargrid = new ClearGridView { DataContext = viewModel1 };
+            //        viewModel1.EditEnded += ClearModel_EditEnded;
+            //        cleargrid.ShowDialog();
+            //    }
+
+            //else if (CompleteRows.Count != 0 && Properties.Settings.Default.ClearCheck == false)
+            //{
+            //    var viewModel = new ClearGridViewModel();
+            //    var cleargrid = new ClearGridView { DataContext = viewModel };
+            //    viewModel.EditEnded += ClearModel_EditEnded;
+            //    cleargrid.ShowDialog();
+            //}
+            //    var dlg = new OpenFileDialog();
+            //    dlg.FileName = "Document";
+            //    dlg.DefaultExt = ".xls";
+            //    dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
+            //    dlg.Multiselect = true;
+            //    var result = dlg.ShowDialog();
+            //    if (result.HasValue == false || result.Value == false)
+            //        return;
+            //    Busy = true;
+
+            //    foreach (string filename in dlg.FileNames)
+            //    {
+            //        var rectCoords = await excelImporter.ReadAsync(filename);
+            //        int index = 1;
+            //        foreach (RectCoord rectCoord in rectCoords)
+            //        {
+
+            //            var completeRow = new CompleteRow();
+            //            completeRow.RectCoordPropertyChanged += CoordChanged;
+            //            completeRow.RectCoord = rectCoord;
+            //            string temp = String.Empty;
+            //            completeRow.Description += "Файл: ";
+            //            for (int i = filename.Length - 1; filename[i] != '\\'; i--)
+            //                temp += filename[i];
+            //            for (int i = temp.Length - 1; i >= 0; i--)
+            //                completeRow.Description += temp[i];
+            //            completeRow.Description += "; Строка " + index.ToString();
+            //            completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
+            //            CompleteRows.Add(completeRow);
+            //            index++;
+            //        }
+            //    }
+            //    Busy = false;
+
         }
 
-        private bool OpenCanExecute()
-        {
-            return true;
-        }
+
+        //private bool OpenCanExecute()
+        //{
+        //    return true;
+        //}
         private void SaveExecute()
         {
             //var save = new SaveDialog();
@@ -378,10 +454,10 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-        private bool AddCanExecute()
-        {
-            return true;
-        }
+        //private bool AddCanExecute()
+        //{
+        //    return true;
+        //}
 
         private void DeleteExecute()
         {

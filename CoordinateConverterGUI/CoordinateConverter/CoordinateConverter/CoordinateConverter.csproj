@@ -98,9 +98,10 @@
     <Compile Include="ViewModel\NumberConverter.cs" />
     <Compile Include="ViewModel\EnumConverter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\RangeChoiceViewModel.cs" />
     <Compile Include="ViewModel\SettingsWindowViewModel.cs" />
-    <Compile Include="View\ClearGridModel.xaml.cs">
-      <DependentUpon>ClearGridModel.xaml</DependentUpon>
+    <Compile Include="View\ClearGridView.xaml.cs">
+      <DependentUpon>ClearGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RangeChoiceWindow.xaml.cs">
       <DependentUpon>RangeChoiceWindow.xaml</DependentUpon>
@@ -120,7 +121,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\ClearGridModel.xaml">
+    <Page Include="View\ClearGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
