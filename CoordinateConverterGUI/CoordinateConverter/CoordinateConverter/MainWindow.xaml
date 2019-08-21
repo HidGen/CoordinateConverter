@@ -61,6 +61,7 @@
     <Window.Resources>
         <viewmodel:EnumConverter x:Key="EnumConvert"/>
         <viewmodel:NumberConverter x:Key="decimalconverter"/>
+        <viewmodel:CoordTypeConverter x:Key="ViewConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -150,12 +151,11 @@
                     <!--FieldName="RectCoord.X"-->
 
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="X"  Binding="{Binding RectCoord.X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-
+                <dxg:GridColumn Header="X"  Binding="{Binding RectCoord.X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <dxg:GridColumn Header="Y"  Binding="{Binding RectCoord.Y, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <dxg:GridColumn Header="H"   Binding="{Binding RectCoord.H, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                <dxg:GridColumn Header="latitude" FieldName="GeoCoord.Lat" ReadOnly="True" />
-                <dxg:GridColumn Header="longitude" FieldName="GeoCoord.Lon" ReadOnly="True"/>
+                <dxg:GridColumn Header="latitude" Binding="{Binding GeoCoord.Lat, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ViewConverter}, ConverterParameter=lat}" ReadOnly="True" />
+                <dxg:GridColumn Header="longitude" Binding="{Binding GeoCoord.Lon, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ViewConverter}, ConverterParameter=lon}"  ReadOnly="True"/>
                 <dxg:GridColumn Header="H" FieldName="GeoCoord.H" ReadOnly="True" />
                 <dxg:GridColumn Header="Описание" FieldName="Description" />
 
@@ -164,8 +164,8 @@
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
 
-                <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" NewItemRowPosition="Bottom" 
-                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" />
+                <dxg:TableView AllowPerPixelScrolling="True" NewItemRowPosition="Bottom" 
+                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" SearchPanelAllowFilter="False" SearchPanelClearOnClose="False" SearchPanelHighlightResults="False" ShowSearchPanelCloseButton="False" AllowColumnFiltering="False" />
             </dxg:GridControl.View>
 
 
@@ -184,7 +184,7 @@
 
         </dxb:StatusBarControl>
 
-        <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
+        <!--<dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
             <dx:WaitIndicator.ContentTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -193,6 +193,6 @@
                     </StackPanel>
                 </DataTemplate>
             </dx:WaitIndicator.ContentTemplate>
-        </dx:WaitIndicator>
+        </dx:WaitIndicator>-->
     </Grid>
 </Window>

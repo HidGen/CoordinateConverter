@@ -95,6 +95,7 @@
     <Compile Include="Model\RectCoord.cs" />
     <Compile Include="ViewModel\ClearGridViewModel.cs" />
     <Compile Include="ViewModel\CloseBehavior.cs" />
+    <Compile Include="ViewModel\CoordTypeConverter.cs" />
     <Compile Include="ViewModel\NumberConverter.cs" />
     <Compile Include="ViewModel\EnumConverter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

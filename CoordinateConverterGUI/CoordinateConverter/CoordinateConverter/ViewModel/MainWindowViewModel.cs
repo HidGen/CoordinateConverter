@@ -56,10 +56,21 @@ namespace CoordinateConverter.ViewModel
         MaxMinH
     }
 
+    [TypeConverter(typeof(EnumToStringConverter))]
+    public enum CoordViewType
+    {
+
+        [Description("Десятичные градусы")]
+        Decimal,
+        [Description("Градусы, минуты, секунды")]
+        MinSec
+    }
+
     public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private CoordinateType selectedCoordinateEnumType;
         private SortType selectedSortEnumType;
+        private CoordViewType selectedCoordViewType;
         private CompleteRow selectedRow;
         private IExcelFileOpen excelImporter;
         private IXmlFileSave xmlExporter;
@@ -137,16 +148,19 @@ namespace CoordinateConverter.ViewModel
             get { return selectedCoordinateEnumType; }
             set
             {
-                selectedCoordinateEnumType = value;
-                //сюда
-                if (CompleteRows.Count != 0)
+                if (selectedCoordinateEnumType != value)
                 {
-                    foreach (var completeRow in CompleteRows)
-                        completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, completeRow.RectCoord);
-                    // NotifyPropertyChanged();
-                }
+                    selectedCoordinateEnumType = value;                    
+                    if (CompleteRows.Count != 0)
+                    {
+                        foreach (var completeRow in CompleteRows)
+                            completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, completeRow.RectCoord);                 
+                    }
 
-                NotifyPropertyChanged();
+                    NotifyPropertyChanged();
+                }
+            
+
             }
         }
 
@@ -193,6 +207,27 @@ namespace CoordinateConverter.ViewModel
 
 
                 NotifyPropertyChanged();
+            }
+        }
+
+        public IEnumerable<CoordViewType> CoordTypeValues
+        {
+            get
+            {
+                return Enum.GetValues(typeof(CoordViewType))
+                     .Cast<CoordViewType>();
+            }
+        }
+
+        public CoordViewType SelectedCoordViewType
+        {
+            get
+            {
+                return selectedCoordViewType;
+            }
+            set
+            {
+                selectedCoordViewType = value;
             }
         }
 
@@ -260,6 +295,7 @@ namespace CoordinateConverter.ViewModel
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
         {
             SelectedCoordinateEnumType = e.SelectedType;
+           
         }
 
         public void CoordChanged(object sender, EventArgs e)

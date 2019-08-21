@@ -46,5 +46,17 @@ namespace CoordinateConverter.Properties {
                 this["ClearRule"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Десятичные градусы")]
+        public global::CoordinateConverter.ViewModel.CoordViewType CoordView {
+            get {
+                return ((global::CoordinateConverter.ViewModel.CoordViewType)(this["CoordView"]));
+            }
+            set {
+                this["CoordView"] = value;
+            }
+        }
     }
 }

@@ -33,10 +33,15 @@ namespace CoordinateConverter.Model
             }
         }
         private GeoCoord geoCoord;
-        public GeoCoord GeoCoord { get => geoCoord;
-            set { geoCoord = value;
+        public GeoCoord GeoCoord
+        {
+            get => geoCoord;
+            set
+            {
+                geoCoord = value;
                 NotifyPropertyChanged();
-            } }
+            }
+        }
 
         public string Description { get; set; }
         public void RectCoordChanged(object sender, EventArgs e)
