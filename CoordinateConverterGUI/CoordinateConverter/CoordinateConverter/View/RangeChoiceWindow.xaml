@@ -26,8 +26,24 @@
         <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="Выберите диапазон вносимых данных:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
         <TextBlock Grid.Column="0" Grid.Row="1" Text="Начальная ячейка:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Конечная ячейка:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Margin="10" Text="{Binding First,UpdateSourceTrigger=PropertyChanged}" />
-        <TextBox Grid.Column="1" Grid.Row="2" Margin="10" Text="{Binding Last,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Margin="10"  >
+            <TextBox.Text>
+                <Binding Path="First" UpdateSourceTrigger="PropertyChanged">                    
+                        <Binding.ValidationRules>
+                        <DataErrorValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Grid.Column="1" Grid.Row="2" Margin="10">
+            <TextBox.Text>
+                <Binding Path="Last" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <DataErrorValidationRule />
+                </Binding.ValidationRules>
+            </Binding>
+            </TextBox.Text>
+        </TextBox>
 
     </Grid>
 </UserControl>
