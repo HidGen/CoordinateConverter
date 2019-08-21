@@ -1,0 +1,44 @@
+﻿<Window x:Class="CoordinateConverter.View.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CoordinateConverter.View"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+         xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
+       ResizeMode="NoResize"
+        mc:Ignorable="d"
+        Title="Настройки" Height="300" Width="430">
+
+    <!--<Window.DataContext>
+        <viewmodel:SettingsWindowViewModel/>
+    </Window.DataContext>-->
+
+    <Window.Resources>
+        <viewmodel:EnumConverter x:Key="EnumConvert"/>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250px"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,30,10,10" Text="Начальная система координат:" FontSize="12"/>
+        <ComboBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,30,0,10"  MinWidth="100px" Width="150" ItemsSource="{Binding CoordinateEnumTypeValues}" SelectedItem="{Binding SelectedCoordinateEnumType}"/>
+        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap" Text="Очищать значения при открытии нового файла?" FontSize="12"/>
+        <CheckBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" IsChecked="{Binding Path=ClearCheck}" />
+        <Button Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30px" Width="70px" Margin="10" Content="OK" FontSize="14" Command="{Binding ReturnCommand}">
+            <i:Interaction.Behaviors>
+                <viewmodel:CloseBehavior/>
+            </i:Interaction.Behaviors>
+        </Button>
+
+    </Grid>
+</Window>
