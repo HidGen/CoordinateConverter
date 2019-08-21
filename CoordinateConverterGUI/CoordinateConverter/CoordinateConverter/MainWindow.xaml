@@ -184,7 +184,7 @@
 
         </dxb:StatusBarControl>
 
-        <!--<dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
+        <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
             <dx:WaitIndicator.ContentTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -193,6 +193,6 @@
                     </StackPanel>
                 </DataTemplate>
             </dx:WaitIndicator.ContentTemplate>
-        </dx:WaitIndicator>-->
+        </dx:WaitIndicator>
     </Grid>
 </Window>

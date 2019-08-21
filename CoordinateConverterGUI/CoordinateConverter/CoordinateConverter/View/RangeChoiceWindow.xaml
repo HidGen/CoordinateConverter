@@ -8,8 +8,8 @@
          xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
         xmlns:local="clr-namespace:CoordinateConverter.View"
         mc:Ignorable="d"
-        Height="250px"
-        Width="400px"
+        Height="100px"
+        Width="320px"
       
     >
     <Grid>
@@ -18,12 +18,12 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
 
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="Выберите диапазон вносимых данных:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="Выберите диапазон вносимых данных:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
         <TextBlock Grid.Column="0" Grid.Row="1" Text="Начальная ячейка:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Конечная ячейка:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBox Grid.Column="1" Grid.Row="1" Margin="10" Text="{Binding First,UpdateSourceTrigger=PropertyChanged}" />

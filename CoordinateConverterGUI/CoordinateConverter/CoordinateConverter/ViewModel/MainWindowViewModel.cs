@@ -56,7 +56,7 @@ namespace CoordinateConverter.ViewModel
         MaxMinH
     }
 
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private CoordinateType selectedCoordinateEnumType;
         private SortType selectedSortEnumType;
@@ -84,7 +84,7 @@ namespace CoordinateConverter.ViewModel
             set
             {
                 indexList = value;
-                NotifyPropertyChanged();
+                NotifyPropertyChanged();            
             }
         }
 
@@ -270,194 +270,84 @@ namespace CoordinateConverter.ViewModel
 
         private async void OpenExecute()
         {
-
+            var usedRange = false;
+            RangeChoiceViewModel rangeChoiceViewModel = null;
 
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
-                if (CompleteRows.Count != 0 && Properties.Settings.Default.ClearCheck == false)
-                {
-
-                    if (ClearGridDialogService == null)
-                    {
-                        return;
-                    }
-                    var clearGridViewmodel = new ClearGridViewModel();
-                    var ressswssa = ClearGridDialogService.ShowDialog(
-                        dialogCommands: clearGridViewmodel.GetCommands(),
-                        title: "Registration Dialog",
-                        viewModel: clearGridViewmodel);
-
-                    if (ressswssa == null)
-                    {
-                        return;
-                    }
-
-                } 
-               
-
-                var rangeChoiceViewModel = new RangeChoiceViewModel();
-                var resrange = RangeChoiceDialogService.ShowDialog(
+                rangeChoiceViewModel = new RangeChoiceViewModel();
+                var rangeResult = RangeChoiceDialogService.ShowDialog(
                     dialogCommands: rangeChoiceViewModel.GetCommands(),
-                    title: "range choice",
+                    title: "Открыть",
                     viewModel: rangeChoiceViewModel);
 
-                if (resrange != null)
-                {
-                    //if (Properties.Settings.Default.ClearRule == true)
-                    //{
-                    //    CompleteRows.Clear();
-                    //}
+                if (rangeResult == null)
+                    return;
 
-                    var dlg = new OpenFileDialog();
-                    dlg.FileName = "Document";
-                    dlg.DefaultExt = ".xls";
-                    dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
-                    dlg.Multiselect = true;
-                    var result = dlg.ShowDialog();
-                    if (result.HasValue == false || result.Value == false)
-                    {
-                        return;
-                    }
-                    else
-                    {
-
-                        if (Properties.Settings.Default.ClearRule == true)
-                        {
-                            CompleteRows.Clear();
-                        }
-                        Busy = true;
-
-                        foreach (string filename in dlg.FileNames)
-                        {
-                            var rectCoords = await excelImporter.ReadRangeAsync(filename, rangeChoiceViewModel.First, rangeChoiceViewModel.Last);
-                            int index = 1;
-                            foreach (RectCoord rectCoord in rectCoords)
-                            {
-                                var completeRow = new CompleteRow();
-                                completeRow.RectCoordPropertyChanged += CoordChanged;
-                                completeRow.RectCoord = rectCoord;
-                                string temp = String.Empty;
-                                completeRow.Description += "Файл: ";
-                                for (int i = filename.Length - 1; filename[i] != '\\'; i--)
-                                    temp += filename[i];
-                                for (int i = temp.Length - 1; i >= 0; i--)
-                                    completeRow.Description += temp[i];
-                                completeRow.Description += "; Строка " + index.ToString();
-                                completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
-                                CompleteRows.Add(completeRow);
-                                index++;
-                            }
-                        }
-
-                        Busy = false;
-                    }
-                }
-                return;
+                usedRange = true;
             }
-
 
             if (CompleteRows.Count != 0 && Properties.Settings.Default.ClearCheck == false)
             {
-
-                if (ClearGridDialogService == null)
-                {
-                    return;
-                }
                 var clearGridViewmodel = new ClearGridViewModel();
-                var ressswssa = ClearGridDialogService.ShowDialog(
+                var clearResult = ClearGridDialogService.ShowDialog(
                     dialogCommands: clearGridViewmodel.GetCommands(),
-                    title: "Registration Dialog",
+                    title: "Открыть",
                     viewModel: clearGridViewmodel);
 
-                if (ressswssa == null)
-                {
+                if (clearResult == null)
                     return;
-                }
-
-
-                var dlg = new OpenFileDialog();
-                dlg.FileName = "Document";
-                dlg.DefaultExt = ".xls";
-                dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
-                dlg.Multiselect = true;
-                var result = dlg.ShowDialog();
-                if (result.HasValue == false || result.Value == false)
-                {
-                    return;
-                }
-
-
-                if (Properties.Settings.Default.ClearRule == true)
-                {
-                    CompleteRows.Clear();
-                }
-                Busy = true;
-
-                foreach (string filename in dlg.FileNames)
-                {
-                    var rectCoords = await excelImporter.ReadAsync(filename);
-                    int index = 1;
-                    foreach (RectCoord rectCoord in rectCoords)
-                    {
-
-                        var completeRow = new CompleteRow();
-                        completeRow.RectCoordPropertyChanged += CoordChanged;
-                        completeRow.RectCoord = rectCoord;
-                        string temp = String.Empty;
-                        completeRow.Description += "Файл: ";
-                        for (int i = filename.Length - 1; filename[i] != '\\'; i--)
-                            temp += filename[i];
-                        for (int i = temp.Length - 1; i >= 0; i--)
-                            completeRow.Description += temp[i];
-                        completeRow.Description += "; Строка " + index.ToString();
-                        completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
-                        CompleteRows.Add(completeRow);
-                        index++;
-                    }
-                }
-                Busy = false;
-
             }
-            else
+            
+            var dlg = new OpenFileDialog();
+            dlg.FileName = "Document";
+            dlg.DefaultExt = ".xls";
+            dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
+            dlg.Multiselect = true;
+            var result = dlg.ShowDialog();
+            if (result.HasValue == false || result.Value == false)
+                return;
+                       
+            if (Properties.Settings.Default.ClearRule == true)            
+                CompleteRows.Clear();
+            Busy = true;
+            foreach (string filename in dlg.FileNames)
             {
-                if (Properties.Settings.Default.ClearRule == true)
+                if (usedRange)
                 {
-                    CompleteRows.Clear();
+                    var rectCoords = await excelImporter.ReadRangeAsync(filename, rangeChoiceViewModel.First, rangeChoiceViewModel.Last);
+                   
+                    AddRows(filename, rectCoords);
+
                 }
-
-                var dlg = new OpenFileDialog();
-                dlg.FileName = "Document";
-                dlg.DefaultExt = ".xls";
-                dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
-                dlg.Multiselect = true;
-                var result = dlg.ShowDialog();
-                if (result.HasValue == false || result.Value == false)
-                    return;
-                Busy = true;
-
-                foreach (string filename in dlg.FileNames)
+                else
                 {
                     var rectCoords = await excelImporter.ReadAsync(filename);
-                    int index = 1;
-                    foreach (RectCoord rectCoord in rectCoords)
-                    {
-
-                        var completeRow = new CompleteRow();
-                        completeRow.RectCoordPropertyChanged += CoordChanged;
-                        completeRow.RectCoord = rectCoord;
-                        string temp = String.Empty;
-                        completeRow.Description += "Файл: ";
-                        for (int i = filename.Length - 1; filename[i] != '\\'; i--)
-                            temp += filename[i];
-                        for (int i = temp.Length - 1; i >= 0; i--)
-                            completeRow.Description += temp[i];
-                        completeRow.Description += "; Строка " + index.ToString();
-                        completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
-                        CompleteRows.Add(completeRow);
-                        index++;
-                    }
+                    AddRows(filename, rectCoords);
                 }
-                Busy = false;
+            }
+            Busy = false;
+
+        }
+
+        private void AddRows(string filename, List<RectCoord> rectCoords)
+        {
+            int index = 1;
+            foreach (RectCoord rectCoord in rectCoords)
+            {
+                var completeRow = new CompleteRow();
+                completeRow.RectCoordPropertyChanged += CoordChanged;
+                completeRow.RectCoord = rectCoord;
+                string temp = String.Empty;
+                completeRow.Description += "Файл: ";
+                for (int i = filename.Length - 1; filename[i] != '\\'; i--)
+                    temp += filename[i];
+                for (int i = temp.Length - 1; i >= 0; i--)
+                    completeRow.Description += temp[i];
+                completeRow.Description += "; Строка " + index.ToString();
+                completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
+                CompleteRows.Add(completeRow);
+                index++;
             }
         }
 

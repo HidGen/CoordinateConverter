@@ -15,9 +15,8 @@ namespace CoordinateConverter.Model
         public CompleteRow()
         {
             rectCoord = new RectCoord();
-            GeoCoord = new GeoCoord();
-            
-
+            geoCoord = new GeoCoord();
+            rectCoord.PropertyChanged += RectCoordChanged;
 
         }
         private RectCoord rectCoord;
