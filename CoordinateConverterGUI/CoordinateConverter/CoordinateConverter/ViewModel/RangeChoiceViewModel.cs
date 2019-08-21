@@ -10,41 +10,46 @@ namespace CoordinateConverter.ViewModel
 {
     class RangeChoiceViewModel
     {
-        public string First { get; set; }
-        public string Last { get; set; }
-        public ICommand OKCommand { get; private set; }
-        public RangeChoiceViewModel()
-        {
-            First = string.Empty;
-            Last = string.Empty;
-            OKCommand = new DelegateCommand(OKExecute,OKCanExecute);
-        }
-        private void OKExecute()
-        {
-            OnEditEnded(First, Last);
-        }
-        private bool OKCanExecute()
-        {
-            return (First != String.Empty && Last != String.Empty);
-        }
 
-        public event EventHandler<RangeArgs> EditEnded;
-        public class RangeArgs : EventArgs
+        private readonly UICommand okCommand;
+
+        private string first;
+        private string last;
+
+        public string First
         {
-            public RangeArgs(string first, string last)
+            get => first;
+            set
             {
-                First = first;
-                Last = last;
+                first = value;
             }
 
-            public string First { get; private set; }
-            public string Last { get; private set; }
-
+        }
+        public string Last
+        {
+            get => last;
+            set
+            {
+                last = value;
+            }
         }
 
-        private void OnEditEnded(string first, string last)
+        public RangeChoiceViewModel()
         {
-            EditEnded?.Invoke(this, new RangeArgs(first, last));
+            okCommand = new UICommand()
+            {
+                Caption = "OK",
+                IsDefault = true,
+                Command = new DelegateCommand(() =>
+                {
+
+                })
+            };
+        }
+
+        public IEnumerable<UICommand> GetCommands()
+        {
+            return new List<UICommand> { okCommand };
         }
     }
 }

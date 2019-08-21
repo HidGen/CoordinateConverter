@@ -32,13 +32,26 @@
                 </DataTemplate>
             </dx:DialogService.ViewTemplate>
         </dx:DialogService>
+        <dx:DialogService x:Name="RangeChoiceDialogService">
+            <dx:DialogService.DialogStyle>
+                <Style TargetType="Window">
+                    <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                    <Setter Property="WindowStyle" Value="ToolWindow" />
+                </Style>
+            </dx:DialogService.DialogStyle>
+            <dx:DialogService.ViewTemplate>
+                <DataTemplate>
+                    <view:RangeChoiceWindow/>
+                </DataTemplate>
+            </dx:DialogService.ViewTemplate>
+        </dx:DialogService>
     </dxmvvm:Interaction.Behaviors>
 
 
     <Window.InputBindings>
         <KeyBinding Key="X" Modifiers="Control" Command="{Binding CutCommand}" />
         <KeyBinding Key="C" Modifiers="Control" Command="{Binding CopyCommand}" />
-        <KeyBinding Key="V" Modifiers="Control" Command="{Binding PasteCommand}" />        
+        <KeyBinding Key="V" Modifiers="Control" Command="{Binding PasteCommand}" />
     </Window.InputBindings>
 
     <Window.DataContext>
@@ -47,7 +60,7 @@
 
     <Window.Resources>
         <viewmodel:EnumConverter x:Key="EnumConvert"/>
-        <viewmodel:NumberConverter x:Key="decimalconverter"/>      
+        <viewmodel:NumberConverter x:Key="decimalconverter"/>
     </Window.Resources>
 
     <Grid>
@@ -55,7 +68,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>      
+        </Grid.RowDefinitions>
 
         <dxb:BarContainerControl>
             <dxb:MainMenuControl AllowCustomizationMenu="False">
@@ -112,7 +125,7 @@
                         <dxe:ComboBoxEditSettings
                             x:Name="SortCombobox" 
                             ItemsSource="{Binding Path=SortEnumTypeValues}" >
-                            
+
                         </dxe:ComboBoxEditSettings>
                     </dxb:BarEditItem.EditSettings>
                 </dxb:BarEditItem>
@@ -122,26 +135,26 @@
         </dxb:BarContainerControl>
         <dxg:GridControl Name="GC" Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row"  EnableSmartColumnsGeneration="False"
                          ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItems="{Binding Selection}"  >
-                         
-                         <!--SelectedItem="{Binding SelectedRow}"-->
-                         
-                       
+
+            <!--SelectedItem="{Binding SelectedRow}"-->
+
+
             <dxg:GridControl.Columns>
                 <dxg:GridColumn Header="№" Width="50px" FieldName="Counter" UnboundType="Integer" >
-                   
-                        <dxg:GridColumn.CellTemplate>
-                            <DataTemplate>
+
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
                             <TextBlock HorizontalAlignment="Right" Margin="5,2,5,2" Text="{Binding RowData.RowHandle.Value, Converter={StaticResource  decimalconverter} }"/>
-                            </DataTemplate>
-                        </dxg:GridColumn.CellTemplate>
-                 
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                    <!--FieldName="RectCoord.X"-->
 
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="X" FieldName="RectCoord.X" >
-                </dxg:GridColumn>
-                <dxg:GridColumn Header="Y" FieldName="RectCoord.Y" />
-                <dxg:GridColumn Header="H" FieldName="RectCoord.H" />
-                <dxg:GridColumn Header="latitude" FieldName="GeoCoord.Lat"  ReadOnly="True"/>
+                <dxg:GridColumn Header="X"  Binding="{Binding RectCoord.X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                <dxg:GridColumn Header="Y"  Binding="{Binding RectCoord.Y, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <dxg:GridColumn Header="H"   Binding="{Binding RectCoord.H, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <dxg:GridColumn Header="latitude" FieldName="GeoCoord.Lat" ReadOnly="True" />
                 <dxg:GridColumn Header="longitude" FieldName="GeoCoord.Lon" ReadOnly="True"/>
                 <dxg:GridColumn Header="H" FieldName="GeoCoord.H" ReadOnly="True" />
                 <dxg:GridColumn Header="Описание" FieldName="Description" />
@@ -150,12 +163,12 @@
 
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
-                
+
                 <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" NewItemRowPosition="Bottom" 
                                ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" />
             </dxg:GridControl.View>
-           
-           
+
+
         </dxg:GridControl>
         <dxb:StatusBarControl Caption="StatusBar" Grid.Row="2"  ShowSizeGrip="True" GlyphSize="Small" AllowCustomizationMenu="False">
             <dxb:BarStaticItem x:Name="biTotalRows" Content="Кол-во строк:" ShowBorder="False"/>

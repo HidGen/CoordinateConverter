@@ -17,7 +17,7 @@ namespace CoordinateConverter.View
     /// <summary>
     /// Логика взаимодействия для RangeChoiceWindow.xaml
     /// </summary>
-    public partial class RangeChoiceWindow : Window
+    public partial class RangeChoiceWindow : UserControl
     {
         public RangeChoiceWindow()
         {
