@@ -34,5 +34,17 @@ namespace CoordinateConverter.Properties {
                 this["ClearCheck"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ClearRule {
+            get {
+                return ((bool)(this["ClearRule"]));
+            }
+            set {
+                this["ClearRule"] = value;
+            }
+        }
     }
 }
