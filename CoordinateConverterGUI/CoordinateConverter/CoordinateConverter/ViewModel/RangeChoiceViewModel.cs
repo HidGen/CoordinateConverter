@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace CoordinateConverter.ViewModel
 {
-    class RangeChoiceViewModel : IDataErrorInfo
+    class RangeChoiceViewModel : ViewModelBase, IDataErrorInfo
     {
 
         private readonly UICommand okCommand;
@@ -26,9 +26,7 @@ namespace CoordinateConverter.ViewModel
             get => first;
             set
             {
-                first = value;
-                first = first?.ToUpper();
-
+                first = value?.ToUpper();  
             }
 
         }
@@ -36,9 +34,8 @@ namespace CoordinateConverter.ViewModel
         {
             get => last;
             set
-            {
-                last = value;
-                last = last?.ToUpper();
+            {                
+                last = value?.ToUpper();
             }
         }
 
@@ -52,12 +49,13 @@ namespace CoordinateConverter.ViewModel
                 Regex excelCellFormat = new Regex(@"^[A-Z]+[0-9]+$");
                 if (columnName == "First")
                 {
-                    if (First != string.Empty)
+
+                    if (!string.IsNullOrEmpty(First))
                     {
 
                         if (!excelCellFormat.IsMatch(First))
                         {
-                            error = "Неверный формат";
+                            error = "Неверный формат ячейки Excel";
                             this.errorFirst = true;
                         }
                         else
@@ -73,7 +71,7 @@ namespace CoordinateConverter.ViewModel
                         Last = Last.ToUpper();
                         if (!excelCellFormat.IsMatch(Last))
                         {
-                            error = "Неверный формат";
+                            error = "Неверный формат ячейки Excel";
                             this.errorLast = true;
                         }
                         else
@@ -105,12 +103,8 @@ namespace CoordinateConverter.ViewModel
             };
             first = string.Empty;
             last = string.Empty;
-        }
+        }      
         
-        //private bool OKCanExecute()
-        //{
-
-        //}
 
         public IEnumerable<UICommand> GetCommands()
         {

@@ -12,6 +12,20 @@
         Width="320px"
       
     >
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self},
+                    Path=(Validation.Errors)[0].ErrorContent}" />
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>        
+    </UserControl.Resources>
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -23,10 +37,13 @@
             <RowDefinition Height="auto"/>
 
         </Grid.RowDefinitions>
+        <!--<dxe:TextEdit Grid.Column="1" Grid.Row="2" NullText="Введите ячейку" Text="{Binding Last, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
+
+
         <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="Выберите диапазон вносимых данных:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
         <TextBlock Grid.Column="0" Grid.Row="1" Text="Начальная ячейка:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Конечная ячейка:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Margin="10"  >
+        <TextBox Grid.Column="1" Grid.Row="1" Margin="10"   >
             <TextBox.Text>
                 <Binding Path="First" UpdateSourceTrigger="PropertyChanged">                    
                         <Binding.ValidationRules>
@@ -42,7 +59,7 @@
                     <DataErrorValidationRule />
                 </Binding.ValidationRules>
             </Binding>
-            </TextBox.Text>
+            </TextBox.Text>            
         </TextBox>
 
     </Grid>

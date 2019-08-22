@@ -248,7 +248,6 @@ C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConvert
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\es\DevExpress.Pdf.v17.2.Core.resources.dll
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\ja\DevExpress.Pdf.v17.2.Core.resources.dll
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\ru\DevExpress.Pdf.v17.2.Core.resources.dll
-C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csprojAssemblyReference.cache
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\MainWindow.g.cs
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\View\ClearGridView.g.cs
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\View\RangeChoiceWindow.g.cs
