@@ -5,24 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CoordinateConverter.View"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-         xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
-       ResizeMode="NoResize"
+        xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="Настройки" Height="300" Width="430">
-
-    <!--<Window.DataContext>
-        <viewmodel:SettingsWindowViewModel/>
-    </Window.DataContext>-->
+        Title="Настройки" Height="250" Width="430">
 
     <Window.Resources>
         <viewmodel:EnumConverter x:Key="EnumConvert"/>
-
     </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250px"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -33,10 +28,9 @@
 
         <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,30,10,10" Text="Начальная система координат:" FontSize="12"/>
         <ComboBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,30,0,10"  MinWidth="100px" Width="150" ItemsSource="{Binding CoordinateEnumTypeValues}" SelectedItem="{Binding SelectedCoordinateEnumType}"/>
-        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,10,10" Text="Начальная система координат:" FontSize="12"/>
+        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,10,10" Text="Вид отображения координат:" FontSize="12"/>
         <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10"  MinWidth="100px" Width="150" ItemsSource="{Binding CoordTypeValues}" SelectedItem="{Binding SelectedCoordViewType}"/>
-
-        <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap" Text="Очищать значения при открытии нового файла?" FontSize="12"/>
+        <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap" Text="Запомнить выбор очистки таблицы" FontSize="12"/>
         <CheckBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" IsChecked="{Binding Path=ClearCheck}" />
         <Button Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30px" Width="70px" Margin="10" Content="OK" FontSize="14" Command="{Binding ReturnCommand}">
             <i:Interaction.Behaviors>

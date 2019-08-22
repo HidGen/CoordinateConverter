@@ -20,24 +20,17 @@ namespace CoordinateConverter.ViewModel
             {
                 throw new NotImplementedException();
             }
-
             if (i >= 0 )
             {
-               
-
                 return i+1;
-
             }
             else 
-            { return null; }
-
-               
+            { return null; }   
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
-
     }
 }

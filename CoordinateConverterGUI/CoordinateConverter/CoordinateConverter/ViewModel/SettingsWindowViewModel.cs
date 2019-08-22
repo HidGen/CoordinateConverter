@@ -41,7 +41,6 @@ namespace CoordinateConverter.ViewModel
             set
             {
                 selectedCoordinateEnumType = value;
-                // OnPropertyChanged("SelectedCoordinateEnumType");
             }
         }
 
@@ -93,10 +92,7 @@ namespace CoordinateConverter.ViewModel
                 return returnCommand ??
                   (returnCommand = new DelegateCommand(() =>
                   {
-                      
-                     
                       OnEditEnded(selectedCoordinateEnumType, ClearCheck, selectedCoordViewType);
-
                   }));
             }
         }
@@ -105,9 +101,8 @@ namespace CoordinateConverter.ViewModel
         {
             public SettingsWindowArgs(CoordinateType selectedType)
             {
-                SelectedType = selectedType;
-               
-             }
+                SelectedType = selectedType;      
+            }
 
             public CoordinateType SelectedType { get; }
             public bool ClearCheck { get; }

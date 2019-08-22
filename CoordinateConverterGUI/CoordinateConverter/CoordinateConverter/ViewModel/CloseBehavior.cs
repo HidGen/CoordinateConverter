@@ -24,12 +24,6 @@ namespace CoordinateConverter.ViewModel
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
-            //Application.Current.Shutdown();
-            //    Window somewindow = Window.GetWindow(e);
-            /* var originalControl = GetOriginalControl(window) as DependencyObject;
-             window.Close();*/
-
-
             var window = Window.GetWindow(AssociatedObject);
             window.Close();
         }

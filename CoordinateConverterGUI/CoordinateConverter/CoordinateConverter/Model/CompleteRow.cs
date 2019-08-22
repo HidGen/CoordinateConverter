@@ -29,7 +29,6 @@ namespace CoordinateConverter.Model
                 rectCoord.PropertyChanged -= RectCoordChanged;
                 rectCoord = value;                
                 rectCoord.PropertyChanged += RectCoordChanged;
-              //  RectCoordChanged(this, EventArgs.Empty);
             }
         }
         private GeoCoord geoCoord;
@@ -48,10 +47,16 @@ namespace CoordinateConverter.Model
         {
             RectCoordPropertyChanged?.Invoke(this, EventArgs.Empty);
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        internal void GeoCoordChanged()
+        {
+            NotifyPropertyChanged(nameof(GeoCoord));
         }
     }
 }

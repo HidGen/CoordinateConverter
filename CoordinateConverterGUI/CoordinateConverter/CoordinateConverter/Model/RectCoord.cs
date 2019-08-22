@@ -42,28 +42,7 @@ namespace CoordinateConverter.Model
         }
         public void OnPropertyChanged()
         {
-            //EventHandler handler = ThresholdReached;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-
-
-    //class MyClass
-    //{
-    //    public MyClass()
-    //    {
-    //        RectCoord coord = new RectCoord();
-    //        coord.PropertyChanged += Coord_PropertyChanged;
-    //    }
-
-    //    private void Coord_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
-
-    //public class PropertyChangedEventArgs : EventArgs
-    //{
-
-    //}
 }
