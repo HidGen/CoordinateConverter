@@ -70,8 +70,7 @@ namespace CoordinateConverter.ViewModel
     {
         private CoordinateType selectedCoordinateEnumType;
         private SortType selectedSortEnumType;
-        private CoordViewType selectedCoordViewType;
-        private CompleteRow selectedRow;
+        private CoordViewType selectedCoordViewType;       
         private IExcelFileOpen excelImporter;
         private IXmlFileSave xmlExporter;
         private Copy copy;
@@ -79,10 +78,9 @@ namespace CoordinateConverter.ViewModel
         private bool busy;
         private CoordConverter coordConverter;
         private ObservableCollection<int> indexes = new ObservableCollection<int>();
-        public string indexList;
-        
+        public string indexList;      
        
-        //private bool dresult;
+       
 
 
         protected IDialogService ClearGridDialogService { get { return this.GetService<IDialogService>("ClearGridDialogService"); } }
@@ -245,15 +243,7 @@ namespace CoordinateConverter.ViewModel
                 
             }
         }
-
-        public CompleteRow SelectedRow
-        {
-            get { return selectedRow; }
-            set
-            {
-                selectedRow = value;
-            }
-        }
+      
 
         public ICommand OpenCommand { get; private set; }
         public ICommand SaveCommand { get; private set; }
@@ -436,8 +426,7 @@ namespace CoordinateConverter.ViewModel
         private void AddExecute()
         {
             if (Selection.Count != 0)
-            {
-                // int foundIndex = default;
+            {               
                 for (int i = 0; i < CompleteRows.Count; i++)
                 {
                     if (CompleteRows[i] == Selection[0])
