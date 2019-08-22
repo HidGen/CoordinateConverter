@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace CoordinateConverter.ViewModel
 {
@@ -51,7 +52,7 @@ namespace CoordinateConverter.ViewModel
             }
             catch (Exception err)
             {
-             // вывести сообщение   
+                MessageBox.Show(err.ToString());
             }            
         }
 

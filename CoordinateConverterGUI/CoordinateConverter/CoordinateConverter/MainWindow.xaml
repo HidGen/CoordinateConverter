@@ -10,13 +10,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CoordinateConverter"
         xmlns:dxnav="http://schemas.devexpress.com/winfx/2008/xaml/navigation"
-    xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
-    xmlns:view="clr-namespace:CoordinateConverter.View"
-    local:InputBindingsBehavior.TakesInputBindingPrecedence="True"
-
-    x:Class="CoordinateConverter.MainWindow" mc:Ignorable="d"
-    MinWidth="550px" MinHeight="350px"
-    Title="CoordinateConverter" Background="Azure" Height="450" Width="850" >
+        xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
+        xmlns:view="clr-namespace:CoordinateConverter.View"
+        local:InputBindingsBehavior.TakesInputBindingPrecedence="True"
+        x:Class="CoordinateConverter.MainWindow" mc:Ignorable="d"
+        MinWidth="550px" 
+        MinHeight="350px"
+        Title="CoordinateConverter"
+        Background="Azure" 
+        Height="450" 
+        Width="850" >
 
     <dxmvvm:Interaction.Behaviors>
         <dx:DialogService x:Name="ClearGridDialogService">
@@ -47,7 +50,6 @@
         </dx:DialogService>
     </dxmvvm:Interaction.Behaviors>
 
-
     <Window.InputBindings>
         <KeyBinding Key="X" Modifiers="Control" Command="{Binding CutCommand}" />
         <KeyBinding Key="C" Modifiers="Control" Command="{Binding CopyCommand}" />
@@ -61,6 +63,7 @@
     <Window.Resources>
         <viewmodel:EnumConverter x:Key="EnumConvert"/>
         <viewmodel:NumberConverter x:Key="decimalconverter"/>
+        <viewmodel:CoordTypeConverter x:Key="ViewConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -86,14 +89,19 @@
                     <dxb:BarButtonItem x:Name="RowUp" Content="Перенести строку вверх" Glyph="{dx:DXImage Image=MoveUp_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveUp_32x32.png}" Command="{Binding MoveUpCommand}"/>
                     <dxb:BarButtonItem x:Name="RowDown" Content="Перенести строку вниз" Glyph="{dx:DXImage Image=MoveDown_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveDown_32x32.png}" Command="{Binding MoveDownCommand}"/>
                     <dxb:BarItemLinkSeparator />
-                    <dxb:BarButtonItem x:Name="SortMinMax" Content="Сортировать по возрастанию"  />
-                    <dxb:BarButtonItem x:Name="SortMaxMin" Content="Сортировать по убыванию" />
+                    <dxb:BarSubItem Name="sb2" Content="Сортировка" >
+                        <dxb:BarButtonItem x:Name="xminmaxbt" Content="по возрастанию X"  Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MinMaxX}"/>
+                        <dxb:BarButtonItem x:Name="xmaxminbt" Content="по убыванию X" Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MaxMinX}"/>
+                        <dxb:BarButtonItem x:Name="yminmaxbt" Content="по возрастанию Y"  Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MinMaxY}"/>
+                        <dxb:BarButtonItem x:Name="ymaxminbt" Content="по убыванию Y" Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MaxMinY}"/>
+                        <dxb:BarButtonItem x:Name="hminmaxbt" Content="по возрастанию H"  Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MinMaxH}"/>
+                        <dxb:BarButtonItem x:Name="hmaxminbt" Content="по убыванию H" Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MaxMinH}"/>
+                    </dxb:BarSubItem>
                     <dxb:BarItemLinkSeparator />
                     <dxb:BarButtonItem x:Name="biEdit" Content="Настройки"  Command="{Binding SettingsCommand}" />
                 </dxb:BarSubItem>
             </dxb:MainMenuControl>
             <dxb:ToolBarControl Caption="Edit" GlyphSize="Small" Margin="0,0,0,0"  Width="auto" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-
                 <dxb:BarButtonItem x:Name="biFileOpen" Content="Открыть" ToolTip="Открыть" Glyph="{dx:DXImage Image=Open_16x16.png}" LargeGlyph="{dx:DXImage Image=Open_32x32.png}" BarItemDisplayMode="ContentAndGlyph" Command="{Binding OpenCommand}" />
                 <dxb:BarButtonItem x:Name="biFileSave" Content="Сохранить" ToolTip="Сохранить" Glyph="{dx:DXImage Image=Save_16x16.png}" LargeGlyph="{dx:DXImage Image=Save_32x32.png}" BarItemDisplayMode="ContentAndGlyph"  Command="{Binding SaveCommand}"/>
                 <dxb:BarItemLinkSeparator />
@@ -103,14 +111,10 @@
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarEditItem EditWidth="170" ToolTip="Начальная система координат" EditValue="{Binding Path=SelectedCoordinateEnumType, Converter={StaticResource EnumConvert}}">
                     <dxb:BarEditItem.EditSettings>
-
                         <dxe:ComboBoxEditSettings                               
                         Name="CoordinateCombobox"                         
                         ItemsSource="{Binding Path=CoordinateEnumTypeValues}">
-
                         </dxe:ComboBoxEditSettings>
-
-
                     </dxb:BarEditItem.EditSettings>
                 </dxb:BarEditItem>
                 <dxb:BarItemLinkSeparator />
@@ -125,50 +129,33 @@
                         <dxe:ComboBoxEditSettings
                             x:Name="SortCombobox" 
                             ItemsSource="{Binding Path=SortEnumTypeValues}" >
-
                         </dxe:ComboBoxEditSettings>
                     </dxb:BarEditItem.EditSettings>
                 </dxb:BarEditItem>
-
-
             </dxb:ToolBarControl>
         </dxb:BarContainerControl>
         <dxg:GridControl Name="GC" Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row"  EnableSmartColumnsGeneration="False"
                          ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItems="{Binding Selection}"  >
-
-            <!--SelectedItem="{Binding SelectedRow}"-->
-
-
             <dxg:GridControl.Columns>
                 <dxg:GridColumn Header="№" Width="50px" FieldName="Counter" UnboundType="Integer" >
-
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock HorizontalAlignment="Right" Margin="5,2,5,2" Text="{Binding RowData.RowHandle.Value, Converter={StaticResource  decimalconverter} }"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
-                    <!--FieldName="RectCoord.X"-->
-
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="X"  Binding="{Binding RectCoord.X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-
+                <dxg:GridColumn Header="X"  Binding="{Binding RectCoord.X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <dxg:GridColumn Header="Y"  Binding="{Binding RectCoord.Y, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <dxg:GridColumn Header="H"   Binding="{Binding RectCoord.H, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                <dxg:GridColumn Header="latitude" FieldName="GeoCoord.Lat" ReadOnly="True" />
-                <dxg:GridColumn Header="longitude" FieldName="GeoCoord.Lon" ReadOnly="True"/>
+                <dxg:GridColumn Header="latitude" Binding="{Binding GeoCoord.Lat, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ViewConverter}, ConverterParameter=lat}" ReadOnly="True" />
+                <dxg:GridColumn Header="longitude" Binding="{Binding GeoCoord.Lon, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ViewConverter}, ConverterParameter=lon}"  ReadOnly="True"/>
                 <dxg:GridColumn Header="H" FieldName="GeoCoord.H" ReadOnly="True" />
                 <dxg:GridColumn Header="Описание" FieldName="Description" />
-
-
-
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
-
-                <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" NewItemRowPosition="Bottom" 
-                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" />
+                <dxg:TableView AllowPerPixelScrolling="True" NewItemRowPosition="Bottom" 
+                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" SearchPanelAllowFilter="False" SearchPanelClearOnClose="False" SearchPanelHighlightResults="False" ShowSearchPanelCloseButton="False" AllowColumnFiltering="False" />
             </dxg:GridControl.View>
-
-
         </dxg:GridControl>
         <dxb:StatusBarControl Caption="StatusBar" Grid.Row="2"  ShowSizeGrip="True" GlyphSize="Small" AllowCustomizationMenu="False">
             <dxb:BarStaticItem x:Name="biTotalRows" Content="Кол-во строк:" ShowBorder="False"/>
@@ -178,10 +165,17 @@
             <dxb:BarStaticItem x:Name="biSelectedRowsCountValue" Content="{Binding  Selection.Count}" ShowBorder="False" />
             <dxb:BarItemLinkSeparator />
             <dxb:BarStaticItem x:Name="biSelectedRows" Content="Выделенные строки:" ShowBorder="False"/>
-            <dxb:BarStaticItem x:Name="biSelectedRowsValue" Content="{Binding IndexList}" ShowBorder="False"/>
-
-
-
+            <dxb:BarStaticItem x:Name="biSelectedRowsValue"   Content="{Binding IndexList}" ShowBorder="False" AutoSizeMode="Fill">
+                <dxb:BarStaticItem.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock MaxWidth="350" 
+                        Text="{Binding}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap"                           
+                        VerticalAlignment="Center" />
+                    </DataTemplate>
+                </dxb:BarStaticItem.ContentTemplate>
+            </dxb:BarStaticItem>
         </dxb:StatusBarControl>
 
         <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">

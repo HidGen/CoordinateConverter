@@ -26,16 +26,20 @@ namespace CoordinateConverter.FileInteractions
                      i++)
                 {
                     int x = 0;
-                    for (int j = workSheet.Dimension.Start.Column;
-                         j <= workSheet.Dimension.End.Column;
-                         j++)
+                    for (int j = workSheet.Dimension.Start.Column; j <= workSheet.Dimension.End.Column; j++)
                     {
                         if (workSheet.Cells[i, j].Value is double)
+                        {
                             x++;
+                        }
                         else
+                        {
                             x = 0;
+                        }
                         if (x == 3)
+                        {
                             rectCoords.Add(new RectCoord { X = (double)workSheet.Cells[i, j - 2].Value, Y = (double)workSheet.Cells[i, j - 1].Value, H = (double)workSheet.Cells[i, j].Value });
+                        }
                     }
                 }
             }
@@ -61,9 +65,7 @@ namespace CoordinateConverter.FileInteractions
                     var data = workSheet.Cells[string.Format("{0}:{1}", first, last)].Value as object[,];
                     var clns = data.GetLength(1);
                     var rws = data.GetLength(0);
-                    for (int i = 0;
-                         i <= rws - 1;
-                         i++)
+                    for (int i = 0; i <= rws - 1; i++)
                     {
                         int x = 0;
                         for (int j = 0;
@@ -71,11 +73,17 @@ namespace CoordinateConverter.FileInteractions
                              j++)
                         {
                             if (data[i, j] is double)
+                            {
                                 x++;
+                            }
                             else
+                            {
                                 x = 0;
+                            }
                             if (x == 3)
+                            {
                                 rectCoords.Add(new RectCoord { X = (double)data[i, j - 2], Y = (double)data[i, j - 1], H = (double)data[i, j] });
+                            }
                         }
                     }
                 }
@@ -118,40 +126,5 @@ namespace CoordinateConverter.FileInteractions
                 writer.WriteEndDocument();
             }
         }
-
-        //private bool ValidateRow(Excel.Range range, int clm)
-        //{
-        //    int x = 0;
-        //    for (int cCnt = 1; cCnt <= clm; cCnt++)
-        //    {
-        //        if ((range.Cells[1, cCnt] as Excel.Range).Value2 is double)
-        //            x++;
-        //        else
-        //            x = 0;
-        //        if (x == 3)
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-
-        //private RectCoord ReadRow(Excel.Range range, int clm)
-        //{
-        //    int x = 0;
-        //    for (int cCnt = 1; cCnt <= clm; cCnt++)
-        //    {
-        //        if ((range.Cells[1, cCnt] as Excel.Range).Value2 is double)
-        //            x++;
-        //        else
-        //            x = 0;
-        //        if (x == 3)
-        //        {
-        //            RectCoord rectCoord = new RectCoord { X = (range.Cells[1, cCnt - 2] as Excel.Range).Value2, Y = (range.Cells[1, cCnt - 1] as Excel.Range).Value2, H = (range.Cells[1, cCnt] as Excel.Range).Value2 };
-        //            return rectCoord;
-        //        }
-        //    }
-        //    throw new Exception("Строка в таблице имеет неверный формат");
-        //}
     }
 }
