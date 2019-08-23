@@ -21,7 +21,6 @@ namespace CoordinateConverter.ViewModel
             set
             {
                 clearCheck = value;
-                // OnPropertyChanged("SelectedCoordinateEnumType");
             }
         }
 

@@ -28,18 +28,14 @@ namespace CoordinateConverter.FileInteractions
                     int x = 0;
                     for (int j = workSheet.Dimension.Start.Column; j <= workSheet.Dimension.End.Column; j++)
                     {
-                        if (workSheet.Cells[i, j].Value is double)
-                        {
-                            x++;
-                        }
-                        else
-                        {
+                        if (workSheet.Cells[i, j].Value is double)                        
+                            x++;                        
+                        else                        
                             x = 0;
-                        }
-                        if (x == 3)
-                        {
+                        
+                        if (x == 3)                        
                             rectCoords.Add(new RectCoord { X = (double)workSheet.Cells[i, j - 2].Value, Y = (double)workSheet.Cells[i, j - 1].Value, H = (double)workSheet.Cells[i, j].Value });
-                        }
+                        
                     }
                 }
             }
@@ -72,18 +68,14 @@ namespace CoordinateConverter.FileInteractions
                              j <= clns - 1;
                              j++)
                         {
-                            if (data[i, j] is double)
-                            {
-                                x++;
-                            }
-                            else
-                            {
+                            if (data[i, j] is double)                            
+                                x++;                            
+                            else                            
                                 x = 0;
-                            }
-                            if (x == 3)
-                            {
+                            
+                            if (x == 3)                            
                                 rectCoords.Add(new RectCoord { X = (double)data[i, j - 2], Y = (double)data[i, j - 1], H = (double)data[i, j] });
-                            }
+                            
                         }
                     }
                 }

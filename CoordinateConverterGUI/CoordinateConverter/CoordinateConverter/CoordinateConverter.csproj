@@ -96,12 +96,15 @@
     <Compile Include="ObservableCollectionExstension.cs" />
     <Compile Include="ViewModel\ClearGridViewModel.cs" />
     <Compile Include="ViewModel\CloseBehavior.cs" />
+    <Compile Include="Model\CoordinateType.cs" />
     <Compile Include="ViewModel\CoordTypeConverter.cs" />
+    <Compile Include="Model\CoordViewType.cs" />
     <Compile Include="ViewModel\NumberConverter.cs" />
     <Compile Include="ViewModel\EnumConverter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\RangeChoiceViewModel.cs" />
     <Compile Include="ViewModel\SettingsWindowViewModel.cs" />
+    <Compile Include="Model\SortType.cs" />
     <Compile Include="View\ClearGridView.xaml.cs">
       <DependentUpon>ClearGridView.xaml</DependentUpon>
     </Compile>

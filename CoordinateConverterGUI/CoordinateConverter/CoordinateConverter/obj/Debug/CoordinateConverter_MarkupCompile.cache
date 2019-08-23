@@ -8,11 +8,11 @@ C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\Coordin
 CoordinateConverter
 none
 false
-DEBUG;TRACE
+CODE_ANALYSIS;DEBUG;TRACE
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\App.xaml
 4238092808
 
-28283938254
+311908342250
 31-1266404029
 MainWindow.xaml;View\ClearGridView.xaml;View\RangeChoiceWindow.xaml;View\SettingsWindow.xaml;
 

@@ -197,4 +197,5 @@ C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\Coordin
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\EPPlus.xml
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\View\ClearGridView.g.cs
 C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\View\ClearGridView.baml
-C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csprojAssemblyReference.cache
+C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\CoordinateConverter.exe.CodeAnalysisLog.xml
+C:\GITHUB\CoordinateConverter\CoordinateConverterGUI\CoordinateConverter\CoordinateConverter\bin\Debug\CoordinateConverter.exe.lastcodeanalysissucceeded

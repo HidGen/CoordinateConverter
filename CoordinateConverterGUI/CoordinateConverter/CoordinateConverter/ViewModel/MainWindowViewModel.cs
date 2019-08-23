@@ -25,46 +25,6 @@ using System.Windows;
 
 namespace CoordinateConverter.ViewModel
 {
-    [TypeConverter(typeof(EnumToStringConverter))]
-    public enum CoordinateType
-    {
-        [Description("МСК-46 зона 1")]
-        MSK461,
-        [Description("МСК-46 зона 2")]
-        MSK462,
-        [Description("СК-42")]
-        SK42,
-        [Description("СК-63")]
-        SK63
-    }
-
-
-    [TypeConverter(typeof(EnumToStringConverter))]
-    public enum SortType
-    {
-        [Description("X по возрастанию")]
-        MinMaxX,
-        [Description("X по убыванию")]
-        MaxMinX,
-        [Description("Y по возрастанию")]
-        MinMaxY,
-        [Description("Y по убыванию")]
-        MaxMinY,
-        [Description("H по возрастанию")]
-        MinMaxH,
-        [Description("H по убыванию")]
-        MaxMinH
-    }
-
-    [TypeConverter(typeof(EnumToStringConverter))]
-    public enum CoordViewType
-    {
-
-        [Description("Десятичные градусы")]
-        Decimal,
-        [Description("Градусы, минуты, секунды")]
-        MinSec
-    }
 
     public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
@@ -78,9 +38,10 @@ namespace CoordinateConverter.ViewModel
         private bool busy;
         private CoordConverter coordConverter;
         private ObservableCollection<int> indexes = new ObservableCollection<int>();
-        public string indexList;      
-       
-       
+        private ICommand settingsCommand;
+
+
+
 
 
         protected IDialogService ClearGridDialogService { get { return this.GetService<IDialogService>("ClearGridDialogService"); } }
@@ -96,16 +57,6 @@ namespace CoordinateConverter.ViewModel
             {
                 indexList = value;
                 NotifyPropertyChanged();            
-            }
-        }
-
-        public ObservableCollection<int> Indexes
-        {
-            get => indexes;
-            set
-            {
-                indexes = value;
-                NotifyPropertyChanged();
             }
         }
 
@@ -127,11 +78,8 @@ namespace CoordinateConverter.ViewModel
         {
             get
             {
-
                 return this.selection;
-
             }
-
         }
 
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
@@ -154,13 +102,10 @@ namespace CoordinateConverter.ViewModel
                     if (CompleteRows.Count != 0)
                     {
                         foreach (var completeRow in CompleteRows)
-                            completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, completeRow.RectCoord);                 
+                        completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, completeRow.RectCoord);                 
                     }
-
                     NotifyPropertyChanged();
                 }
-            
-
             }
         }
 
@@ -238,23 +183,22 @@ namespace CoordinateConverter.ViewModel
                             item.GeoCoordChanged();
                         }
                     }
-
-                }
-                
+                } 
             }
         }
-      
 
-        public ICommand OpenCommand { get; private set; }
-        public ICommand SaveCommand { get; private set; }
         public ICommand AddRowCommand { get; private set; }
-        public ICommand DeleteRowCommand { get; private set; }
-        public ICommand MoveUpCommand { get; private set; }
-        public ICommand MoveDownCommand { get; private set; }
-        public ICommand PasteCommand { get; private set; }
         public ICommand CopyCommand { get; private set; }
         public ICommand CutCommand { get; private set; }
+        public ICommand DeleteRowCommand { get; private set; }
+        public ICommand MoveDownCommand { get; private set; }
+        public ICommand MoveUpCommand { get; private set; }
+        public ICommand OpenCommand { get; private set; }
+        public ICommand PasteCommand { get; private set; }
+        public ICommand SaveCommand { get; private set; }
         public ICommand<SortType> SortCommand { get; private set; }
+        public string indexList;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindowViewModel()
         {
@@ -277,12 +221,10 @@ namespace CoordinateConverter.ViewModel
             CopyCommand = new DelegateCommand(CopyExecute, CopyCanExecute);
             CutCommand = new DelegateCommand(CutExecute, CutCanExecute);
             SortCommand = new DelegateCommand<SortType>(SortExecute, SortCanExecute);
-            Indexes = new ObservableCollection<int>();
             Selection.CollectionChanged += GetSelectedIndexes;
         }
 
 
-        private ICommand settingsCommand;
         public ICommand SettingsCommand
         {
             get
@@ -365,7 +307,6 @@ namespace CoordinateConverter.ViewModel
                 if (usedRange)
                 {
                     var rectCoords = await excelImporter.ReadRangeAsync(filename, rangeChoiceViewModel.First, rangeChoiceViewModel.Last);
-                   
                     AddRows(filename, rectCoords);
 
                 }
@@ -459,60 +400,33 @@ namespace CoordinateConverter.ViewModel
 
         private void MoveUpExecute()
         {
-            for (int i = 0; i < CompleteRows.Count; i++)
-            {
-                for (int j = 0; j < Selection.Count; j++)
-                {
-                    if (Selection[j] == CompleteRows[i])
-                    {
-                        CompleteRows.Move(i, i - 1);
-                        break;
-                    }
-                }
-            }
-
+            CompleteRows.MoveUp(Selection);
             GetSelectedIndexesMethod();
         }
 
         private bool MoveUpCanExecute()
         {
-            bool checkDown = default;
+            bool checkUp = default;
             foreach (var row in Selection)
             {
                 if (row == CompleteRows[0])
                 {
-                    checkDown = false;
+                    checkUp = false;
                     break;
                 }
                 else
                 {
-                    checkDown = true;
+                    checkUp = true;
                 }
             }
 
-            if (checkDown == true)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return checkUp;
         }
 
         private void MoveDownExecute()
         {
-            for (int i = CompleteRows.Count - 1; i >= 0; i--)
-            {
-                for (int j = 0; j < Selection.Count; j++)
-                {
-                    if (Selection[j] == CompleteRows[i])
-                    {
-                        CompleteRows.Move(i, i + 1);
-                        break;
-                    }
-                }
-            }
+            CompleteRows.MoveDown(Selection);
+
             GetSelectedIndexesMethod();
         }
 
@@ -531,14 +445,7 @@ namespace CoordinateConverter.ViewModel
                     checkDown = true;
                 }
             }
-            if (checkDown == true)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return checkDown;
         }
         private void PasteExecute()
         {
@@ -633,61 +540,26 @@ namespace CoordinateConverter.ViewModel
 
         public void GetSelectedIndexes(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Indexes.Clear();
-            for (int i = 0; i < CompleteRows.Count; i++)
-            {
-                for (int j = 0; j < Selection.Count; j++)
-                {
-                    if (Selection[j] == CompleteRows[i])
-                    {
-                        Indexes.Add(i + 1);
-                        break;
-                    }
-                }
-            }
-            IndexList = string.Empty;
-
-            for (int i = 0; i < Indexes.Count; i++)
-            {
-                if (i != (Indexes.Count - 1))
-                {
-                    IndexList += Indexes[i] + "; ";
-                }
-                else
-                {
-                    IndexList += Indexes[i];
-                }
-            }
+            GetSelectedIndexesMethod();
         }
 
         public void GetSelectedIndexesMethod()
         {
-            Indexes.Clear();
-            for (int i = 0; i < CompleteRows.Count; i++)
-            {
-                for (int j = 0; j < Selection.Count; j++)
-                {
-                    if (Selection[j] == CompleteRows[i])
-                    {
-                        // CompleteRows.Move(i, i + 1);
-                        Indexes.Add(i + 1);
-                        break;
-                    }
-                }
-            }
-            IndexList = string.Empty;
+            if (Selection.Count == 0)
+                return;
 
-            for (int i = 0; i < Indexes.Count; i++)
-            {
-                if (i != (Indexes.Count - 1))
-                {
-                    IndexList += Indexes[i] + "; ";
-                }
-                else
-                {
-                    IndexList += Indexes[i];
-                }
-            }
+            var tempIndexes = new List<int>();
+
+            foreach (var item in Selection)
+                tempIndexes.Add(CompleteRows.IndexOf(item) + 1);
+
+
+            var strBld = new StringBuilder();
+            foreach (var index in tempIndexes.OrderBy(x=>x))            
+                strBld.Append(index + "; ");
+
+            strBld.Remove(strBld.Length - 2, 2);
+            IndexList = strBld.ToString();
         }
 
         public void SortMinMax(SortType type)
@@ -727,7 +599,7 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
