@@ -11,21 +11,9 @@ namespace CoordinateConverter.ViewModel
     public class NumberConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        { int i;
-            try
-            {
-                i = System.Convert.ToInt32(value);
-            }
-            catch
-            {
-                throw new NotImplementedException();
-            }
-            if (i >= 0 )
-            {
-                return i+1;
-            }
-            else 
-            { return null; }   
+        {
+            var i = System.Convert.ToInt32(value);
+            return i >= 0 ? i + 1 : (object)null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

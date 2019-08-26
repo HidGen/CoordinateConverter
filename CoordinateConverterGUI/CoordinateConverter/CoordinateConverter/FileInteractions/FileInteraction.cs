@@ -79,11 +79,27 @@ namespace CoordinateConverter.FileInteractions
                         }
                     }
                 }
+                if (rectCoords.Count == 0)
+                {
+                    MessageBox.Show(
+                        "В данном диапазоне не найдено ни одной записи!",
+                        "Внимание!",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Exclamation
+                        );
+                }
                 return rectCoords;
             }
             catch
             {
-                MessageBox.Show("Неверный диапазон данных или имя файла.");
+                
+                MessageBox.Show(
+                        "Неверный диапазон данных или имя файла.",
+                        "Ошибка",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                        );
+
                 return new List<RectCoord>();
             }
 

@@ -1,19 +1,22 @@
 ﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CoordinateConverter.ViewModel
 {
-    public class SettingsWindowViewModel
+    public class SettingsWindowViewModel: ViewModelBase
     {
         public event EventHandler<SettingsWindowArgs> EditEnded;
 
         public bool clearCheck;
+        protected ICurrentWindowService Service { get { return this.GetService<ICurrentWindowService>(); } }
 
         public bool ClearCheck {
 
@@ -69,10 +72,24 @@ namespace CoordinateConverter.ViewModel
 
         private void OnEditEnded(CoordinateType coordinateType, bool clearCheck, CoordViewType viewType)
         {
+            try
+            { 
             Properties.Settings.Default.ClearCheck = clearCheck;
             Properties.Settings.Default.CoordView = viewType;
             Properties.Settings.Default.Save();
             EditEnded?.Invoke(this, new SettingsWindowArgs(coordinateType));
+                Service.Close();
+            }
+            catch
+            {
+                MessageBox.Show(
+                 "Не удалось выполнить операцию",
+                 "Ошибка",
+                 MessageBoxButton.OK,
+                 MessageBoxImage.Error
+                 );
+                return;
+            }
         }
 
         private ICommand returnCommand;
@@ -107,6 +124,5 @@ namespace CoordinateConverter.ViewModel
             public bool ClearCheck { get; }
           
         }
-
     }
 }

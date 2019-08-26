@@ -11,15 +11,22 @@ namespace CoordinateConverter.ClipboardInteractions
     {
         public void CopyFromTable(IList<CompleteRow> completeRows)
         {
-            string str = string.Empty;
+            StringBuilder str = new StringBuilder();
             foreach (var completeRow in completeRows)
             {
-                str += completeRow.RectCoord.X.ToString() + '\t' + completeRow.RectCoord.Y.ToString() + '\t' + completeRow.RectCoord.H.ToString()
-                    + '\t' + completeRow.GeoCoord.Lat.ToString() + '\t' + completeRow.GeoCoord.Lon.ToString() + '\t' + completeRow.GeoCoord.H.ToString() + '\t'
-                    + completeRow.Description + '\r' + '\n';
+                str.AppendLine(
+                    completeRow.RectCoord.X.ToString() + '\t' +
+                    completeRow.RectCoord.Y.ToString() + '\t' + 
+                    completeRow.RectCoord.H.ToString() + '\t' + 
+                    completeRow.GeoCoord.Lat.ToString() + '\t' +
+                    completeRow.GeoCoord.Lon.ToString() + '\t' + 
+                    completeRow.GeoCoord.H.ToString() + '\t' + 
+                    completeRow.Description);
             }
+
+            var test = str.ToString();
             var dataObject = new System.Windows.DataObject();
-            dataObject.SetText(str);
+            dataObject.SetText(str.ToString());
             System.Windows.Clipboard.SetDataObject(dataObject, true);
         }
     }
