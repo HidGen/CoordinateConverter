@@ -27,12 +27,5 @@ namespace CoordinateConverter
             InitializeComponent();
            
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-       //  CoordinateCombobox.ItemsSource = Enum.GetValues(typeof(CoordinateType)).Cast<CoordinateType>();
-            //   var viewModel = DataContext as MainWindowViewModel;
-            //   viewModel.Load();
-        }
     }
 }

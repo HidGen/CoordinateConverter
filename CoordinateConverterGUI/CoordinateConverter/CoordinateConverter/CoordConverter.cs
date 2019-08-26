@@ -32,9 +32,7 @@ namespace CoordinateConverter
                     break;
                 case CoordinateType.SK63:
                     throw new Exception("Coordinate system isn't supported yet");
-#pragma warning disable CS0162 // Обнаружен недостижимый код
                     BasicTypeString = @"";
-#pragma warning restore CS0162 // Обнаружен недостижимый код
                     break;
             }
         }

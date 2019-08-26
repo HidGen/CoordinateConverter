@@ -12,6 +12,8 @@
         xmlns:dxnav="http://schemas.devexpress.com/winfx/2008/xaml/navigation"
         xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
         xmlns:view="clr-namespace:CoordinateConverter.View"
+
+
         local:InputBindingsBehavior.TakesInputBindingPrecedence="True"
         x:Class="CoordinateConverter.MainWindow" mc:Ignorable="d"
         MinWidth="550px" 
@@ -19,7 +21,8 @@
         Title="CoordinateConverter"
         Background="Azure" 
         Height="450" 
-        Width="850" >
+        Width="850" 
+   >
 
     <dxmvvm:Interaction.Behaviors>
         <dx:DialogService x:Name="ClearGridDialogService">
@@ -64,9 +67,12 @@
         <viewmodel:EnumConverter x:Key="EnumConvert"/>
         <viewmodel:NumberConverter x:Key="decimalconverter"/>
         <viewmodel:CoordTypeConverter x:Key="ViewConverter"/>
+       
     </Window.Resources>
 
-    <Grid>
+
+   
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -135,7 +141,8 @@
             </dxb:ToolBarControl>
         </dxb:BarContainerControl>
         <dxg:GridControl Name="GC" Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row"  EnableSmartColumnsGeneration="False"
-                         ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItems="{Binding Selection}"  >
+                         ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItems="{Binding Selection}" 
+                         >
             <dxg:GridControl.Columns>
                 <dxg:GridColumn Header="№" Width="50px" FieldName="Counter" UnboundType="Integer" >
                     <dxg:GridColumn.CellTemplate>
@@ -147,9 +154,9 @@
                 <dxg:GridColumn Header="X"  Binding="{Binding RectCoord.X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <dxg:GridColumn Header="Y"  Binding="{Binding RectCoord.Y, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <dxg:GridColumn Header="H"   Binding="{Binding RectCoord.H, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                <dxg:GridColumn Header="latitude" Binding="{Binding GeoCoord.Lat, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ViewConverter}, ConverterParameter=lat}" ReadOnly="True" />
-                <dxg:GridColumn Header="longitude" Binding="{Binding GeoCoord.Lon, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ViewConverter}, ConverterParameter=lon}"  ReadOnly="True"/>
-                <dxg:GridColumn Header="H" FieldName="GeoCoord.H" ReadOnly="True" />
+                <dxg:GridColumn Header="Широта" Binding="{Binding GeoCoord.Lat, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ViewConverter}, ConverterParameter=lat}" ReadOnly="True" />
+                <dxg:GridColumn Header="Долгота" Binding="{Binding GeoCoord.Lon, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ViewConverter}, ConverterParameter=lon}"  ReadOnly="True"/>
+                <dxg:GridColumn Header="Высота" FieldName="GeoCoord.H" ReadOnly="True" />
                 <dxg:GridColumn Header="Описание" FieldName="Description" />
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
@@ -178,11 +185,11 @@
             </dxb:BarStaticItem>
         </dxb:StatusBarControl>
 
-        <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible">
+        <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible" >
             <dx:WaitIndicator.ContentTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Please Wait" FontSize="20"/>
+                        <TextBlock Text="Пожалуйста, подождите" FontSize="20"/>
                         <TextBlock Text="{Binding}"/>
                     </StackPanel>
                 </DataTemplate>

@@ -6,9 +6,14 @@
         xmlns:local="clr-namespace:CoordinateConverter.View"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"  
         ResizeMode="NoResize"
         mc:Ignorable="d"
         Title="Настройки" Height="250" Width="430">
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService />
+    </dxmvvm:Interaction.Behaviors>
 
     <Window.Resources>
         <viewmodel:EnumConverter x:Key="EnumConvert"/>
@@ -32,11 +37,9 @@
         <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10"  MinWidth="100px" Width="150" ItemsSource="{Binding CoordTypeValues}" SelectedItem="{Binding SelectedCoordViewType}"/>
         <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap" Text="Запомнить выбор очистки таблицы" FontSize="12"/>
         <CheckBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" IsChecked="{Binding Path=ClearCheck}" />
-        <Button Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30px" Width="70px" Margin="10" Content="OK" FontSize="14" Command="{Binding ReturnCommand}">
-            <i:Interaction.Behaviors>
-                <viewmodel:CloseBehavior/>
-            </i:Interaction.Behaviors>
-        </Button>
+
+        <Button Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30px" Width="70px" Margin="10" Content="OK" FontSize="14" Command="{Binding ReturnCommand}"/>
+
 
     </Grid>
 </Window>

@@ -95,7 +95,6 @@
     <Compile Include="Model\RectCoord.cs" />
     <Compile Include="ObservableCollectionExstension.cs" />
     <Compile Include="ViewModel\ClearGridViewModel.cs" />
-    <Compile Include="ViewModel\CloseBehavior.cs" />
     <Compile Include="Model\CoordinateType.cs" />
     <Compile Include="ViewModel\CoordTypeConverter.cs" />
     <Compile Include="Model\CoordViewType.cs" />

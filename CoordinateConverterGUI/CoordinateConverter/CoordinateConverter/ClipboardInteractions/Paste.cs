@@ -34,8 +34,15 @@ namespace CoordinateConverter.ClipboardInteractions
                     }
                     catch
                     {
-                        MessageBox.Show("Неверный формат строки в буфере обмена");
-                        rectCoords.Clear();
+                      
+                        MessageBox.Show(
+                         "Неверный формат строки в буфере обмена",
+                         "Ошибка",
+                         MessageBoxButton.OK,
+                         MessageBoxImage.Error
+                         );
+                    
+                    rectCoords.Clear();
                         break;
                     }
                 }

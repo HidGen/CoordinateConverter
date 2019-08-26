@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CoordinateConverter.Model
 {
-    public class CompleteRow:INotifyPropertyChanged
+    public class CompleteRow: BindableBase
     {
 
         public event EventHandler RectCoordPropertyChanged;
@@ -38,7 +39,7 @@ namespace CoordinateConverter.Model
             set
             {
                 geoCoord = value;
-                NotifyPropertyChanged();
+                RaisePropertyChanged(nameof(geoCoord));
             }
         }
 
@@ -48,15 +49,9 @@ namespace CoordinateConverter.Model
             RectCoordPropertyChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         internal void GeoCoordChanged()
         {
-            NotifyPropertyChanged(nameof(GeoCoord));
+            RaisePropertyChanged(nameof(geoCoord));
         }
     }
 }

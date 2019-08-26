@@ -49,10 +49,17 @@ namespace CoordinateConverter.ViewModel
             {
                 Properties.Settings.Default.ClearCheck = value;
                 Properties.Settings.Default.Save();
+                throw new NotImplementedException();
             }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.ToString());
+            catch 
+            {               
+                MessageBox.Show(
+                  "Произошла ошибка в работе программы",
+                  "Ошибка",
+                  MessageBoxButton.OK,
+                  MessageBoxImage.Error
+                  );
+                return;
             }            
         }
 
