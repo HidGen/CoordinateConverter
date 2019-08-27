@@ -119,19 +119,35 @@ namespace CoordinateConverter.FileInteractions
             settings.NewLineOnAttributes = true;
             using (XmlWriter writer = XmlWriter.Create(path, settings))
             {
-                writer.WriteStartDocument();
-                writer.WriteStartElement("GeoCoords");
 
+                writer.WriteStartDocument(false);
+                writer.WriteStartElement("gpx", "http://www.topografix.com/GPX/1/1");
+                writer.WriteAttributeString("xmlns", "http://www.topografix.com/GPX/1/1");
+                writer.WriteAttributeString("xmlns", "gpxx", null, "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+                writer.WriteAttributeString("xmlns", "wptxl", null, "http://www.garmin.com/xmlschemas/WaypointExtension/v1");
+                writer.WriteAttributeString("xmlns", "gpxtpx", null, "http://www.garmin.com/xmlschemas/TrackPointExtension/v1");
+                writer.WriteAttributeString("creator", "Oregon 650");
+                writer.WriteAttributeString("version", "1.1");
+                writer.WriteAttributeString("xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
+                writer.WriteAttributeString("xsi", "schemaLocation", null, "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackStatsExtension/v1 http://www8.garmin.com/xmlschemas/TrackStatsExtension.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd");
+                writer.WriteStartElement("metadata");
+                writer.WriteStartElement("link");
+                writer.WriteAttributeString("href", "http://www.garmin.com");
+                writer.WriteElementString("text", "Garmin International");
+                writer.WriteEndElement();
+                writer.WriteElementString("time", DateTime.UtcNow.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
+                writer.WriteEndElement();
                 foreach (GeoCoord geoCoord in geoCoords)
                 {
-                    writer.WriteStartElement("GeoCoord");
-                    writer.WriteElementString("lat", geoCoord.Lat.ToString());
-                    writer.WriteElementString("long", geoCoord.Lon.ToString());
+                    writer.WriteStartElement("wpt");
+                    writer.WriteAttributeString("lat", geoCoord.Lat.ToString());
+                    writer.WriteAttributeString("long", geoCoord.Lon.ToString());
+                    writer.WriteElementString("ele", geoCoord.H.ToString());
                     writer.WriteEndElement();
                 }
-
                 writer.WriteEndElement();
                 writer.WriteEndDocument();
+
             }
         }
     }

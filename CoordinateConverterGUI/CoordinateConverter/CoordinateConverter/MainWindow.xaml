@@ -10,6 +10,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CoordinateConverter"
         xmlns:dxnav="http://schemas.devexpress.com/winfx/2008/xaml/navigation"
+
         xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
         xmlns:view="clr-namespace:CoordinateConverter.View"
 
@@ -69,7 +70,7 @@
         <viewmodel:CoordTypeConverter x:Key="ViewConverter"/>
        
     </Window.Resources>
-
+    <Border>
 
    
         <Grid>
@@ -142,6 +143,8 @@
         </dxb:BarContainerControl>
         <dxg:GridControl Name="GC" Grid.Row="1" Margin="0,5,0,0" SelectionMode="Row"  EnableSmartColumnsGeneration="False"
                          ItemsSource="{Binding CompleteRows, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItems="{Binding Selection}" 
+                         AllowDrop="True"
+                              viewmodel:FileDragDropHelper.IsFileDragDropEnabled="True" viewmodel:FileDragDropHelper.FileDragDropTarget="{Binding}"
                          >
             <dxg:GridControl.Columns>
                 <dxg:GridColumn Header="№" Width="50px" FieldName="Counter" UnboundType="Integer" >
@@ -159,11 +162,11 @@
                 <dxg:GridColumn Header="Высота" FieldName="GeoCoord.H" ReadOnly="True" />
                 <dxg:GridColumn Header="Описание" FieldName="Description" />
             </dxg:GridControl.Columns>
-            <dxg:GridControl.View>
-                <dxg:TableView AllowPerPixelScrolling="True" NewItemRowPosition="Bottom" 
+                <dxg:GridControl.View>
+                    <dxg:TableView AllowPerPixelScrolling="True" NewItemRowPosition="Bottom" 
                                ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" SearchPanelAllowFilter="False" SearchPanelClearOnClose="False" SearchPanelHighlightResults="False" ShowSearchPanelCloseButton="False" AllowColumnFiltering="False" />
-            </dxg:GridControl.View>
-        </dxg:GridControl>
+                </dxg:GridControl.View>
+            </dxg:GridControl>
         <dxb:StatusBarControl Caption="StatusBar" Grid.Row="2"  ShowSizeGrip="True" GlyphSize="Small" AllowCustomizationMenu="False">
             <dxb:BarStaticItem x:Name="biTotalRows" Content="Кол-во строк:" ShowBorder="False"/>
             <dxb:BarStaticItem x:Name="biTotalRowsValue" Content= "{Binding  CompleteRows.Count}" ShowBorder="False"/>
@@ -185,8 +188,9 @@
             </dxb:BarStaticItem>
         </dxb:StatusBarControl>
 
-        <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible" >
-            <dx:WaitIndicator.ContentTemplate>
+            <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible" AllowDrop="True"
+                              viewmodel:FileDragDropHelper.IsFileDragDropEnabled="True" viewmodel:FileDragDropHelper.FileDragDropTarget="{Binding}">
+                <dx:WaitIndicator.ContentTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Пожалуйста, подождите" FontSize="20"/>
@@ -196,4 +200,5 @@
             </dx:WaitIndicator.ContentTemplate>
         </dx:WaitIndicator>
     </Grid>
+    </Border>
 </Window>

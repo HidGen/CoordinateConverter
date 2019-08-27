@@ -49,7 +49,7 @@ namespace CoordinateConverter.ViewModel
             {
                 Properties.Settings.Default.ClearCheck = value;
                 Properties.Settings.Default.Save();
-                throw new NotImplementedException();
+               
             }
             catch 
             {               
