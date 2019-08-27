@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>CoordinateConverter</RootNamespace>
     <AssemblyName>CoordinateConverter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -88,6 +88,7 @@
     <Compile Include="EnumToStringConverter.cs" />
     <Compile Include="FileInteractions\FileInteraction.cs" />
     <Compile Include="FileInteractions\IExcelFileOpen.cs" />
+    <Compile Include="FileInteractions\IDragDropTarget.cs" />
     <Compile Include="FileInteractions\IXmlFileSave.cs" />
     <Compile Include="InputBindingsBehavior.cs" />
     <Compile Include="Model\CompleteRow.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Model\CoordinateType.cs" />
     <Compile Include="ViewModel\CoordTypeConverter.cs" />
     <Compile Include="Model\CoordViewType.cs" />
+    <Compile Include="ViewModel\FileDragDropHelper.cs" />
     <Compile Include="ViewModel\NumberConverter.cs" />
     <Compile Include="ViewModel\EnumConverter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

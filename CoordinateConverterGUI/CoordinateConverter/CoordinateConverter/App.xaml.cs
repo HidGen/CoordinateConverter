@@ -13,5 +13,6 @@ namespace CoordinateConverter
     /// </summary>
     public partial class App : Application
     {
+     
     }
 }
