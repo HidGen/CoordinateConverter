@@ -1,28 +1,19 @@
 ﻿using CoordinateConverter.View;
-
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.ComponentModel;
-using System.Reflection;
-using System.Xml.Linq;
-
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using CoordinateConverter.Model;
 using CoordinateConverter.FileInteractions;
-
 using Microsoft.Win32;
 using System.Collections.Specialized;
 using CoordinateConverter.ClipboardInteractions;
 using System.Windows;
-using DevExpress.Xpf.Core;
+
 
 namespace CoordinateConverter.ViewModel
 {
@@ -71,7 +62,8 @@ namespace CoordinateConverter.ViewModel
 
         public ObservableCollection<CompleteRow> CompleteRows { get; }
 
-        public ObservableCollection<CompleteRow> Selection { get; private set; }
+        public ObservableCollection<CompleteRow> Selection { get;
+            private set; }
 
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
         {
@@ -117,29 +109,26 @@ namespace CoordinateConverter.ViewModel
                 selectedSortEnumType = value;
                 if (CompleteRows.Count != 0)
                 {
-                    if (SelectedSortEnumType == SortType.MinMaxX)
+                    switch (SelectedSortEnumType)
                     {
-                        SortMinMax(SortType.MinMaxX);
-                    }
-                    else if (SelectedSortEnumType == SortType.MaxMinX)
-                    {
-                        SortMinMax(SortType.MaxMinX);
-                    }
-                    else if (SelectedSortEnumType == SortType.MinMaxY)
-                    {
-                        SortMinMax(SortType.MinMaxY);
-                    }
-                    else if (SelectedSortEnumType == SortType.MaxMinY)
-                    {
-                        SortMinMax(SortType.MaxMinY);
-                    }
-                    else if (SelectedSortEnumType == SortType.MinMaxH)
-                    {
-                        SortMinMax(SortType.MinMaxH);
-                    }
-                    else if (SelectedSortEnumType == SortType.MaxMinH)
-                    {
-                        SortMinMax(SortType.MaxMinH);
+                        case SortType.MinMaxX:
+                            SortMinMax(SortType.MinMaxX);
+                            break;
+                        case SortType.MaxMinX:
+                            SortMinMax(SortType.MaxMinX);
+                            break;
+                        case SortType.MinMaxY:
+                            SortMinMax(SortType.MinMaxY);
+                            break;
+                        case SortType.MaxMinY:
+                            SortMinMax(SortType.MaxMinY);
+                            break;
+                        case SortType.MinMaxH:
+                            SortMinMax(SortType.MinMaxH);
+                            break;
+                        case SortType.MaxMinH:
+                            SortMinMax(SortType.MaxMinH);
+                            break;
                     }
                 }
                 RaisePropertyChanged(nameof(SelectedSortEnumType));
@@ -260,11 +249,9 @@ namespace CoordinateConverter.ViewModel
                         dialogCommands: clearGridViewmodel.GetCommands(),
                         title: "Открыть",
                         viewModel: clearGridViewmodel);
-
-                    if (clearResult == null)
-                    {
+                    if (clearResult == null)                    
                         return;
-                    }
+                    
                 }
 
                 var dlg = new OpenFileDialog();
@@ -663,7 +650,11 @@ namespace CoordinateConverter.ViewModel
         public void GetSelectedIndexesMethod()
         {
             if (Selection.Count == 0)
+            {
+                IndexList = string.Empty;
                 return;
+            }
+             
 
             var tempIndexes = new List<int>();
 

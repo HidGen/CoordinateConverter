@@ -14,6 +14,4 @@ namespace CoordinateConverter.ViewModel
         [Description("СК-63")]
         SK63
     }
-
-
 }
