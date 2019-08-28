@@ -1,9 +1,6 @@
 ﻿using CoordinateConverter.FileInteractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -41,8 +38,44 @@ namespace CoordinateConverter.ViewModel
         {
             if (e.NewValue == e.OldValue) return;
             var control = d as Control;
-            if (control != null) control.Drop += OnDrop;
+            if (control != null)
+            {
+                control.Drop += OnDrop;
+                control.DragOver += OnDragOver;
+                control.DragEnter += OnDragOver;
+            }
         }
+
+        private static void OnDragOver(object sender, DragEventArgs e)
+        {
+            DependencyObject d = sender as DependencyObject;
+            if (d == null) return;
+            Object target = d.GetValue(FileDragDropTargetProperty);
+            IDragDropTarget fileTarget = target as IDragDropTarget;
+            if (fileTarget != null)
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var filenames = ((string[])e.Data.GetData(DataFormats.FileDrop));
+                    foreach (var filename in filenames)
+                    {
+                        string c = Path.GetExtension(filename);
+                        if (c == ".xls" || c == ".xlsm" || c == ".xlsx")
+                            e.Effects = DragDropEffects.Move;
+                        else
+                        {
+                            e.Effects = DragDropEffects.None;
+                            break;
+                        }
+
+                    }
+                    e.Handled = true;
+                }
+            }
+
+
+        }
+
 
         private static void OnDrop(object _sender, DragEventArgs _dragEventArgs)
         {
@@ -56,9 +89,9 @@ namespace CoordinateConverter.ViewModel
                 {
                     fileTarget.OnFileDrop((string[])_dragEventArgs.Data.GetData(DataFormats.FileDrop));
                 }
-                else if((_dragEventArgs.Data.GetDataPresent(DataFormats.Text)))
+                else if ((_dragEventArgs.Data.GetDataPresent(DataFormats.Text)))
                 {
-                   fileTarget.OnTextDrop((string)_dragEventArgs.Data.GetData(DataFormats.Text));
+                    fileTarget.OnTextDrop((string)_dragEventArgs.Data.GetData(DataFormats.Text));
                 }
             }
 
