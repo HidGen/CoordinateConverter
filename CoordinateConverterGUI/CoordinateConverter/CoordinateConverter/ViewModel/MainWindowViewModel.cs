@@ -260,7 +260,7 @@ namespace CoordinateConverter.ViewModel
                 var dlg = new OpenFileDialog();
                 dlg.FileName = "Документ";
                 dlg.DefaultExt = ".xls";
-                dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
+                dlg.Filter = "Файл Excel (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
                 dlg.Multiselect = true;
                 dlg.Title = "Выбор файла";
                 var result = dlg.ShowDialog();
@@ -347,7 +347,7 @@ namespace CoordinateConverter.ViewModel
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.FileName = "Документ"; // Default file name
                 saveFileDialog.DefaultExt = ".xml"; // Default file extension
-                saveFileDialog.Filter = "Xml documents (.xml)|*.xml|All files (*.*)|*.*";
+                saveFileDialog.Filter = "Файл Xml (.xml)|*.xml|All files (*.*)|*.*";
 
                 var geoCoords = CompleteRows.Select(x => x.GeoCoord).ToList();
 

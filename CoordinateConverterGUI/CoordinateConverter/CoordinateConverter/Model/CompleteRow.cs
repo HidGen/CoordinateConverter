@@ -1,11 +1,5 @@
 ﻿using DevExpress.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoordinateConverter.Model
 {
@@ -39,7 +33,7 @@ namespace CoordinateConverter.Model
             set
             {
                 geoCoord = value;
-                RaisePropertyChanged(nameof(geoCoord));
+                RaisePropertyChanged(nameof(GeoCoord));
             }
         }
 
@@ -51,7 +45,7 @@ namespace CoordinateConverter.Model
 
         internal void GeoCoordChanged()
         {
-            RaisePropertyChanged(nameof(geoCoord));
+            RaisePropertyChanged(nameof(GeoCoord));
         }
     }
 }

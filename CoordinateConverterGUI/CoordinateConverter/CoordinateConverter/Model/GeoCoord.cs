@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DevExpress.Mvvm;
 
 namespace CoordinateConverter.Model
 {
-    public class GeoCoord
+    public class GeoCoord : BindableBase
     {
         public double Lat { get; set; }
         public double Lon { get; set; }
-        public double H { get; set; }
+        private double h;
+        public double H { get => h; set
+            {
+                h = value;
+                RaisePropertiesChanged(nameof(H));
+            } }
     }
 }

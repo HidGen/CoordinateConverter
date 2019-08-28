@@ -59,6 +59,13 @@
         <KeyBinding Key="X" Modifiers="Control" Command="{Binding CutCommand}" />
         <KeyBinding Key="C" Modifiers="Control" Command="{Binding CopyCommand}" />
         <KeyBinding Key="V" Modifiers="Control" Command="{Binding PasteCommand}" />
+        <KeyBinding Key="Delete" Modifiers="Shift"  Command="{Binding DeleteRowCommand}" />
+        <KeyBinding Key="Add" Command="{Binding AddRowCommand}" />
+        <KeyBinding Key="Up" Modifiers="Ctrl"  Command="{Binding MoveUpCommand}" />
+        <KeyBinding Key="Down" Modifiers="Ctrl"  Command="{Binding MoveDownCommand}" />
+        <KeyBinding Key="S" Modifiers="Ctrl"  Command="{Binding SaveCommand}" />
+        <KeyBinding Key="O" Modifiers="Ctrl"  Command="{Binding OpenCommand}" />
+        <KeyBinding Key="F1" Command="{Binding SettingsCommand}" />
     </Window.InputBindings>
 
     <Window.DataContext>
@@ -84,18 +91,18 @@
             <dxb:BarContainerControl>
                 <dxb:MainMenuControl AllowCustomizationMenu="False">
                     <dxb:BarSubItem x:Name="biFile" Content="Файл" >
-                        <dxb:BarButtonItem x:Name="FileOpen" Content="Открыть" Glyph="{dx:DXImage Image=Open_16x16.png}" LargeGlyph="{dx:DXImage Image=Open_32x32.png}" Command="{Binding OpenCommand}"/>
-                        <dxb:BarButtonItem x:Name="FileSave" Content="Сохранить" Glyph="{dx:DXImage Image=Save_16x16.png}" LargeGlyph="{dx:DXImage Image=Save_32x32.png}" Command="{Binding SaveCommand}"/>
+                        <dxb:BarButtonItem x:Name="FileOpen" Content="Открыть" ToolTip="Открыть (Ctrl + O)" Glyph="{dx:DXImage Image=Open_16x16.png}" LargeGlyph="{dx:DXImage Image=Open_32x32.png}" Command="{Binding OpenCommand}"/>
+                        <dxb:BarButtonItem x:Name="FileSave" Content="Сохранить" ToolTip="Сохранить (Ctrl + S)" Glyph="{dx:DXImage Image=Save_16x16.png}" LargeGlyph="{dx:DXImage Image=Save_32x32.png}" Command="{Binding SaveCommand}"/>
                     </dxb:BarSubItem>
                     <dxb:BarSubItem x:Name="biCopyPaste" Content="Правка">
-                        <dxb:BarButtonItem x:Name="Cut" Content="Вырезать" Glyph="{dx:DXImage Image=Cut_16x16.png}" LargeGlyph="{dx:DXImage Image=Cut_32x32.png}"  Command="{Binding CutCommand}" />
-                        <dxb:BarButtonItem x:Name="Copy" Content="Скопировать" Glyph="{dx:DXImage Image=Copy_16x16.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}" Command="{Binding CopyCommand}"/>
-                        <dxb:BarButtonItem x:Name="Paste" Content="Вставить" Glyph="{dx:DXImage Image=Paste_16x16.png}" LargeGlyph="{dx:DXImage Image=Paste_32x32.png}"  Command="{Binding PasteCommand}"/>
+                        <dxb:BarButtonItem x:Name="Cut" Content="Вырезать" ToolTip="Вырезать (Ctrl + X)" Glyph="{dx:DXImage Image=Cut_16x16.png}" LargeGlyph="{dx:DXImage Image=Cut_32x32.png}"  Command="{Binding CutCommand}" />
+                        <dxb:BarButtonItem x:Name="Copy" Content="Копировать" ToolTip="Копировать (Ctrl + C)" Glyph="{dx:DXImage Image=Copy_16x16.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}" Command="{Binding CopyCommand}"/>
+                        <dxb:BarButtonItem x:Name="Paste" Content="Вставить" ToolTip="Вставить (Ctrl + V)" Glyph="{dx:DXImage Image=Paste_16x16.png}" LargeGlyph="{dx:DXImage Image=Paste_32x32.png}"  Command="{Binding PasteCommand}"/>
                         <dxb:BarItemLinkSeparator />
-                        <dxb:BarButtonItem x:Name="RowAdd" Content="Добавить строку" Glyph="{dx:DXImage Image=Add_16x16.png}" LargeGlyph="{dx:DXImage Image=Add_32x32.png}" Command="{Binding AddRowCommand}" />
-                        <dxb:BarButtonItem x:Name="RowDelete" Content="Удалить строку" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" Command="{Binding DeleteRowCommand}"/>
-                        <dxb:BarButtonItem x:Name="RowUp" Content="Перенести строку вверх" Glyph="{dx:DXImage Image=MoveUp_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveUp_32x32.png}" Command="{Binding MoveUpCommand}"/>
-                        <dxb:BarButtonItem x:Name="RowDown" Content="Перенести строку вниз" Glyph="{dx:DXImage Image=MoveDown_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveDown_32x32.png}" Command="{Binding MoveDownCommand}"/>
+                        <dxb:BarButtonItem x:Name="RowAdd" Content="Добавить строку" ToolTip="Добавить строку (+)" Glyph="{dx:DXImage Image=Add_16x16.png}" LargeGlyph="{dx:DXImage Image=Add_32x32.png}" Command="{Binding AddRowCommand}" />
+                        <dxb:BarButtonItem x:Name="RowDelete" Content="Удалить строку" ToolTip="Удалить строку (Shift + Del)" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" Command="{Binding DeleteRowCommand}"/>
+                        <dxb:BarButtonItem x:Name="RowUp" Content="Перенести строку вверх" ToolTip="Перенести строку вверх (Ctrl + Up)" Glyph="{dx:DXImage Image=MoveUp_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveUp_32x32.png}" Command="{Binding MoveUpCommand}"/>
+                        <dxb:BarButtonItem x:Name="RowDown" Content="Перенести строку вниз" ToolTip="Перенести строку вниз (Ctrl + Down)" Glyph="{dx:DXImage Image=MoveDown_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveDown_32x32.png}" Command="{Binding MoveDownCommand}"/>
                         <dxb:BarItemLinkSeparator />
                         <dxb:BarSubItem Name="sb2" Content="Сортировка" >
                             <dxb:BarButtonItem x:Name="xminmaxbt" Content="по возрастанию X"  Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MinMaxX}"/>
@@ -106,16 +113,16 @@
                             <dxb:BarButtonItem x:Name="hmaxminbt" Content="по убыванию H" Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MaxMinH}"/>
                         </dxb:BarSubItem>
                         <dxb:BarItemLinkSeparator />
-                        <dxb:BarButtonItem x:Name="biEdit" Content="Настройки"  Command="{Binding SettingsCommand}" />
+                        <dxb:BarButtonItem x:Name="biEdit" Content="Настройки"  ToolTip="Настройки (F1)" Command="{Binding SettingsCommand}" />
                     </dxb:BarSubItem>
                 </dxb:MainMenuControl>
                 <dxb:ToolBarControl Caption="Edit" GlyphSize="Small" Margin="0,0,0,0"  Width="auto" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-                    <dxb:BarButtonItem x:Name="biFileOpen" Content="Открыть" ToolTip="Открыть" Glyph="{dx:DXImage Image=Open_16x16.png}" LargeGlyph="{dx:DXImage Image=Open_32x32.png}" BarItemDisplayMode="ContentAndGlyph" Command="{Binding OpenCommand}" />
-                    <dxb:BarButtonItem x:Name="biFileSave" Content="Сохранить" ToolTip="Сохранить" Glyph="{dx:DXImage Image=Save_16x16.png}" LargeGlyph="{dx:DXImage Image=Save_32x32.png}" BarItemDisplayMode="ContentAndGlyph"  Command="{Binding SaveCommand}"/>
+                    <dxb:BarButtonItem x:Name="biFileOpen" Content="Открыть" ToolTip="Открыть (Ctrl + O)" Glyph="{dx:DXImage Image=Open_16x16.png}" LargeGlyph="{dx:DXImage Image=Open_32x32.png}" BarItemDisplayMode="ContentAndGlyph" Command="{Binding OpenCommand}" />
+                    <dxb:BarButtonItem x:Name="biFileSave" Content="Сохранить" ToolTip="Сохранить (Ctrl + S)" Glyph="{dx:DXImage Image=Save_16x16.png}" LargeGlyph="{dx:DXImage Image=Save_32x32.png}" BarItemDisplayMode="ContentAndGlyph"  Command="{Binding SaveCommand}"/>
                     <dxb:BarItemLinkSeparator />
-                    <dxb:BarButtonItem x:Name="biCut" ToolTip="Вырезать" Glyph="{dx:DXImage Image=Cut_16x16.png}" LargeGlyph="{dx:DXImage Image=Cut_32x32.png}"  Command="{Binding CutCommand}" />
-                    <dxb:BarButtonItem x:Name="biCopy" ToolTip="Копировать" Glyph="{dx:DXImage Image=Copy_16x16.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}" Command="{Binding CopyCommand}"/>
-                    <dxb:BarButtonItem x:Name="biPaste" ToolTip="Вставить" Glyph="{dx:DXImage Image=Paste_16x16.png}" LargeGlyph="{dx:DXImage Image=Paste_32x32.png}" Command="{Binding PasteCommand}" />
+                    <dxb:BarButtonItem x:Name="biCut" ToolTip="Вырезать (Ctrl + X)" Glyph="{dx:DXImage Image=Cut_16x16.png}" LargeGlyph="{dx:DXImage Image=Cut_32x32.png}"  Command="{Binding CutCommand}" />
+                    <dxb:BarButtonItem x:Name="biCopy" ToolTip="Копировать (Ctrl + C)" Glyph="{dx:DXImage Image=Copy_16x16.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}" Command="{Binding CopyCommand}"/>
+                    <dxb:BarButtonItem x:Name="biPaste" ToolTip="Вставить (Ctrl + V)" Glyph="{dx:DXImage Image=Paste_16x16.png}" LargeGlyph="{dx:DXImage Image=Paste_32x32.png}" Command="{Binding PasteCommand}" />
                     <dxb:BarItemLinkSeparator />
                     <dxb:BarEditItem EditWidth="170" ToolTip="Начальная система координат" EditValue="{Binding Path=SelectedCoordinateEnumType, Converter={StaticResource EnumConvert}}">
                         <dxb:BarEditItem.EditSettings>
@@ -126,10 +133,10 @@
                         </dxb:BarEditItem.EditSettings>
                     </dxb:BarEditItem>
                     <dxb:BarItemLinkSeparator />
-                    <dxb:BarButtonItem x:Name="biRowAdd" ToolTip="Добавить строку" Glyph="{dx:DXImage Image=Add_16x16.png}" LargeGlyph="{dx:DXImage Image=Add_32x32.png}" Command="{Binding AddRowCommand}" />
-                    <dxb:BarButtonItem x:Name="biRowDelete" ToolTip="Удалить" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" Command="{Binding DeleteRowCommand}"/>
-                    <dxb:BarButtonItem x:Name="biRowUp" ToolTip="Перенести строку вверх" Glyph="{dx:DXImage Image=MoveUp_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveUp_32x32.png}" Command="{Binding MoveUpCommand}"/>
-                    <dxb:BarButtonItem x:Name="biRowDown" ToolTip="Перенести строку вниз" Glyph="{dx:DXImage Image=MoveDown_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveDown_32x32.png}" Command="{Binding MoveDownCommand}"/>
+                    <dxb:BarButtonItem x:Name="biRowAdd" ToolTip="Добавить строку (+)" Glyph="{dx:DXImage Image=Add_16x16.png}" LargeGlyph="{dx:DXImage Image=Add_32x32.png}" Command="{Binding AddRowCommand}" />
+                    <dxb:BarButtonItem x:Name="biRowDelete" ToolTip="Удалить строку (Shift + Del)" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" Command="{Binding DeleteRowCommand}"/>
+                    <dxb:BarButtonItem x:Name="biRowUp" ToolTip="Перенести строку вверх (Ctrl + Up)" Glyph="{dx:DXImage Image=MoveUp_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveUp_32x32.png}" Command="{Binding MoveUpCommand}"/>
+                    <dxb:BarButtonItem x:Name="biRowDown" ToolTip="Перенести строку вниз (Ctrl + Down)" Glyph="{dx:DXImage Image=MoveDown_16x16.png}" LargeGlyph="{dx:DXImage Image=MoveDown_32x32.png}" Command="{Binding MoveDownCommand}"/>
                     <dxb:BarItemLinkSeparator />
                     <dxb:BarStaticItem x:Name="biSortRows" Content="Сортировать по:" ShowBorder="False"/>
                     <dxb:BarEditItem EditWidth="170"  ToolTip="Сортировка строк" EditValue="{Binding Path=SelectedSortEnumType, Converter={StaticResource EnumConvert}}">
