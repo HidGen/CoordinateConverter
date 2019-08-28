@@ -13,11 +13,13 @@ using Microsoft.Win32;
 using System.Collections.Specialized;
 using CoordinateConverter.ClipboardInteractions;
 using System.Windows;
+using DevExpress.Mvvm.DataAnnotations;
+
 
 
 namespace CoordinateConverter.ViewModel
 {
-
+   
     public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged, IDragDropTarget
     {
         private CoordinateType selectedCoordinateEnumType;
@@ -32,6 +34,7 @@ namespace CoordinateConverter.ViewModel
         private ObservableCollection<int> indexes = new ObservableCollection<int>();
         private ICommand settingsCommand;
         private string indexList;
+        //private NewItemRowBehavior rowBehavior;
 
 
         protected IDialogService ClearGridDialogService { get { return this.GetService<IDialogService>("ClearGridDialogService"); } }
@@ -62,8 +65,7 @@ namespace CoordinateConverter.ViewModel
 
         public ObservableCollection<CompleteRow> CompleteRows { get; }
 
-        public ObservableCollection<CompleteRow> Selection { get;
-            private set; }
+        public ObservableCollection<CompleteRow> Selection { get; private set; }
 
         public IEnumerable<CoordinateType> CoordinateEnumTypeValues
         {
@@ -205,9 +207,10 @@ namespace CoordinateConverter.ViewModel
             CopyCommand = new DelegateCommand(CopyExecute, CopyCanExecute);
             CutCommand = new DelegateCommand(CutExecute, CutCanExecute);
             SortCommand = new DelegateCommand<SortType>(SortExecute, SortCanExecute);
-            Selection.CollectionChanged += GetSelectedIndexes;
+            Selection.CollectionChanged += GetSelectedIndexes;            
         }
 
+       
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
         {
             SelectedCoordinateEnumType = e.SelectedType;
@@ -790,6 +793,12 @@ namespace CoordinateConverter.ViewModel
                 completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
                 CompleteRows.Add(completeRow);
             }
+        }
+        [Command]
+        public void NewItemAdded(CompleteRow row)
+        {
+            row.RectCoordPropertyChanged += CoordChanged;
+            row.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, row.RectCoord);
         }
     }
 }

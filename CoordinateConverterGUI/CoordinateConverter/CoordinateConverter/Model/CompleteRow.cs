@@ -18,6 +18,7 @@ namespace CoordinateConverter.Model
             rectCoord = new RectCoord();
             geoCoord = new GeoCoord();
             rectCoord.PropertyChanged += RectCoordChanged;
+           
 
         }
         private RectCoord rectCoord;
