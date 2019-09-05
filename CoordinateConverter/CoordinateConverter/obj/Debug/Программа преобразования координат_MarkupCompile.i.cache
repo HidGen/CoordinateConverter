@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\spike\Desktop\Backup\CoordinateConverter\CoordinateConverter\obj\Debug\
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\
 CoordinateConverter
 none
 false
 DEBUG;TRACE
-C:\Users\spike\Desktop\Backup\CoordinateConverter\CoordinateConverter\App.xaml
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\App.xaml
 4238092808
 
 36870232538
-321170862251
+321390434385
 MainWindow.xaml;View\ClearGridView.xaml;View\RangeChoiceWindow.xaml;View\SettingsWindow.xaml;
 
 True
