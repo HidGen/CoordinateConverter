@@ -409,3 +409,4 @@ C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConve
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csproj.CopyComplete
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат.exe
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат.pdb
+C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csprojAssemblyReference.cache
