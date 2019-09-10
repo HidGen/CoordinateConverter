@@ -113,6 +113,7 @@
     <Compile Include="Model\CompleteRow.cs" />
     <Compile Include="Model\GeoCoord.cs" />
     <Compile Include="Model\RectCoord.cs" />
+    <Compile Include="NewItemRowBehavior.cs" />
     <Compile Include="ObservableCollectionExstension.cs" />
     <Compile Include="ViewModel\ClearGridViewModel.cs" />
     <Compile Include="Model\CoordinateType.cs" />
