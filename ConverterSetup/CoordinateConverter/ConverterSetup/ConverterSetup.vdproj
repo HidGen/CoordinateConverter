@@ -189,7 +189,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_306C16F0E1ACB9E2F09F71423C331774"
+        "MsmKey" = "8:_332DAB151795290F1986B4C05D358C12"
         "OwnerKey" = "8:_51F157BA8E894658895ABB2864D52881"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -369,6 +369,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8D17B075BDA0338C68A878E2CEA540FF"
+        "OwnerKey" = "8:_51F157BA8E894658895ABB2864D52881"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_91C98180C12E435C8A541AF46706891A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -473,12 +479,6 @@
         {
         "MsmKey" = "8:_A84CF324547048508199078D49168154"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A9B1ADFE47DB821CC3EA8AFA7DCFDDE0"
-        "OwnerKey" = "8:_51F157BA8E894658895ABB2864D52881"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1030,13 +1030,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_306C16F0E1ACB9E2F09F71423C331774"
+        "OwnerKey" = "8:_8D17B075BDA0338C68A878E2CEA540FF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A9B1ADFE47DB821CC3EA8AFA7DCFDDE0"
+        "OwnerKey" = "8:_332DAB151795290F1986B4C05D358C12"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1162,6 +1162,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -1584,20 +1592,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_306C16F0E1ACB9E2F09F71423C331774"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_332DAB151795290F1986B4C05D358C12"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DotSpatial.Projections, Version=1.9.0.0, Culture=neutral, PublicKeyToken=272632bddd08a38b, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_306C16F0E1ACB9E2F09F71423C331774"
+                    "_332DAB151795290F1986B4C05D358C12"
                     {
-                    "Name" = "8:EPPlus.dll"
+                    "Name" = "8:DotSpatial.Projections.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:EPPlus.dll"
+            "SourcePath" = "8:DotSpatial.Projections.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7E915760A9CD49C3A11A779BB3B6F2A0"
@@ -2049,6 +2057,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8D17B075BDA0338C68A878E2CEA540FF"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8D17B075BDA0338C68A878E2CEA540FF"
+                    {
+                    "Name" = "8:EPPlus.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:EPPlus.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7E915760A9CD49C3A11A779BB3B6F2A0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_91C98180C12E435C8A541AF46706891A"
             {
             "AssemblyRegister" = "3:1"
@@ -2295,37 +2334,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A9B1ADFE47DB821CC3EA8AFA7DCFDDE0"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DotSpatial.Projections, Version=1.9.0.0, Culture=neutral, PublicKeyToken=272632bddd08a38b, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A9B1ADFE47DB821CC3EA8AFA7DCFDDE0"
-                    {
-                    "Name" = "8:DotSpatial.Projections.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:DotSpatial.Projections.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7E915760A9CD49C3A11A779BB3B6F2A0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AB8274D70CBB8DE9C51B4008ACC142DC"
@@ -2943,7 +2951,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Программа преобразования координат"
         "ProductCode" = "8:{94B1E051-DAC0-4F79-8D67-FDA2F3BFDC5E}"
-        "PackageCode" = "8:{64BF618A-55BA-4870-86B2-6BED62DFCC87}"
+        "PackageCode" = "8:{8E2ABD4B-B70E-4656-A9D4-4072A3B8DB7F}"
         "UpgradeCode" = "8:{69C6DD70-ACE6-47A2-A3CD-49EA99A30035}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -2951,12 +2959,12 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:NIIRES"
+        "Manufacturer" = "8:SWSU"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:ConverterSetup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:NIIRES"
+        "ARPCONTACT" = "8:SWSU"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
