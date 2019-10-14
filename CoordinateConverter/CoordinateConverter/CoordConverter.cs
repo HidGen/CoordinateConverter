@@ -21,11 +21,94 @@ namespace CoordinateConverter
                 case CoordinateType.MSK462:
                     BasicTypeString = ConfigurationManager.AppSettings["LCS46_2"];
                     break;
-                case CoordinateType.SK42:
-                    //BasicTypeString =ConfigurationManager.AppSettings["CS42"];
-                    BasicTypeString = ConfigurationManager.AppSettings["GKzone2"];
-                    //throw new Exception("Coordinate system isn't supported yet");
+                case CoordinateType.SK42zone2:                   
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone2"];                    
                     break;
+                case CoordinateType.SK42zone3:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone3"];
+                    break;
+                case CoordinateType.SK42zone4:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone4"];
+                    break;
+                case CoordinateType.SK42zone5:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone5"];
+                    break;
+                case CoordinateType.SK42zone6:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone6"];
+                    break;
+                case CoordinateType.SK42zone7:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone7"];
+                    break;
+                case CoordinateType.SK42zone8:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone8"];
+                    break;
+                case CoordinateType.SK42zone9:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone9"];
+                    break;
+                case CoordinateType.SK42zone10:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone10"];
+                    break;
+                case CoordinateType.SK42zone11:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone11"];
+                    break;
+                case CoordinateType.SK42zone12:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone12"];
+                    break;
+                case CoordinateType.SK42zone13:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone13"];
+                    break;
+                case CoordinateType.SK42zone14:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone14"];
+                    break;
+                case CoordinateType.SK42zone15:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone15"];
+                    break;
+                case CoordinateType.SK42zone16:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone16"];
+                    break;
+                case CoordinateType.SK42zone17:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone17"];
+                    break;
+                case CoordinateType.SK42zone18:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone18"];
+                    break;
+                case CoordinateType.SK42zone19:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone19"];
+                    break;
+                case CoordinateType.SK42zone20:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone20"];
+                    break;
+                case CoordinateType.SK42zone21:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone21"];
+                    break;
+                case CoordinateType.SK42zone22:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone22"];
+                    break;
+                case CoordinateType.SK42zone23:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone23"];
+                    break;
+                case CoordinateType.SK42zone24:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone24"];
+                    break;
+                case CoordinateType.SK42zone25:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone25"];
+                    break;
+                case CoordinateType.SK42zone26:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone26"];
+                    break;
+                case CoordinateType.SK42zone27:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone27"];
+                    break;
+                case CoordinateType.SK42zone28:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone28"];
+                    break;
+                case CoordinateType.SK42zone29:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone29"];
+                    break;
+                case CoordinateType.SK42zone30:
+                    BasicTypeString = ConfigurationManager.AppSettings["GKzone30"];
+                    break;
+
                 case CoordinateType.SK63:
                     throw new Exception("Coordinate system isn't supported yet");
                     BasicTypeString = @"";
