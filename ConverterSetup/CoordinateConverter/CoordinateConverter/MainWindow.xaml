@@ -17,12 +17,12 @@
 
         local:InputBindingsBehavior.TakesInputBindingPrecedence="True"
         x:Class="CoordinateConverter.MainWindow" mc:Ignorable="d"
-        MinWidth="550px" 
+        MinWidth="600px" 
         MinHeight="350px"
         Title="Программа преобразования координат"
         Background="Azure" 
         Height="450" 
-        Width="850" 
+        Width="900" 
    >
 
     <dxmvvm:Interaction.Behaviors>
