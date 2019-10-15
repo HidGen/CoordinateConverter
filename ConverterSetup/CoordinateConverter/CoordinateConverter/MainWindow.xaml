@@ -64,7 +64,7 @@
         <KeyBinding Key="Down" Modifiers="Ctrl"  Command="{Binding MoveDownCommand}" />
         <KeyBinding Key="S" Modifiers="Ctrl"  Command="{Binding SaveCommand}" />
         <KeyBinding Key="O" Modifiers="Ctrl"  Command="{Binding OpenCommand}" />
-        <KeyBinding Key="F1" Command="{Binding SettingsCommand}" />
+        <KeyBinding Key="F1" Command="{Binding SettingsCommand}" />       
     </Window.InputBindings>
 
     <Window.DataContext>
@@ -171,7 +171,7 @@
                 </dxg:GridControl.Columns>
                 <dxg:GridControl.View>
                     <dxg:TableView AllowPerPixelScrolling="True" NewItemRowPosition="Bottom" 
-                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" SearchPanelAllowFilter="False" SearchPanelClearOnClose="False" SearchPanelHighlightResults="False" ShowSearchPanelCloseButton="False" AllowColumnFiltering="False" AutomationProperties.ItemType="System.Double" >
+                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" SearchPanelAllowFilter="False" SearchPanelClearOnClose="False" SearchPanelHighlightResults="False" ShowSearchPanelCloseButton="False" AllowColumnFiltering="False" AutomationProperties.ItemType="System.Double" EnterMoveNextColumn="True" >
                         <dxmvvm:Interaction.Behaviors>
                             <local:NewItemRowBehavior NewItemRowUpdated="{Binding NewItemAddedCommand}" />
                         </dxmvvm:Interaction.Behaviors>
@@ -198,7 +198,7 @@
                     </dxb:BarStaticItem.ContentTemplate>
                 </dxb:BarStaticItem>
             </dxb:StatusBarControl>
-            <!--<dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible" AllowDrop="True"
+            <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible" AllowDrop="True"
                               viewmodel:FileDragDropHelper.IsFileDragDropEnabled="True" viewmodel:FileDragDropHelper.FileDragDropTarget="{Binding}">
                 <dx:WaitIndicator.ContentTemplate>
                     <DataTemplate>
@@ -208,7 +208,7 @@
                         </StackPanel>
                     </DataTemplate>
                 </dx:WaitIndicator.ContentTemplate>
-            </dx:WaitIndicator>-->
+            </dx:WaitIndicator>
         </Grid>
     </Border>
 </Window>
