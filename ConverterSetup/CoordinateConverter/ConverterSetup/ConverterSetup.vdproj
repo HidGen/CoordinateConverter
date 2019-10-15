@@ -189,12 +189,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_332DAB151795290F1986B4C05D358C12"
-        "OwnerKey" = "8:_51F157BA8E894658895ABB2864D52881"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_36F4E01AADFB4AFF9672547D054DE681"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -215,6 +209,12 @@
         {
         "MsmKey" = "8:_429D10AE51E4B2FA81D411AFE4FFD60D"
         "OwnerKey" = "8:_0B438CE4C129B23689EDD56E22E0FFA9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_485DE18BB0C1D5AC6A350458A3742732"
+        "OwnerKey" = "8:_51F157BA8E894658895ABB2864D52881"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -365,12 +365,6 @@
         {
         "MsmKey" = "8:_873BE7C51E8CCD24BC84622A08913111"
         "OwnerKey" = "8:_777C7985F4FF91A5CA5FF9A7629FFEC7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8D17B075BDA0338C68A878E2CEA540FF"
-        "OwnerKey" = "8:_51F157BA8E894658895ABB2864D52881"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -665,6 +659,12 @@
         {
         "MsmKey" = "8:_BA96F90E60DA67F333DBA3BFB4FB0753"
         "OwnerKey" = "8:_E8280443FD3EEDC59FADD8EEB939F3D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BCDE97911453621859E6897FFA460BE3"
+        "OwnerKey" = "8:_51F157BA8E894658895ABB2864D52881"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1030,18 +1030,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8D17B075BDA0338C68A878E2CEA540FF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_332DAB151795290F1986B4C05D358C12"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_05F2972915D66BFB54C4371F699A6FBB"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1103,6 +1091,18 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_BA96F90E60DA67F333DBA3BFB4FB0753"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BCDE97911453621859E6897FFA460BE3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_485DE18BB0C1D5AC6A350458A3742732"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -1592,37 +1592,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_332DAB151795290F1986B4C05D358C12"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DotSpatial.Projections, Version=1.9.0.0, Culture=neutral, PublicKeyToken=272632bddd08a38b, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_332DAB151795290F1986B4C05D358C12"
-                    {
-                    "Name" = "8:DotSpatial.Projections.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:DotSpatial.Projections.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7E915760A9CD49C3A11A779BB3B6F2A0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_36F4E01AADFB4AFF9672547D054DE681"
             {
             "AssemblyRegister" = "3:1"
@@ -1730,6 +1699,37 @@
                     }
                 }
             "SourcePath" = "8:DevExpress.CodeParser.v17.2.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7E915760A9CD49C3A11A779BB3B6F2A0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_485DE18BB0C1D5AC6A350458A3742732"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:DotSpatial.Projections, Version=1.9.0.0, Culture=neutral, PublicKeyToken=272632bddd08a38b, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_485DE18BB0C1D5AC6A350458A3742732"
+                    {
+                    "Name" = "8:DotSpatial.Projections.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:DotSpatial.Projections.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7E915760A9CD49C3A11A779BB3B6F2A0"
@@ -2040,37 +2040,6 @@
                     }
                 }
             "SourcePath" = "8:DevExpress.Mvvm.v17.2.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7E915760A9CD49C3A11A779BB3B6F2A0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8D17B075BDA0338C68A878E2CEA540FF"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_8D17B075BDA0338C68A878E2CEA540FF"
-                    {
-                    "Name" = "8:EPPlus.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:EPPlus.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7E915760A9CD49C3A11A779BB3B6F2A0"
@@ -2474,6 +2443,37 @@
                     }
                 }
             "SourcePath" = "8:DevExpress.Data.v17.2.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7E915760A9CD49C3A11A779BB3B6F2A0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BCDE97911453621859E6897FFA460BE3"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_BCDE97911453621859E6897FFA460BE3"
+                    {
+                    "Name" = "8:EPPlus.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:EPPlus.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7E915760A9CD49C3A11A779BB3B6F2A0"
@@ -2957,7 +2957,7 @@
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
+        "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:SWSU"
         "ARPHELPTELEPHONE" = "8:"

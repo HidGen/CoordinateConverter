@@ -409,6 +409,9 @@ C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConvert
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csproj.CopyComplete
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат.exe
 C:\Users\Лаврушов\Documents\GitHub\CoordinateConverter\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат.pdb
+C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\DevExpress.Xpf.Grid.v17.2.Core.dll
+C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\DevExpress.Xpf.Grid.v17.2.Core.xml
+C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\App.g.cs
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\Программа преобразования координат.exe.config
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\Программа преобразования координат.exe
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\Программа преобразования координат.pdb
@@ -418,7 +421,6 @@ C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConve
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\DevExpress.Printing.v17.2.Core.dll
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\devexpress.xpf.controls.v17.2.dll
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\DevExpress.Xpf.Core.v17.2.dll
-C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\DevExpress.Xpf.Grid.v17.2.Core.dll
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\devexpress.xpf.grid.v17.2.dll
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\DotSpatial.Projections.dll
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\EPPlus.dll
@@ -430,7 +432,6 @@ C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConve
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\devexpress.xpf.controls.v17.2.xml
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\DevExpress.Xpf.Core.v17.2.xml
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\devexpress.xpf.grid.v17.2.xml
-C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\DevExpress.Xpf.Grid.v17.2.Core.xml
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\DotSpatial.Projections.xml
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\EPPlus.xml
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\bin\Debug\System.Windows.Interactivity.xml
@@ -466,7 +467,6 @@ C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConve
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\View\ClearGridView.g.cs
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\View\RangeChoiceWindow.g.cs
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\View\SettingsWindow.g.cs
-C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\App.g.cs
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат_MarkupCompile.cache
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат_MarkupCompile.lref

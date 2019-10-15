@@ -127,7 +127,7 @@
                         <dxb:BarEditItem.EditSettings>
                             <dxe:ComboBoxEditSettings                               
                         Name="CoordinateCombobox"                         
-                        ItemsSource="{Binding Path=CoordinateEnumTypeValues}">
+                        ItemsSource="{Binding Path=CoordinateEnumTypeValues}" AllowSpinOnMouseWheel="False" IsTextEditable="False">
                             </dxe:ComboBoxEditSettings>
                         </dxb:BarEditItem.EditSettings>
                     </dxb:BarEditItem>
@@ -142,7 +142,7 @@
                         <dxb:BarEditItem.EditSettings>
                             <dxe:ComboBoxEditSettings
                             x:Name="SortCombobox" 
-                            ItemsSource="{Binding Path=SortEnumTypeValues}" >
+                            ItemsSource="{Binding Path=SortEnumTypeValues}" IsTextEditable="False" >
                             </dxe:ComboBoxEditSettings>
                         </dxb:BarEditItem.EditSettings>
                     </dxb:BarEditItem>
@@ -171,7 +171,7 @@
                 </dxg:GridControl.Columns>
                 <dxg:GridControl.View>
                     <dxg:TableView AllowPerPixelScrolling="True" NewItemRowPosition="Bottom" 
-                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" SearchPanelAllowFilter="False" SearchPanelClearOnClose="False" SearchPanelHighlightResults="False" ShowSearchPanelCloseButton="False" AllowColumnFiltering="False" >
+                               ShowFilterPanelMode="Never" ShowGroupPanel="False" AutoWidth="True" AllowSorting="False" ShowIndicator="False" SearchPanelAllowFilter="False" SearchPanelClearOnClose="False" SearchPanelHighlightResults="False" ShowSearchPanelCloseButton="False" AllowColumnFiltering="False" AutomationProperties.ItemType="System.Double" >
                         <dxmvvm:Interaction.Behaviors>
                             <local:NewItemRowBehavior NewItemRowUpdated="{Binding NewItemAddedCommand}" />
                         </dxmvvm:Interaction.Behaviors>
@@ -198,7 +198,7 @@
                     </dxb:BarStaticItem.ContentTemplate>
                 </dxb:BarStaticItem>
             </dxb:StatusBarControl>
-            <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible" AllowDrop="True"
+            <!--<dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible" AllowDrop="True"
                               viewmodel:FileDragDropHelper.IsFileDragDropEnabled="True" viewmodel:FileDragDropHelper.FileDragDropTarget="{Binding}">
                 <dx:WaitIndicator.ContentTemplate>
                     <DataTemplate>
@@ -208,7 +208,7 @@
                         </StackPanel>
                     </DataTemplate>
                 </dx:WaitIndicator.ContentTemplate>
-            </dx:WaitIndicator>
+            </dx:WaitIndicator>-->
         </Grid>
     </Border>
 </Window>
