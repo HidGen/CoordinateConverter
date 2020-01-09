@@ -15,6 +15,7 @@
 
     <Window.Resources>
         <viewmodel:EnumConverter x:Key="EnumConvert"/>
+        <viewmodel:CheckConverter x:Key="CheckConvert"/>
     </Window.Resources>
 
     <Grid>
@@ -34,9 +35,19 @@
         <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,10,10" Text="Вид отображения координат:" FontSize="12"/>
         <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10"  MinWidth="100px" Width="150" ItemsSource="{Binding CoordTypeValues}" SelectedItem="{Binding SelectedCoordViewType}" IsReadOnly="True"/>
         <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap" Text="Запомнить выбор очистки таблицы" FontSize="12"/>
-        <CheckBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" IsChecked="{Binding Path=ClearCheck}" />
-
-        <Button Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30px" Width="70px" Margin="10" Content="OK" FontSize="14" Command="{Binding ReturnCommand}"/>
+        <CheckBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" IsChecked="{Binding Path=ClearCheck}" x:Name="check"/>
+        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Text="{Binding Converter={StaticResource CheckConvert}}">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=check, Path=IsChecked}" Value="False">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+            <Button Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30px" Width="70px" Margin="10" Content="OK" FontSize="14" Command="{Binding ReturnCommand}"/>
 
 
     </Grid>

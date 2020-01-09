@@ -9,6 +9,10 @@ namespace CoordinateConverter.ViewModel
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var point = System.Convert.ToDouble(value);
+            if (Double.IsNaN(point))
+                return "NaN";
+
+
             var param  = System.Convert.ToString(parameter);
             if (string.IsNullOrEmpty(param))
                 return value;

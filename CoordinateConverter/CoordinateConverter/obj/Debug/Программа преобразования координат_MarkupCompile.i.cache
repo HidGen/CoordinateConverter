@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\
+C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\
 CoordinateConverter
 none
 false
 DEBUG;TRACE
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\App.xaml
+C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\App.xaml
 4238092808
 
-36870232538
-321390434385
+38-565517770
+32190217203
 MainWindow.xaml;View\ClearGridView.xaml;View\RangeChoiceWindow.xaml;View\SettingsWindow.xaml;
 
 True

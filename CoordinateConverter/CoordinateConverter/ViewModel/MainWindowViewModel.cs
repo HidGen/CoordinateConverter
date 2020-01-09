@@ -1,18 +1,21 @@
-﻿using CoordinateConverter.ClipboardInteractions;
-using CoordinateConverter.FileInteractions;
-using CoordinateConverter.Model;
-using CoordinateConverter.View;
+﻿using CoordinateConverter.View;
 using DevExpress.Mvvm;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Windows;
 using System.Windows.Input;
+using System.ComponentModel;
+using CoordinateConverter.Model;
+using CoordinateConverter.FileInteractions;
+using Microsoft.Win32;
+using System.Collections.Specialized;
+using CoordinateConverter.ClipboardInteractions;
+using System.Windows;
+using DevExpress.Mvvm.DataAnnotations;
+
+
 
 namespace CoordinateConverter.ViewModel
 {
@@ -31,6 +34,7 @@ namespace CoordinateConverter.ViewModel
         private ObservableCollection<int> indexes = new ObservableCollection<int>();
         private ICommand settingsCommand;
         private string indexList;
+
 
 
         protected IDialogService ClearGridDialogService { get { return this.GetService<IDialogService>("ClearGridDialogService"); } }
@@ -107,29 +111,26 @@ namespace CoordinateConverter.ViewModel
                 selectedSortEnumType = value;
                 if (CompleteRows.Count != 0)
                 {
-                    if (SelectedSortEnumType == SortType.MinMaxX)
+                    switch (SelectedSortEnumType)
                     {
-                        SortMinMax(SortType.MinMaxX);
-                    }
-                    else if (SelectedSortEnumType == SortType.MaxMinX)
-                    {
-                        SortMinMax(SortType.MaxMinX);
-                    }
-                    else if (SelectedSortEnumType == SortType.MinMaxY)
-                    {
-                        SortMinMax(SortType.MinMaxY);
-                    }
-                    else if (SelectedSortEnumType == SortType.MaxMinY)
-                    {
-                        SortMinMax(SortType.MaxMinY);
-                    }
-                    else if (SelectedSortEnumType == SortType.MinMaxH)
-                    {
-                        SortMinMax(SortType.MinMaxH);
-                    }
-                    else if (SelectedSortEnumType == SortType.MaxMinH)
-                    {
-                        SortMinMax(SortType.MaxMinH);
+                        case SortType.MinMaxX:
+                            SortMinMax(SortType.MinMaxX);
+                            break;
+                        case SortType.MaxMinX:
+                            SortMinMax(SortType.MaxMinX);
+                            break;
+                        case SortType.MinMaxY:
+                            SortMinMax(SortType.MinMaxY);
+                            break;
+                        case SortType.MaxMinY:
+                            SortMinMax(SortType.MaxMinY);
+                            break;
+                        case SortType.MinMaxH:
+                            SortMinMax(SortType.MinMaxH);
+                            break;
+                        case SortType.MaxMinH:
+                            SortMinMax(SortType.MaxMinH);
+                            break;
                     }
                 }
                 RaisePropertyChanged(nameof(SelectedSortEnumType));
@@ -209,6 +210,7 @@ namespace CoordinateConverter.ViewModel
             Selection.CollectionChanged += GetSelectedIndexes;
         }
 
+
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
         {
             SelectedCoordinateEnumType = e.SelectedType;
@@ -250,17 +252,15 @@ namespace CoordinateConverter.ViewModel
                         dialogCommands: clearGridViewmodel.GetCommands(),
                         title: "Открыть",
                         viewModel: clearGridViewmodel);
-
                     if (clearResult == null)
-                    {
                         return;
-                    }
+
                 }
 
                 var dlg = new OpenFileDialog();
                 dlg.FileName = "Документ";
                 dlg.DefaultExt = ".xls";
-                dlg.Filter = "Excel documents (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
+                dlg.Filter = "Файл Excel (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
                 dlg.Multiselect = true;
                 dlg.Title = "Выбор файла";
                 var result = dlg.ShowDialog();
@@ -315,10 +315,9 @@ namespace CoordinateConverter.ViewModel
                     string temp = String.Empty;
                     completeRow.Description += "Файл: ";
                     for (int i = filename.Length - 1; filename[i] != '\\'; i--)
-                    {
                         temp += filename[i];
 
-                    }
+
                     for (int i = temp.Length - 1; i >= 0; i--)
                     {
                         completeRow.Description += temp[i];
@@ -348,7 +347,7 @@ namespace CoordinateConverter.ViewModel
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.FileName = "Документ"; // Default file name
                 saveFileDialog.DefaultExt = ".xml"; // Default file extension
-                saveFileDialog.Filter = "Xml documents (.xml)|*.xml|All files (*.*)|*.*";
+                saveFileDialog.Filter = "Файл Xml (.xml)|*.xml|All files (*.*)|*.*";
 
                 var geoCoords = CompleteRows.Select(x => x.GeoCoord).ToList();
 
@@ -395,7 +394,7 @@ namespace CoordinateConverter.ViewModel
                     var completeRow = new CompleteRow();
                     completeRow.RectCoordPropertyChanged += CoordChanged;
                     CompleteRows.Insert(CompleteRows.Count, completeRow);
-                   
+
                 }
             }
             catch
@@ -654,7 +653,11 @@ namespace CoordinateConverter.ViewModel
         public void GetSelectedIndexesMethod()
         {
             if (Selection.Count == 0)
+            {
+                IndexList = string.Empty;
                 return;
+            }
+
 
             var tempIndexes = new List<int>();
 
@@ -717,9 +720,11 @@ namespace CoordinateConverter.ViewModel
         public async void OnFileDrop(string[] filepaths)
         {
             int i = 0;
+
             foreach (var file in filepaths)
             {
-                if (CompleteRows.Count != 0 && Properties.Settings.Default.ClearCheck == false && i<1)
+
+                if (CompleteRows.Count != 0 && Properties.Settings.Default.ClearCheck == false && i < 1)
                 {
                     var clearGridViewmodel = new ClearGridViewModel();
                     var clearResult = ClearGridDialogService.ShowDialog(
@@ -779,15 +784,21 @@ namespace CoordinateConverter.ViewModel
                     }
                 }
             }
-            foreach(var rectCoord in rectCoords)
+            foreach (var rectCoord in rectCoords)
             {
-                var completeRow = new CompleteRow ();
+                var completeRow = new CompleteRow();
                 completeRow.RectCoordPropertyChanged += CoordChanged;
                 completeRow.RectCoord = rectCoord;
                 completeRow.Description = string.Empty;
                 completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
                 CompleteRows.Add(completeRow);
             }
+        }
+        [Command]
+        public void NewItemAdded(CompleteRow row)
+        {
+            row.RectCoordPropertyChanged += CoordChanged;
+            row.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, row.RectCoord);
         }
     }
 }
