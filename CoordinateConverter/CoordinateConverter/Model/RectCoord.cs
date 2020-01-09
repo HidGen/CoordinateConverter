@@ -7,6 +7,9 @@ namespace CoordinateConverter.Model
         public event EventHandler PropertyChanged;
 
         private double x;
+        private double y;
+        private double h;
+
         public double X
         {
             get => x;
@@ -16,7 +19,7 @@ namespace CoordinateConverter.Model
                 OnPropertyChanged();
             }
         }
-        private double y;
+       
         public double Y
         {
             get => y;
@@ -26,7 +29,7 @@ namespace CoordinateConverter.Model
                 OnPropertyChanged();
             }
         }
-        private double h;
+       
         public double H
         {
             get => h;
@@ -36,6 +39,7 @@ namespace CoordinateConverter.Model
                 OnPropertyChanged();
             }
         }
+
         public void OnPropertyChanged()
         {
             PropertyChanged?.Invoke(this, EventArgs.Empty);

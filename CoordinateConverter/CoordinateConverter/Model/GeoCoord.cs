@@ -4,15 +4,18 @@ namespace CoordinateConverter.Model
 {
     public class GeoCoord : BindableBase
     {
+        private double alt;
+
         public double Lat { get; set; }
+
         public double Lon { get; set; }
-        private double h;
-        public double H
+
+        public double Alt
         {
-            get => h; set
+            get => alt; set
             {
-                h = value;
-                RaisePropertiesChanged(nameof(H));
+                alt = value;
+                RaisePropertiesChanged(nameof(Alt));
             }
         }
     }

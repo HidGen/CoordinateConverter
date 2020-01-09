@@ -7,7 +7,7 @@
         xmlns:viewmodel="clr-namespace:CoordinateConverter.ViewModel"
         ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="Настройки" Height="250" Width="430">
+        Title="Настройки" Height="200" Width="430">
 
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService />
@@ -29,9 +29,6 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,30,10,10" Text="Начальная система координат:" FontSize="12"/>
-        <ComboBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,30,0,10"  MinWidth="100px" Width="150" ItemsSource="{Binding CoordinateEnumTypeValues}" SelectedItem="{Binding SelectedCoordinateEnumType}" IsReadOnly="True"/>
         <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,10,10" Text="Вид отображения координат:" FontSize="12"/>
         <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10"  MinWidth="100px" Width="150" ItemsSource="{Binding CoordTypeValues}" SelectedItem="{Binding SelectedCoordViewType}" IsReadOnly="True"/>
         <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap" Text="Запомнить выбор очистки таблицы" FontSize="12"/>

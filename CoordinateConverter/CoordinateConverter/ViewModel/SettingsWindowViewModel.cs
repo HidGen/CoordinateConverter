@@ -23,24 +23,6 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-        public IEnumerable<CoordinateType> CoordinateEnumTypeValues
-        {
-            get
-            {
-                return Enum.GetValues(typeof(CoordinateType))
-                    .Cast<CoordinateType>();
-            }
-        }
-
-        public CoordinateType selectedCoordinateEnumType;
-        public CoordinateType SelectedCoordinateEnumType
-        {
-            get { return selectedCoordinateEnumType; }
-            set
-            {
-                selectedCoordinateEnumType = value;
-            }
-        }
 
         public IEnumerable<CoordViewType> CoordTypeValues
         {
@@ -66,14 +48,14 @@ namespace CoordinateConverter.ViewModel
         }
 
 
-        private void OnEditEnded(CoordinateType coordinateType, bool clearCheck, CoordViewType viewType)
+        private void OnEditEnded(bool clearCheck, CoordViewType viewType)
         {
             try
             { 
             Properties.Settings.Default.ClearCheck = clearCheck;
             Properties.Settings.Default.CoordView = viewType;
             Properties.Settings.Default.Save();
-            EditEnded?.Invoke(this, new SettingsWindowArgs(coordinateType));
+            EditEnded?.Invoke(this, new SettingsWindowArgs());
                 Service.Close();
             }
             catch
@@ -90,11 +72,10 @@ namespace CoordinateConverter.ViewModel
 
         private ICommand returnCommand;
 
-        public SettingsWindowViewModel(CoordinateType selectedCoordinateEnumType)
+        public SettingsWindowViewModel()
         {
-            this.clearCheck = Properties.Settings.Default.ClearCheck;
-            this.SelectedCoordinateEnumType = selectedCoordinateEnumType;
-            this.SelectedCoordViewType = Properties.Settings.Default.CoordView;
+            clearCheck = Properties.Settings.Default.ClearCheck;           
+            SelectedCoordViewType = Properties.Settings.Default.CoordView;
         }
 
         public ICommand ReturnCommand
@@ -104,19 +85,15 @@ namespace CoordinateConverter.ViewModel
                 return returnCommand ??
                   (returnCommand = new DelegateCommand(() =>
                   {
-                      OnEditEnded(selectedCoordinateEnumType, ClearCheck, selectedCoordViewType);
+                      OnEditEnded(ClearCheck, selectedCoordViewType);
                   }));
             }
         }
 
         public class SettingsWindowArgs : EventArgs
-        {
-            public SettingsWindowArgs(CoordinateType selectedType)
-            {
-                SelectedType = selectedType;      
-            }
+        { 
 
-            public CoordinateType SelectedType { get; }
+           
             public bool ClearCheck { get; }
           
         }

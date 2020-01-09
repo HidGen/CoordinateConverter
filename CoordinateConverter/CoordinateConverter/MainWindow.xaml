@@ -123,14 +123,14 @@
                     <dxb:BarButtonItem x:Name="biCopy" ToolTip="Копировать (Ctrl + C)" Glyph="{dx:DXImage Image=Copy_16x16.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}" Command="{Binding CopyCommand}"/>
                     <dxb:BarButtonItem x:Name="biPaste" ToolTip="Вставить (Ctrl + V)" Glyph="{dx:DXImage Image=Paste_16x16.png}" LargeGlyph="{dx:DXImage Image=Paste_32x32.png}" Command="{Binding PasteCommand}" />
                     <dxb:BarItemLinkSeparator />
-                    <dxb:BarEditItem EditWidth="260" ToolTip="Начальная система координат" EditValue="{Binding Path=SelectedCoordinateEnumType, Converter={StaticResource EnumConvert}}">
+                    <!--<dxb:BarEditItem EditWidth="260" ToolTip="Начальная система координат" EditValue="{Binding Path=SelectedCoordinateEnumType, Converter={StaticResource EnumConvert}}">
                         <dxb:BarEditItem.EditSettings>
                             <dxe:ComboBoxEditSettings                               
                         Name="CoordinateCombobox"                         
                         ItemsSource="{Binding Path=CoordinateEnumTypeValues}" AllowSpinOnMouseWheel="False" IsTextEditable="False">
                             </dxe:ComboBoxEditSettings>
                         </dxb:BarEditItem.EditSettings>
-                    </dxb:BarEditItem>
+                    </dxb:BarEditItem>-->
                     <dxb:BarItemLinkSeparator />
                     <dxb:BarButtonItem x:Name="biRowAdd" ToolTip="Добавить строку (+)" Glyph="{dx:DXImage Image=Add_16x16.png}" LargeGlyph="{dx:DXImage Image=Add_32x32.png}" Command="{Binding AddRowCommand}" />
                     <dxb:BarButtonItem x:Name="biRowDelete" ToolTip="Удалить строку (Shift + Del)" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" Command="{Binding DeleteRowCommand}"/>
@@ -163,10 +163,10 @@
                     </dxg:GridColumn>
                     <dxg:GridColumn Header="X"  Binding="{Binding RectCoord.X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     <dxg:GridColumn Header="Y"  Binding="{Binding RectCoord.Y, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                    <dxg:GridColumn Header="H"   Binding="{Binding RectCoord.H, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <!--<dxg:GridColumn Header="H"   Binding="{Binding RectCoord.H, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />-->
                     <dxg:GridColumn Header="Широта" Binding="{Binding GeoCoord.Lat, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ViewConverter}, ConverterParameter=lat}" ReadOnly="True" />
                     <dxg:GridColumn Header="Долгота" Binding="{Binding GeoCoord.Lon, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ViewConverter}, ConverterParameter=lon}"  ReadOnly="True"/>
-                    <dxg:GridColumn Header="Высота" Binding="{Binding GeoCoord.H, UpdateSourceTrigger=PropertyChanged}" ReadOnly="True" />
+                    <!--<dxg:GridColumn Header="Высота" Binding="{Binding GeoCoord.H, UpdateSourceTrigger=PropertyChanged}" ReadOnly="True" />-->
                     <dxg:GridColumn Header="Описание" FieldName="Description" />
                 </dxg:GridControl.Columns>
                 <dxg:GridControl.View>
@@ -198,7 +198,7 @@
                     </dxb:BarStaticItem.ContentTemplate>
                 </dxb:BarStaticItem>
             </dxb:StatusBarControl>
-            <dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible" AllowDrop="True"
+            <!--<dx:WaitIndicator Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" DeferedVisibility="{Binding Busy}" Visibility="Visible" AllowDrop="True"
                               viewmodel:FileDragDropHelper.IsFileDragDropEnabled="True" viewmodel:FileDragDropHelper.FileDragDropTarget="{Binding}">
                 <dx:WaitIndicator.ContentTemplate>
                     <DataTemplate>
@@ -208,7 +208,7 @@
                         </StackPanel>
                     </DataTemplate>
                 </dx:WaitIndicator.ContentTemplate>
-            </dx:WaitIndicator>
+            </dx:WaitIndicator>-->
         </Grid>
     </Border>
 </Window>

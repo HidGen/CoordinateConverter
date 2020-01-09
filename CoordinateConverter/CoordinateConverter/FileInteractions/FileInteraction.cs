@@ -11,37 +11,30 @@ namespace CoordinateConverter.FileInteractions
 {
     class FileInteraction : IExcelFileOpen, IXmlFileSave
     {
-        public List<RectCoord> Read(string path)
+        public IList<CompleteRow> Read(string path)
         {
-            var rectCoords = new List<RectCoord>();
+            var completeRows = new List<CompleteRow>();
             using (var package = new ExcelPackage(new FileInfo(path)))
             {
                 ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
 
-                for (int i = workSheet.Dimension.Start.Row;
-                     i <= workSheet.Dimension.End.Row;
-                     i++)
+                for (int i = workSheet.Dimension.Start.Row; i <= workSheet.Dimension.End.Row; i++)
                 {
-                    int x = 0;
                     for (int j = workSheet.Dimension.Start.Column; j <= workSheet.Dimension.End.Column; j++)
                     {
-                        if (workSheet.Cells[i, j].Value is double)                        
-                            x++;                        
-                        else                        
-                            x = 0;
-                        
-                        if (x == 3)                        
-                            rectCoords.Add(new RectCoord { X = (double)workSheet.Cells[i, j - 2].Value, Y = (double)workSheet.Cells[i, j - 1].Value, H = (double)workSheet.Cells[i, j].Value });
+                        if (workSheet.Cells[i, j].Value is string || workSheet.Cells[i, j].Value is double)                        
+                                 if(workSheet.Cells[i, j + 1].Value is double && workSheet.Cells[i, j + 2].Value is double)
+                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = (double)workSheet.Cells[i, j + 1].Value, Y = (double)workSheet.Cells[i, j + 2].Value, H = 0 }, Description =  workSheet.Cells[i, j].Value.ToString() });
                         
                     }
                 }
             }
-            return rectCoords;
+            return completeRows;
         }
 
-        public Task<List<RectCoord>> ReadAsync(string path)
+        public Task<IList<CompleteRow>> ReadAsync(string path)
         {
-            return Task<List<RectCoord>>.Run(() =>
+            return Task.Run(() =>
             {
                 return Read(path);
             });
@@ -61,9 +54,7 @@ namespace CoordinateConverter.FileInteractions
                     for (int i = 0; i <= rws - 1; i++)
                     {
                         int x = 0;
-                        for (int j = 0;
-                             j <= clns - 1;
-                             j++)
+                        for (int j = 0; j <= clns - 1; j++)
                         {
                             if (data[i, j] is double)                            
                                 x++;                            
@@ -71,7 +62,7 @@ namespace CoordinateConverter.FileInteractions
                                 x = 0;
                             
                             if (x == 3)                            
-                                rectCoords.Add(new RectCoord { X = (double)data[i, j - 2], Y = (double)data[i, j - 1], H = (double)data[i, j] });
+                                rectCoords.Add(new RectCoord { X = (double)data[i, j - 1], Y = (double)data[i, j], H = 0 });
                             
                         }
                     }
@@ -103,17 +94,19 @@ namespace CoordinateConverter.FileInteractions
         }
         public Task<List<RectCoord>> ReadRangeAsync(string path, string first, string last)
         {
-            return Task<List<RectCoord>>.Run(() =>
+            return Task.Run(() =>
             {
                 return ReadRange(path, first, last);
             });
         }
         public void SaveToXml(string path, List<GeoCoord> geoCoords)
         {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.OmitXmlDeclaration = true;
-            settings.NewLineOnAttributes = true;
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                Indent = true,
+                OmitXmlDeclaration = true,
+                NewLineOnAttributes = true
+            };
             using (XmlWriter writer = XmlWriter.Create(path, settings))
             {
 
@@ -139,7 +132,7 @@ namespace CoordinateConverter.FileInteractions
                     writer.WriteStartElement("wpt");
                     writer.WriteAttributeString("lat", geoCoord.Lat.ToString());
                     writer.WriteAttributeString("long", geoCoord.Lon.ToString());
-                    writer.WriteElementString("ele", geoCoord.H.ToString());
+                    writer.WriteElementString("ele", "0");
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();

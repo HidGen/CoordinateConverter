@@ -117,7 +117,6 @@
     <Compile Include="ObservableCollectionExstension.cs" />
     <Compile Include="ViewModel\CheckConverter.cs" />
     <Compile Include="ViewModel\ClearGridViewModel.cs" />
-    <Compile Include="Model\CoordinateType.cs" />
     <Compile Include="ViewModel\CoordTypeConverter.cs" />
     <Compile Include="Model\CoordViewType.cs" />
     <Compile Include="ViewModel\FileDragDropHelper.cs" />

@@ -24,9 +24,9 @@ namespace CoordinateConverter.ClipboardInteractions
                     var rectCoord = new RectCoord();
                     try
                     {
-                        rectCoord.X = Convert.ToDouble(values[0]);
-                        rectCoord.Y = Convert.ToDouble(values[1]);
-                        rectCoord.H = Convert.ToDouble(values[2]);
+                        rectCoord.X = Convert.ToDouble(values[1]);
+                        rectCoord.Y = Convert.ToDouble(values[2]);
+                       //?????
                         rectCoords.Add(rectCoord);
                     }
                     catch

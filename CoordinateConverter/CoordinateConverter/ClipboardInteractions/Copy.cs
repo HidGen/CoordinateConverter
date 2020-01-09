@@ -13,11 +13,9 @@ namespace CoordinateConverter.ClipboardInteractions
             {
                 str.AppendLine(
                     completeRow.RectCoord.X.ToString() + '\t' +
-                    completeRow.RectCoord.Y.ToString() + '\t' + 
-                    completeRow.RectCoord.H.ToString() + '\t' + 
+                    completeRow.RectCoord.Y.ToString() + '\t' +                     
                     completeRow.GeoCoord.Lat.ToString() + '\t' +
-                    completeRow.GeoCoord.Lon.ToString() + '\t' + 
-                    completeRow.GeoCoord.H.ToString() + '\t' + 
+                    completeRow.GeoCoord.Lon.ToString() + '\t' +                     
                     completeRow.Description);
             }
 

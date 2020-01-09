@@ -22,7 +22,7 @@ namespace CoordinateConverter.ViewModel
 
     public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged, IDragDropTarget
     {
-        private CoordinateType selectedCoordinateEnumType;
+        //private CoordinateType selectedCoordinateEnumType;
         private SortType selectedSortEnumType;
         private CoordViewType selectedCoordViewType;
         private IExcelFileOpen excelImporter;
@@ -67,32 +67,25 @@ namespace CoordinateConverter.ViewModel
 
         public ObservableCollection<CompleteRow> Selection { get; private set; }
 
-        public IEnumerable<CoordinateType> CoordinateEnumTypeValues
-        {
-            get
-            {
-                return Enum.GetValues(typeof(CoordinateType))
-                    .Cast<CoordinateType>();
-            }
-        }
+       
 
-        public CoordinateType SelectedCoordinateEnumType
-        {
-            get { return selectedCoordinateEnumType; }
-            set
-            {
-                if (selectedCoordinateEnumType != value)
-                {
-                    selectedCoordinateEnumType = value;
-                    if (CompleteRows.Count != 0)
-                    {
-                        foreach (var completeRow in CompleteRows)
-                            completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, completeRow.RectCoord);
-                    }
-                    RaisePropertyChanged(nameof(SelectedCoordinateEnumType));
-                }
-            }
-        }
+        //public CoordinateType SelectedCoordinateEnumType
+        //{
+        //    get { return selectedCoordinateEnumType; }
+        //    set
+        //    {
+        //        if (selectedCoordinateEnumType != value)
+        //        {
+        //            selectedCoordinateEnumType = value;
+        //            if (CompleteRows.Count != 0)
+        //            {
+        //                foreach (var completeRow in CompleteRows)
+        //                    completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, completeRow.RectCoord);
+        //            }
+        //            RaisePropertyChanged(nameof(SelectedCoordinateEnumType));
+        //        }
+        //    }
+        //}
 
         public IEnumerable<SortType> SortEnumTypeValues
         {
@@ -176,7 +169,7 @@ namespace CoordinateConverter.ViewModel
                 return settingsCommand ??
                   (settingsCommand = new DelegateCommand(() =>
                   {
-                      var viewModel = new SettingsWindowViewModel(SelectedCoordinateEnumType);
+                      var viewModel = new SettingsWindowViewModel();
                       var opensettings = new SettingsWindow { DataContext = viewModel };
                       viewModel.EditEnded += ViewModel_EditEnded;
                       opensettings.Show();
@@ -212,15 +205,15 @@ namespace CoordinateConverter.ViewModel
 
 
         private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
-        {
-            SelectedCoordinateEnumType = e.SelectedType;
+        {           
             SelectedCoordViewType = Properties.Settings.Default.CoordView;
+            RaisePropertyChanged(nameof(SelectedCoordViewType));
         }
 
         public void CoordChanged(object sender, EventArgs e)
         {
             var row = sender as CompleteRow;
-            row.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, row.RectCoord);
+            row.GeoCoord = coordConverter.Convert(row.RectCoord);
         }
 
         private async void OpenExecute()
@@ -278,14 +271,14 @@ namespace CoordinateConverter.ViewModel
                 {
                     if (usedRange)
                     {
-                        var rectCoords = await excelImporter.ReadRangeAsync(filename, rangeChoiceViewModel.First, rangeChoiceViewModel.Last);
-                        AddRows(filename, rectCoords);
+                        //var rectCoords = await excelImporter.ReadRangeAsync(filename, rangeChoiceViewModel.First, rangeChoiceViewModel.Last);
+                        //AddRows(filename, rectCoords);
 
                     }
                     else
                     {
-                        var rectCoords = await excelImporter.ReadAsync(filename);
-                        AddRows(filename, rectCoords);
+                        var completeRows = await excelImporter.ReadAsync(filename);
+                        AddRows(filename, completeRows);//????????
                     }
                 }
                 Busy = false;
@@ -302,28 +295,26 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-        private void AddRows(string filename, List<RectCoord> rectCoords)
+        private void AddRows(string filename, IList<CompleteRow> completeRows)
         {
             try
             {
                 int index = 1;
-                foreach (RectCoord rectCoord in rectCoords)
-                {
-                    var completeRow = new CompleteRow();
-                    completeRow.RectCoordPropertyChanged += CoordChanged;
-                    completeRow.RectCoord = rectCoord;
-                    string temp = String.Empty;
-                    completeRow.Description += "Файл: ";
+                foreach (var completeRow in completeRows)
+                {                    
+                    completeRow.RectCoordPropertyChanged += CoordChanged;                   
+                    string temp = string.Empty;
+                    completeRow.Description += " Файл: ";
                     for (int i = filename.Length - 1; filename[i] != '\\'; i--)
                         temp += filename[i];
-
+                    //?????
 
                     for (int i = temp.Length - 1; i >= 0; i--)
                     {
                         completeRow.Description += temp[i];
                     }
-                    completeRow.Description += "; Строка " + index.ToString();
-                    completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
+                    //completeRow.Description += "; Строка " + index.ToString();
+                    completeRow.GeoCoord = coordConverter.Convert(completeRow.RectCoord);
                     CompleteRows.Add(completeRow);
                     index++;
                 }
@@ -344,10 +335,12 @@ namespace CoordinateConverter.ViewModel
         {
             try
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.FileName = "Документ"; // Default file name
-                saveFileDialog.DefaultExt = ".xml"; // Default file extension
-                saveFileDialog.Filter = "Файл Xml (.xml)|*.xml|All files (*.*)|*.*";
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    FileName = "Документ",
+                    DefaultExt = ".xml",
+                    Filter = "Файл Xml (.xml)|*.xml|All files (*.*)|*.*"
+                };
 
                 var geoCoords = CompleteRows.Select(x => x.GeoCoord).ToList();
 
@@ -524,7 +517,7 @@ namespace CoordinateConverter.ViewModel
                     completeRow.RectCoordPropertyChanged += CoordChanged;
                     completeRow.RectCoord = rectCoord;
                     completeRow.Description = string.Empty;
-                    completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
+                    completeRow.GeoCoord = coordConverter.Convert(rectCoord);
 
                     CompleteRows.Insert(insertIndex, completeRow);
                     insertIndex++;
@@ -790,7 +783,7 @@ namespace CoordinateConverter.ViewModel
                 completeRow.RectCoordPropertyChanged += CoordChanged;
                 completeRow.RectCoord = rectCoord;
                 completeRow.Description = string.Empty;
-                completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, rectCoord);
+                completeRow.GeoCoord = coordConverter.Convert(rectCoord);
                 CompleteRows.Add(completeRow);
             }
         }
@@ -798,7 +791,7 @@ namespace CoordinateConverter.ViewModel
         public void NewItemAdded(CompleteRow row)
         {
             row.RectCoordPropertyChanged += CoordChanged;
-            row.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, row.RectCoord);
+            row.GeoCoord = coordConverter.Convert(row.RectCoord);
         }
     }
 }
