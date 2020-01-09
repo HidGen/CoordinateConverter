@@ -1,6 +1,3 @@
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\CoordinateConverter.exe.config
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\CoordinateConverter.exe
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\CoordinateConverter.pdb
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\DevExpress.Data.v17.2.dll
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\DevExpress.Images.v17.2.dll
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\DevExpress.Mvvm.v17.2.dll
@@ -47,19 +44,13 @@ C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\View\SettingsWindow.g.cs
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\App.g.cs
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter_MarkupCompile.cache
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter_MarkupCompile.lref
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\MainWindow.baml
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\View\RangeChoiceWindow.baml
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\View\SettingsWindow.baml
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.g.resources
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.Properties.Resources.resources
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csproj.GenerateResource.cache
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.exe.licenses
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csproj.CoreCompileInputs.cache
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csproj.CopyComplete
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.exe
-C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.pdb
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\System.Windows.Interactivity.dll
 C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\System.Windows.Interactivity.xml
 C:\Users\spike\Desktop\CoordinateConverter-master\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csprojAssemblyReference.cache
@@ -480,3 +471,19 @@ C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConve
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csproj.CopyComplete
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат.exe
 C:\GITHUB\CoordinateConverter\ConverterSetup\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат.pdb
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\Программа преобразования координат.exe.config
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\Программа преобразования координат.exe
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\Программа преобразования координат.pdb
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\DotSpatial.Projections.dll
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\EPPlus.dll
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\DotSpatial.Projections.xml
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\bin\Debug\EPPlus.xml
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\CoordinateConverter.csprojAssemblyReference.cache
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\View\ClearGridView.baml
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\View\ClearGridView.g.cs
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат_MarkupCompile.cache
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат_MarkupCompile.lref
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат.g.resources
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат.exe.licenses
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат.exe
+C:\GITHUB\CoordinateConverter\CoordinateConverter\CoordinateConverter\obj\Debug\Программа преобразования координат.pdb
