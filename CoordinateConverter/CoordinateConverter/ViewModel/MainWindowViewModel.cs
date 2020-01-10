@@ -510,15 +510,12 @@ namespace CoordinateConverter.ViewModel
                     insertIndex = CompleteRows.IndexOf(Selection[0]);
 
 
-                var rectCoords = paste.PasteDataFromExcel();
-                foreach (var rectCoord in rectCoords)
-                {
-                    var completeRow = new CompleteRow();
-                    completeRow.RectCoordPropertyChanged += CoordChanged;
-                    completeRow.RectCoord = rectCoord;
-                    completeRow.Description = string.Empty;
-                    completeRow.GeoCoord = coordConverter.Convert(rectCoord);
-
+                var completeRows = paste.PasteDataFromExcel();//???
+                foreach (var completeRow in completeRows)
+                {                    
+                    completeRow.RectCoordPropertyChanged += CoordChanged;                    
+                    completeRow.Description += string.Empty;
+                    completeRow.GeoCoord = coordConverter.Convert(completeRow.RectCoord);
                     CompleteRows.Insert(insertIndex, completeRow);
                     insertIndex++;
                 }
@@ -745,7 +742,7 @@ namespace CoordinateConverter.ViewModel
         {
             string[] lines;
             var delimiters = new char[] { '\n' };
-            var rectCoords = new List<RectCoord>();
+            var completeRows = new List<CompleteRow>();
             str = str.Replace('\r', ' ');
             lines = str.Split(delimiters, StringSplitOptions.None);
             foreach (var line in lines)
@@ -757,36 +754,44 @@ namespace CoordinateConverter.ViewModel
                     var rectCoord = new RectCoord();
                     try
                     {
-                        rectCoord.X = Convert.ToDouble(values[0]);
-                        rectCoord.Y = Convert.ToDouble(values[1]);
-                        rectCoord.H = Convert.ToDouble(values[2]);
-                        rectCoords.Add(rectCoord);
+                        rectCoord.X = Convert.ToDouble(values[1]);
+                        rectCoord.Y = Convert.ToDouble(values[2]);
+                        completeRows.Add(new CompleteRow { RectCoord = rectCoord, Description = values[0] });
                     }
                     catch
                     {
-
-                        MessageBox.Show(
-                         "Неверный формат строки",
-                         "Ошибка",
-                         MessageBoxButton.OK,
-                         MessageBoxImage.Error
-                         );
-
-                        rectCoords.Clear();
-                        break;
+                        try
+                        {
+                            rectCoord.X = Convert.ToDouble(values[0]);
+                            rectCoord.Y = Convert.ToDouble(values[1]);
+                            completeRows.Add(new CompleteRow
+                            {
+                                RectCoord = rectCoord
+                            }
+                            );
+                        }
+                        catch
+                        {
+                            MessageBox.Show(
+                           "Неверный формат строки в буфере обмена",
+                           "Ошибка",
+                           MessageBoxButton.OK,
+                           MessageBoxImage.Error
+                           );
+                            completeRows.Clear();
+                            break;
+                        }
                     }
-                }
+                }               
             }
-            foreach (var rectCoord in rectCoords)
+            foreach (var completeRow in completeRows)
             {
-                var completeRow = new CompleteRow();
-                completeRow.RectCoordPropertyChanged += CoordChanged;
-                completeRow.RectCoord = rectCoord;
-                completeRow.Description = string.Empty;
-                completeRow.GeoCoord = coordConverter.Convert(rectCoord);
+                completeRow.RectCoordPropertyChanged += CoordChanged;                
+                completeRow.GeoCoord = coordConverter.Convert(completeRow.RectCoord);
                 CompleteRows.Add(completeRow);
             }
         }
+        
         [Command]
         public void NewItemAdded(CompleteRow row)
         {

@@ -83,7 +83,7 @@ namespace CoordinateConverter.ViewModel
         {
             DependencyObject d = _sender as DependencyObject;
             if (d == null) return;
-            Object target = d.GetValue(FileDragDropTargetProperty);
+            object target = d.GetValue(FileDragDropTargetProperty);
             IDragDropTarget fileTarget = target as IDragDropTarget;
             if (fileTarget != null)
             {
@@ -91,7 +91,7 @@ namespace CoordinateConverter.ViewModel
                 {
                     fileTarget.OnFileDrop((string[])_dragEventArgs.Data.GetData(DataFormats.FileDrop));
                 }
-                else if ((_dragEventArgs.Data.GetDataPresent(DataFormats.Text)))
+                else if (_dragEventArgs.Data.GetDataPresent(DataFormats.Text))
                 {
                     fileTarget.OnTextDrop((string)_dragEventArgs.Data.GetData(DataFormats.Text));
                 }
