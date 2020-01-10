@@ -97,12 +97,7 @@ namespace CoordinateConverter.ViewModel
                         case SortType.MaxMinY:
                             SortMinMax(SortType.MaxMinY);
                             break;
-                        case SortType.MinMaxH:
-                            SortMinMax(SortType.MinMaxH);
-                            break;
-                        case SortType.MaxMinH:
-                            SortMinMax(SortType.MaxMinH);
-                            break;
+                     
                     }
                 }
                 RaisePropertyChanged(nameof(SelectedSortEnumType));
@@ -579,17 +574,7 @@ namespace CoordinateConverter.ViewModel
                         {
                             SelectedSortEnumType = SortType.MaxMinY;
                             return;
-                        }
-                    case SortType.MinMaxH:
-                        {
-                            SelectedSortEnumType = SortType.MinMaxH;
-                            return;
-                        }
-                    case SortType.MaxMinH:
-                        {
-                            SelectedSortEnumType = SortType.MaxMinH;
-                            return;
-                        }
+                        }                   
                 }
             }
             catch
@@ -660,17 +645,7 @@ namespace CoordinateConverter.ViewModel
                     {
                         CompleteRows.SortDesc((x, y) => x.RectCoord.Y.CompareTo(y.RectCoord.Y));
                         return;
-                    }
-                case SortType.MinMaxH:
-                    {
-                        CompleteRows.SortAsc((x, y) => x.RectCoord.H.CompareTo(y.RectCoord.H));
-                        return;
-                    }
-                case SortType.MaxMinH:
-                    {
-                        CompleteRows.SortDesc((x, y) => x.RectCoord.H.CompareTo(y.RectCoord.H));
-                        return;
-                    }
+                    }               
             }
         }
 

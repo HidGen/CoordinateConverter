@@ -74,8 +74,6 @@
 
     </Window.Resources>
     <Border>
-
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -103,9 +101,7 @@
                             <dxb:BarButtonItem x:Name="xminmaxbt" Content="по возрастанию X"  Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MinMaxX}"/>
                             <dxb:BarButtonItem x:Name="xmaxminbt" Content="по убыванию X" Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MaxMinX}"/>
                             <dxb:BarButtonItem x:Name="yminmaxbt" Content="по возрастанию Y"  Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MinMaxY}"/>
-                            <dxb:BarButtonItem x:Name="ymaxminbt" Content="по убыванию Y" Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MaxMinY}"/>
-                            <dxb:BarButtonItem x:Name="hminmaxbt" Content="по возрастанию H"  Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MinMaxH}"/>
-                            <dxb:BarButtonItem x:Name="hmaxminbt" Content="по убыванию H" Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MaxMinH}"/>
+                            <dxb:BarButtonItem x:Name="ymaxminbt" Content="по убыванию Y" Command="{Binding SortCommand}" CommandParameter="{x:Static viewmodel:SortType.MaxMinY}"/>                            
                         </dxb:BarSubItem>
                         <dxb:BarItemLinkSeparator />
                         <dxb:BarButtonItem x:Name="biEdit" Content="Настройки"  ToolTip="Настройки (F1)" Command="{Binding SettingsCommand}" />

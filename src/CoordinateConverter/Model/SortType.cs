@@ -12,11 +12,7 @@ namespace CoordinateConverter.ViewModel
         [Description("Y по возрастанию")]
         MinMaxY,
         [Description("Y по убыванию")]
-        MaxMinY,
-        [Description("H по возрастанию")]
-        MinMaxH,
-        [Description("H по убыванию")]
-        MaxMinH
+        MaxMinY
     }
 
 
