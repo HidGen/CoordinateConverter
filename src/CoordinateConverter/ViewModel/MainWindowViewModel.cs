@@ -21,8 +21,7 @@ namespace CoordinateConverter.ViewModel
 {
 
     public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged, IDragDropTarget
-    {
-        //private CoordinateType selectedCoordinateEnumType;
+    {       
         private SortType selectedSortEnumType;
         private CoordViewType selectedCoordViewType;
         private IExcelFileOpen excelImporter;
@@ -65,27 +64,7 @@ namespace CoordinateConverter.ViewModel
 
         public ObservableCollection<CompleteRow> CompleteRows { get; }
 
-        public ObservableCollection<CompleteRow> Selection { get; private set; }
-
-       
-
-        //public CoordinateType SelectedCoordinateEnumType
-        //{
-        //    get { return selectedCoordinateEnumType; }
-        //    set
-        //    {
-        //        if (selectedCoordinateEnumType != value)
-        //        {
-        //            selectedCoordinateEnumType = value;
-        //            if (CompleteRows.Count != 0)
-        //            {
-        //                foreach (var completeRow in CompleteRows)
-        //                    completeRow.GeoCoord = coordConverter.Convert(SelectedCoordinateEnumType, completeRow.RectCoord);
-        //            }
-        //            RaisePropertyChanged(nameof(SelectedCoordinateEnumType));
-        //        }
-        //    }
-        //}
+        public ObservableCollection<CompleteRow> Selection { get; private set; }       
 
         public IEnumerable<SortType> SortEnumTypeValues
         {
@@ -204,7 +183,7 @@ namespace CoordinateConverter.ViewModel
         }
 
 
-        private void ViewModel_EditEnded(object sender, SettingsWindowViewModel.SettingsWindowArgs e)
+        private void ViewModel_EditEnded(object sender, EventArgs e)
         {           
             SelectedCoordViewType = Properties.Settings.Default.CoordView;
             RaisePropertyChanged(nameof(SelectedCoordViewType));
@@ -250,35 +229,33 @@ namespace CoordinateConverter.ViewModel
 
                 }
 
-                var dlg = new OpenFileDialog();
-                dlg.FileName = "Документ";
-                dlg.DefaultExt = ".xls";
-                dlg.Filter = "Файл Excel (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx";
-                dlg.Multiselect = true;
-                dlg.Title = "Выбор файла";
+                var dlg = new OpenFileDialog
+                {
+                    FileName = "Документ",
+                    DefaultExt = ".xls",
+                    Filter = "Файл Excel (.xls;.xlsm;.xlsx)|*.xls;*.xlsm;*.xlsx",
+                    Multiselect = true,
+                    Title = "Выбор файла"
+                };
                 var result = dlg.ShowDialog();
-                if (result.HasValue == false || result.Value == false)
-                {
-                    return;
-                }
+                if (result.HasValue == false || result.Value == false)                
+                    return;                
 
-                if (Properties.Settings.Default.ClearRule == true)
-                {
+                if (Properties.Settings.Default.ClearRule == true)                
                     CompleteRows.Clear();
-                }
+                
                 Busy = true;
                 foreach (string filename in dlg.FileNames)
                 {
                     if (usedRange)
                     {
-                        //var rectCoords = await excelImporter.ReadRangeAsync(filename, rangeChoiceViewModel.First, rangeChoiceViewModel.Last);
-                        //AddRows(filename, rectCoords);
-
+                        var completeRows = await excelImporter.ReadRangeAsync(filename, rangeChoiceViewModel.First, rangeChoiceViewModel.Last);
+                        AddRows(filename, completeRows);
                     }
                     else
                     {
                         var completeRows = await excelImporter.ReadAsync(filename);
-                        AddRows(filename, completeRows);//????????
+                        AddRows(filename, completeRows);
                     }
                 }
                 Busy = false;
@@ -306,14 +283,11 @@ namespace CoordinateConverter.ViewModel
                     string temp = string.Empty;
                     completeRow.Description += " Файл: ";
                     for (int i = filename.Length - 1; filename[i] != '\\'; i--)
-                        temp += filename[i];
-                    //?????
+                        temp += filename[i];             
 
-                    for (int i = temp.Length - 1; i >= 0; i--)
-                    {
-                        completeRow.Description += temp[i];
-                    }
-                    //completeRow.Description += "; Строка " + index.ToString();
+                    for (int i = temp.Length - 1; i >= 0; i--)                    
+                        completeRow.Description += temp[i];                    
+                    
                     completeRow.GeoCoord = coordConverter.Convert(completeRow.RectCoord);
                     CompleteRows.Add(completeRow);
                     index++;
@@ -510,7 +484,7 @@ namespace CoordinateConverter.ViewModel
                     insertIndex = CompleteRows.IndexOf(Selection[0]);
 
 
-                var completeRows = paste.PasteDataFromExcel();//???
+                var completeRows = paste.PasteDataFromExcel();
                 foreach (var completeRow in completeRows)
                 {                    
                     completeRow.RectCoordPropertyChanged += CoordChanged;                    

@@ -31,7 +31,6 @@ namespace CoordinateConverter.FileInteractions
                                              
                         else if (workSheet.Cells[i, j].Value is double && workSheet.Cells[i, j + 1].Value is double)
                             completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = (double)workSheet.Cells[i, j].Value, Y = (double)workSheet.Cells[i, j + 1].Value, H = 0 }, Description = "" });
-
                     }
                 }
             }
@@ -45,9 +44,9 @@ namespace CoordinateConverter.FileInteractions
                 return Read(path);
             });
         }
-        public List<RectCoord> ReadRange(string path, string first, string last)
+        public IList<CompleteRow> ReadRange(string path, string first, string last)
         {
-            var rectCoords = new List<RectCoord>();
+            var completeRows = new List<CompleteRow>();
             try
             {
                 using (var package = new ExcelPackage(new FileInfo(path)))
@@ -58,22 +57,24 @@ namespace CoordinateConverter.FileInteractions
                     var clns = data.GetLength(1);
                     var rws = data.GetLength(0);
                     for (int i = 0; i <= rws - 1; i++)
-                    {
-                        int x = 0;
+                    {                        
                         for (int j = 0; j <= clns - 1; j++)
                         {
-                            if (data[i, j] is double)                            
-                                x++;                            
-                            else                            
-                                x = 0;
-                            
-                            if (x == 3)                            
-                                rectCoords.Add(new RectCoord { X = (double)data[i, j - 1], Y = (double)data[i, j], H = 0 });
-                            
+                            if (data[i, j] is string || data[i, j] is double)
+                                if (j + 1 <= clns - 1)
+                                {
+                                    if (data[i, j + 1] is double && j + 2 <= clns - 1 && data[i, j + 2] is double)
+                                    {
+                                        completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = (double)data[i, j + 1], Y = (double)data[i, j + 2], H = 0 }, Description = data[i, j].ToString() });
+                                        break;
+                                    }
+                                    else if (data[i, j] is double && data[i, j + 1] is double)
+                                        completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = (double)data[i, j], Y = (double)data[i, j + 1], H = 0 }, Description = "" });
+                                }
                         }
                     }
                 }
-                if (rectCoords.Count == 0)
+                if (completeRows.Count == 0)
                 {
                     MessageBox.Show(
                         "В данном диапазоне не найдено ни одной записи!",
@@ -82,7 +83,7 @@ namespace CoordinateConverter.FileInteractions
                         MessageBoxImage.Exclamation
                         );
                 }
-                return rectCoords;
+                return completeRows;
             }
             catch
             {
@@ -94,11 +95,11 @@ namespace CoordinateConverter.FileInteractions
                         MessageBoxImage.Error
                         );
 
-                return new List<RectCoord>();
+                return new List<CompleteRow>();
             }
 
         }
-        public Task<List<RectCoord>> ReadRangeAsync(string path, string first, string last)
+        public Task<IList<CompleteRow>> ReadRangeAsync(string path, string first, string last)
         {
             return Task.Run(() =>
             {
@@ -143,7 +144,6 @@ namespace CoordinateConverter.FileInteractions
                 }
                 writer.WriteEndElement();
                 writer.WriteEndDocument();
-
             }
         }
     }

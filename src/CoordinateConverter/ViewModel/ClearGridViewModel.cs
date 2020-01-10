@@ -46,8 +46,7 @@ namespace CoordinateConverter.ViewModel
             try
             {
                 Properties.Settings.Default.ClearCheck = value;
-                Properties.Settings.Default.Save();
-               
+                Properties.Settings.Default.Save();               
             }
             catch 
             {               

@@ -13,13 +13,11 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-
         <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"
                    Text="Таблица содержит данные. Очистить таблицу?" FontSize="14"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,5">
             <CheckBox  VerticalAlignment="Center" Margin="0" IsChecked="{Binding Path=ClearCheck}" />
             <TextBlock  Margin="10,0,0,0" VerticalAlignment="Center" Text="Запомнить выбор очистки таблицы" FontSize="14"/>
         </StackPanel>
-
     </Grid>
 </UserControl>

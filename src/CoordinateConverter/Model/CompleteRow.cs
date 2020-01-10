@@ -5,16 +5,18 @@ namespace CoordinateConverter.Model
 {
     public class CompleteRow: BindableBase
     {
+        private RectCoord rectCoord;
+        private GeoCoord geoCoord;
 
         public event EventHandler RectCoordPropertyChanged;
+
         public CompleteRow()
         {
             rectCoord = new RectCoord();
             geoCoord = new GeoCoord();
             rectCoord.PropertyChanged += RectCoordChanged;
-
         }
-        private RectCoord rectCoord;
+        
         public RectCoord RectCoord
         {
             get => rectCoord;
@@ -26,7 +28,7 @@ namespace CoordinateConverter.Model
                 rectCoord.PropertyChanged += RectCoordChanged;
             }
         }
-        private GeoCoord geoCoord;
+        
         public GeoCoord GeoCoord
         {
             get => geoCoord;
@@ -43,7 +45,7 @@ namespace CoordinateConverter.Model
             RectCoordPropertyChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        internal void GeoCoordChanged()
+        public void GeoCoordChanged()
         {
             RaisePropertyChanged(nameof(geoCoord));
         }

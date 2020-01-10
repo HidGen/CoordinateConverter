@@ -52,7 +52,7 @@ namespace CoordinateConverter.ViewModel
         {
             DependencyObject d = sender as DependencyObject;
             if (d == null) return;
-            Object target = d.GetValue(FileDragDropTargetProperty);
+            object target = d.GetValue(FileDragDropTargetProperty);
             IDragDropTarget fileTarget = target as IDragDropTarget;
             if (fileTarget != null)
             {
@@ -69,13 +69,10 @@ namespace CoordinateConverter.ViewModel
                             e.Effects = DragDropEffects.None;
                             break;
                         }
-
                     }
                     e.Handled = true;
                 }
             }
-
-
         }
 
 
@@ -96,7 +93,6 @@ namespace CoordinateConverter.ViewModel
                     fileTarget.OnTextDrop((string)_dragEventArgs.Data.GetData(DataFormats.Text));
                 }
             }
-
             else
             {
                 throw new Exception("FileDragDropTarget object must be of type IFileDragDropTarget");

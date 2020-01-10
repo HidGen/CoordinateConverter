@@ -60,7 +60,6 @@ namespace CoordinateConverter
                         return Enum.Parse(enumType, fi.Name);
                 }
             }
-
             return Enum.Parse(enumType, (string)_value);
         }
     }

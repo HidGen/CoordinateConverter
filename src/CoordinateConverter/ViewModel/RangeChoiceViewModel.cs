@@ -8,9 +8,7 @@ namespace CoordinateConverter.ViewModel
 {
     class RangeChoiceViewModel : IDataErrorInfo
     {
-
         private readonly UICommand okCommand;
-
 
         private string first;
         private string last;
@@ -50,13 +48,13 @@ namespace CoordinateConverter.ViewModel
                         if (!excelCellFormat.IsMatch(First))
                         {
                             error = "Неверный формат ячейки Excel";
-                            this.errorFirst = true;
+                            errorFirst = true;
                         }
                         else
-                            this.errorFirst = false;
+                            errorFirst = false;
                     }
                     else
-                        this.errorFirst = true;
+                        errorFirst = true;
                 }
                 if (columnName == "Last")
                 {
@@ -65,13 +63,13 @@ namespace CoordinateConverter.ViewModel
                         if (!excelCellFormat.IsMatch(Last))
                         {
                             error = "Неверный формат ячейки Excel";
-                            this.errorLast = true;
+                            errorLast = true;
                         }
                         else
-                            this.errorLast = false;
+                            errorLast = false;
                     }
                     else
-                        this.errorLast = true;
+                        errorLast = true;
                 }
 
                 return error;

@@ -9,19 +9,11 @@ namespace CoordinateConverter.ViewModel
 {
     public class SettingsWindowViewModel: ViewModelBase
     {
-        public event EventHandler<SettingsWindowArgs> EditEnded;
+        public event EventHandler EditEnded;
 
-        public bool clearCheck;
-        protected ICurrentWindowService Service { get { return this.GetService<ICurrentWindowService>(); } }
+        protected ICurrentWindowService Service { get { return GetService<ICurrentWindowService>(); } }
 
-        public bool ClearCheck {
-
-            get { return clearCheck; }
-            set
-            {
-                clearCheck = value;
-            }
-        }
+        public bool ClearCheck { get; set; }
 
 
         public IEnumerable<CoordViewType> CoordTypeValues
@@ -33,29 +25,17 @@ namespace CoordinateConverter.ViewModel
             }
         }
 
-        private CoordViewType selectedCoordViewType;
-
-        public CoordViewType SelectedCoordViewType
-        {
-            get
-            {
-                return selectedCoordViewType;
-            }
-            set
-            {
-                selectedCoordViewType = value;
-            }
-        }
+        public CoordViewType SelectedCoordViewType { get; set; }
 
 
         private void OnEditEnded(bool clearCheck, CoordViewType viewType)
         {
             try
             { 
-            Properties.Settings.Default.ClearCheck = clearCheck;
-            Properties.Settings.Default.CoordView = viewType;
-            Properties.Settings.Default.Save();
-            EditEnded?.Invoke(this, new SettingsWindowArgs());
+                Properties.Settings.Default.ClearCheck = clearCheck;
+                Properties.Settings.Default.CoordView = viewType;
+                Properties.Settings.Default.Save();
+                EditEnded?.Invoke(this, EventArgs.Empty);
                 Service.Close();
             }
             catch
@@ -74,7 +54,7 @@ namespace CoordinateConverter.ViewModel
 
         public SettingsWindowViewModel()
         {
-            clearCheck = Properties.Settings.Default.ClearCheck;           
+            ClearCheck = Properties.Settings.Default.ClearCheck;           
             SelectedCoordViewType = Properties.Settings.Default.CoordView;
         }
 
@@ -85,17 +65,9 @@ namespace CoordinateConverter.ViewModel
                 return returnCommand ??
                   (returnCommand = new DelegateCommand(() =>
                   {
-                      OnEditEnded(ClearCheck, selectedCoordViewType);
+                      OnEditEnded(ClearCheck, SelectedCoordViewType);
                   }));
             }
-        }
-
-        public class SettingsWindowArgs : EventArgs
-        { 
-
-           
-            public bool ClearCheck { get; }
-          
-        }
+        }      
     }
 }

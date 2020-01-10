@@ -45,7 +45,7 @@ namespace CoordinateConverter
         }
 
         public static void MoveUp<TSource>(this ObservableCollection<TSource> source, ObservableCollection<TSource> selection)
-            where TSource:CompleteRow
+            where TSource : CompleteRow
         {
             for (int i = 0; i < source.Count; i++)
             {
