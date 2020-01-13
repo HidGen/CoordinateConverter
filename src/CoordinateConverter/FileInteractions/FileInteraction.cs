@@ -22,11 +22,23 @@ namespace CoordinateConverter.FileInteractions
                 {
                     for (int j = workSheet.Dimension.Start.Column; j <= workSheet.Dimension.End.Column; j++)
                     {
-                        if (workSheet.Cells[i, j].Value is string || workSheet.Cells[i, j].Value is double)                        
-                            if (workSheet.Cells[i, j + 1].Value is double && workSheet.Cells[i, j + 2].Value is double)
+                        if (workSheet.Cells[i, j].Value is string || workSheet.Cells[i, j].Value is double)
+                            try
+                            {                               
+                                if (Convert.ToDouble(workSheet.Cells[i, j].Value) != 0)
+                                {
+                                    workSheet.Cells[i, j + 1].Value = Convert.ToDouble(workSheet.Cells[i, j + 1].Value);
+                                    workSheet.Cells[i, j + 2].Value = Convert.ToDouble(workSheet.Cells[i, j + 2].Value);
+                                }
+                            }
+                            catch
                             {
-                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = (double)workSheet.Cells[i, j + 1].Value, Y = (double)workSheet.Cells[i, j + 2].Value, H = 0 }, Description = workSheet.Cells[i, j].Value.ToString() });
-                                break;
+                                //throw new Exception("Неверный формат входных данных");
+                            }
+                            if (workSheet.Cells[i, j + 1].Value is double && workSheet.Cells[i, j + 2].Value is double )
+                            {                             
+                              completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = (double)workSheet.Cells[i, j + 1].Value, Y = (double)workSheet.Cells[i, j + 2].Value, H = 0 }, Description = workSheet.Cells[i, j].Value.ToString() });
+                              break;
                             }
                                              
                         else if (workSheet.Cells[i, j].Value is double && workSheet.Cells[i, j + 1].Value is double)
