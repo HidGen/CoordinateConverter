@@ -144,7 +144,7 @@ namespace CoordinateConverter.ViewModel
                   (settingsCommand = new DelegateCommand(() =>
                   {
                       var viewModel = new SettingsWindowViewModel();
-                      var opensettings = new SettingsWindow { DataContext = viewModel };
+                      var opensettings = new SettingsWindow { DataContext = viewModel, WindowStartupLocation = WindowStartupLocation.CenterOwner, Owner = Application.Current.MainWindow };
                       viewModel.EditEnded += ViewModel_EditEnded;
                       opensettings.Show();
                   }));
@@ -263,6 +263,7 @@ namespace CoordinateConverter.ViewModel
                  MessageBoxButton.OK,
                  MessageBoxImage.Error
                  );
+                Busy = false;
                 return;
             }
         }

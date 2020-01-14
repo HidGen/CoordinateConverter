@@ -17,32 +17,71 @@ namespace CoordinateConverter.FileInteractions
             using (var package = new ExcelPackage(new FileInfo(path)))
             {
                 ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
+                int? xIndex = null;
+                int? descriptionIndex = null;
+                int spaceCount = 0;
 
                 for (int i = workSheet.Dimension.Start.Row; i <= workSheet.Dimension.End.Row; i++)
                 {
-                    for (int j = workSheet.Dimension.Start.Column; j <= workSheet.Dimension.End.Column; j++)
+                    if (!xIndex.HasValue)
                     {
-                        if (workSheet.Cells[i, j].Value is string || workSheet.Cells[i, j].Value is double)
-                            try
-                            {                               
-                                if (Convert.ToDouble(workSheet.Cells[i, j].Value) != 0)
+                        for (int j = workSheet.Dimension.Start.Column; j <= workSheet.Dimension.End.Column; j++)
+                        {                         
+                            if (workSheet.Cells[i, j].Value is string || workSheet.Cells[i, j].Value is double)
+                                try
                                 {
-                                    workSheet.Cells[i, j + 1].Value = Convert.ToDouble(workSheet.Cells[i, j + 1].Value);
-                                    workSheet.Cells[i, j + 2].Value = Convert.ToDouble(workSheet.Cells[i, j + 2].Value);
+                                    if (workSheet.Cells[i, j + 1].Value is string || workSheet.Cells[i, j + 1].Value is double)
+                                    {
+                                        double x;
+                                        double y;
+                                        string description;
+
+                                        if (workSheet.Cells[i, j + 2].Value is string || workSheet.Cells[i, j + 2].Value is double)
+                                        {
+                                            xIndex = j + 1;
+                                            descriptionIndex = j;                                           
+                                            x = Convert.ToDouble(workSheet.Cells[i, xIndex.Value].Value);
+                                            y = Convert.ToDouble(workSheet.Cells[i, xIndex.Value + 1].Value);
+                                            description = workSheet.Cells[i, descriptionIndex.Value].Value.ToString();
+                                            completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            xIndex = j;                                          
+                                            x = Convert.ToDouble(workSheet.Cells[i, xIndex.Value].Value);
+                                            y = Convert.ToDouble(workSheet.Cells[i, xIndex.Value + 1].Value);
+                                            description = string.Empty;
+                                            completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                                            break;
+                                        }
+                                    }
                                 }
-                            }
-                            catch
+                                catch {}
+                        }
+                    }
+                    else
+                    {
+                        double x;
+                        double y;
+                        string description = string.Empty;
+                        try
+                        {
+                            if (spaceCount >= 2)
+                                break;
+                            if (workSheet.Cells[i, xIndex.Value].Value == null || workSheet.Cells[i, xIndex.Value + 1].Value == null)
                             {
-                                //throw new Exception("Неверный формат входных данных");
+                                spaceCount += 1;
+                                continue;
                             }
-                            if (workSheet.Cells[i, j + 1].Value is double && workSheet.Cells[i, j + 2].Value is double )
-                            {                             
-                              completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = (double)workSheet.Cells[i, j + 1].Value, Y = (double)workSheet.Cells[i, j + 2].Value, H = 0 }, Description = workSheet.Cells[i, j].Value.ToString() });
-                              break;
-                            }
-                                             
-                        else if (workSheet.Cells[i, j].Value is double && workSheet.Cells[i, j + 1].Value is double)
-                            completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = (double)workSheet.Cells[i, j].Value, Y = (double)workSheet.Cells[i, j + 1].Value, H = 0 }, Description = "" });
+                            x = Convert.ToDouble(workSheet.Cells[i, xIndex.Value].Value);
+                            y = Convert.ToDouble(workSheet.Cells[i, xIndex.Value + 1].Value);
+                            if(descriptionIndex.HasValue)
+                            description = workSheet.Cells[i, descriptionIndex.Value].Value.ToString();
+                            completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                            spaceCount = 0;
+                        }
+                        catch { }
                     }
                 }
             }
@@ -68,21 +107,71 @@ namespace CoordinateConverter.FileInteractions
                     var data = workSheet.Cells[string.Format("{0}:{1}", first, last)].Value as object[,];
                     var clns = data.GetLength(1);
                     var rws = data.GetLength(0);
+                    int? xIndex = null;
+                    int? descriptionIndex = null;
+                    int spaceCount = 0;
+
                     for (int i = 0; i <= rws - 1; i++)
-                    {                        
-                        for (int j = 0; j <= clns - 1; j++)
+                    {
+                        if (!xIndex.HasValue)
                         {
-                            if (data[i, j] is string || data[i, j] is double)
-                                if (j + 1 <= clns - 1)
-                                {
-                                    if (data[i, j + 1] is double && j + 2 <= clns - 1 && data[i, j + 2] is double)
+                            for (int j = 0; j <= clns - 1; j++)
+                            {
+                                if (data[i, j] is string || data[i, j] is double)
+                                    try
                                     {
-                                        completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = (double)data[i, j + 1], Y = (double)data[i, j + 2], H = 0 }, Description = data[i, j].ToString() });
-                                        break;
+                                        if (data[i, j + 1] is string || data[i, j + 1] is double)
+                                        {
+                                            double x;
+                                            double y;
+                                            string description;
+
+                                            if (j + 2 <= clns - 1 && (data[i, j + 2] is string || data[i, j + 2] is double))
+                                            {
+                                                xIndex = j + 1;
+                                                descriptionIndex = j;                                               
+                                                x = Convert.ToDouble(data[i, xIndex.Value]);
+                                                y = Convert.ToDouble(data[i, xIndex.Value + 1]);
+                                                description = data[i, descriptionIndex.Value].ToString();
+                                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                xIndex = j;                                              
+                                                x = Convert.ToDouble(data[i, xIndex.Value]);
+                                                y = Convert.ToDouble(data[i, xIndex.Value + 1]);
+                                                description = string.Empty;
+                                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                                                break;
+                                            }
+                                        }
                                     }
-                                    else if (data[i, j] is double && data[i, j + 1] is double)
-                                        completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = (double)data[i, j], Y = (double)data[i, j + 1], H = 0 }, Description = "" });
+                                    catch { }
+                            }
+                        }                        
+                        else
+                        {
+                            double x;
+                            double y;
+                            string description = string.Empty;
+                            try
+                            {
+                                if (spaceCount >= 2)
+                                    break;
+                                if (data[i, xIndex.Value] == null || data[i, xIndex.Value + 1] == null)
+                                {
+                                    spaceCount += 1;
+                                    continue;
                                 }
+                                x = Convert.ToDouble(data[i, xIndex.Value]);
+                                y = Convert.ToDouble(data[i, xIndex.Value + 1]);
+                                if (descriptionIndex.HasValue)
+                                    description = data[i, descriptionIndex.Value].ToString();
+                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                                spaceCount = 0;
+                            }
+                            catch { }
                         }
                     }
                 }
@@ -99,7 +188,7 @@ namespace CoordinateConverter.FileInteractions
             }
             catch
             {
-                
+
                 MessageBox.Show(
                         "Неверный диапазон данных или имя файла.",
                         "Ошибка",
