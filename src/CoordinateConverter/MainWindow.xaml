@@ -22,7 +22,7 @@
    >
 
     <dxmvvm:Interaction.Behaviors>
-        <dx:DialogService x:Name="ClearGridDialogService">
+        <dx:DialogService x:Name="ClearGridDialogService" DialogWindowStartupLocation="CenterOwner">
             <dx:DialogService.DialogStyle>
                 <Style TargetType="Window">
                     <Setter Property="SizeToContent" Value="WidthAndHeight" />
@@ -35,7 +35,7 @@
                 </DataTemplate>
             </dx:DialogService.ViewTemplate>
         </dx:DialogService>
-        <dx:DialogService x:Name="RangeChoiceDialogService">
+        <dx:DialogService x:Name="RangeChoiceDialogService" DialogWindowStartupLocation="CenterOwner">
             <dx:DialogService.DialogStyle>
                 <Style TargetType="Window">
                     <Setter Property="SizeToContent" Value="WidthAndHeight" />

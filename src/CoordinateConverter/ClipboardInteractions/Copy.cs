@@ -8,7 +8,7 @@ namespace CoordinateConverter.ClipboardInteractions
     {
         public void CopyFromTable(IList<CompleteRow> completeRows)
         {
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
             foreach (var completeRow in completeRows)
             {
                 str.AppendLine(

@@ -33,12 +33,8 @@ namespace CoordinateConverter.ViewModel
         private ObservableCollection<int> indexes = new ObservableCollection<int>();
         private ICommand settingsCommand;
         private string indexList;
-
-
-
-        protected IDialogService ClearGridDialogService { get { return GetService<IDialogService>("ClearGridDialogService"); } }
-
-        protected IDialogService RangeChoiceDialogService { get { return GetService<IDialogService>("RangeChoiceDialogService"); } }
+        private IDialogService ClearGridDialogService { get { return GetService<IDialogService>("ClearGridDialogService"); } }
+        private IDialogService RangeChoiceDialogService { get { return GetService<IDialogService>("RangeChoiceDialogService"); } }
 
         public bool ClearRule { get; set; }
 

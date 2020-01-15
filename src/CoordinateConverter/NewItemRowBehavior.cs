@@ -27,7 +27,6 @@ namespace CoordinateConverter
 
         void OnRowUpdated(object sender, RowEventArgs e)
         {
-
             OnRowUpdated(e);
         }
 

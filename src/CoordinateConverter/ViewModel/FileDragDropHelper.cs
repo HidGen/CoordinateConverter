@@ -50,8 +50,7 @@ namespace CoordinateConverter.ViewModel
 
         private static void OnDragOver(object sender, DragEventArgs e)
         {
-            DependencyObject d = sender as DependencyObject;
-            if (d == null) return;
+            if (!(sender is DependencyObject d)) return;
             object target = d.GetValue(FileDragDropTargetProperty);
             IDragDropTarget fileTarget = target as IDragDropTarget;
             if (fileTarget != null)
@@ -78,8 +77,7 @@ namespace CoordinateConverter.ViewModel
 
         private static void OnDrop(object _sender, DragEventArgs _dragEventArgs)
         {
-            DependencyObject d = _sender as DependencyObject;
-            if (d == null) return;
+            if (!(_sender is DependencyObject d)) return;
             object target = d.GetValue(FileDragDropTargetProperty);
             IDragDropTarget fileTarget = target as IDragDropTarget;
             if (fileTarget != null)
