@@ -39,7 +39,7 @@ namespace CoordinateConverter.ViewModel
         {
             get
             {
-                string error = String.Empty;
+                string error = string.Empty;
                 Regex excelCellFormat = new Regex(@"^[A-Z]+[0-9]+$");
                 if (columnName == "First")
                 {
@@ -71,7 +71,6 @@ namespace CoordinateConverter.ViewModel
                     else
                         errorLast = true;
                 }
-
                 return error;
             }
         }

@@ -12,14 +12,12 @@ namespace CoordinateConverter.ClipboardInteractions
             foreach (var completeRow in completeRows)
             {
                 str.AppendLine(
+                    completeRow.Description + '\t' +
                     completeRow.RectCoord.X.ToString() + '\t' +
                     completeRow.RectCoord.Y.ToString() + '\t' +                     
                     completeRow.GeoCoord.Lat.ToString() + '\t' +
-                    completeRow.GeoCoord.Lon.ToString() + '\t' +                     
-                    completeRow.Description);
-            }
-
-            var test = str.ToString();
+                    completeRow.GeoCoord.Lon.ToString());
+            }           
             var dataObject = new System.Windows.DataObject();
             dataObject.SetText(str.ToString());
             System.Windows.Clipboard.SetDataObject(dataObject, true);

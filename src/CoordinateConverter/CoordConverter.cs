@@ -1,5 +1,4 @@
 ﻿using CoordinateConverter.Model;
-using CoordinateConverter.ViewModel;
 using DotSpatial.Projections;
 using System.Configuration;
 
@@ -7,8 +6,7 @@ namespace CoordinateConverter
 {
     public class CoordConverter
     {
-        public string BasicTypeString { get; private set; }     
-    
+        public string BasicTypeString { get; private set; }         
 
         public GeoCoord Convert(RectCoord rectCoord)
         {
@@ -20,7 +18,7 @@ namespace CoordinateConverter
             ProjectionInfo src = ProjectionInfo.FromProj4String(BasicTypeString);
             ProjectionInfo trg = ProjectionInfo.FromProj4String("+proj=longlat +datum=WGS84 +no_defs");
             double[] xy = { rectCoord.Y, rectCoord.X };
-            double[] h = { rectCoord.H };
+            double[] h = { 0 };
             Reproject.ReprojectPoints(xy, h, src, trg, 0, 1);
             var geoCoord = new GeoCoord { Lon = xy[0], Lat = xy[1], Alt = h[0] };
             return geoCoord;

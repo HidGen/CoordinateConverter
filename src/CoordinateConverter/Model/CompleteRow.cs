@@ -22,9 +22,10 @@ namespace CoordinateConverter.Model
             get => rectCoord;
             set
             {
-                if(rectCoord!=null)
+                if(rectCoord != null)
                 rectCoord.PropertyChanged -= RectCoordChanged;
-                rectCoord = value;                
+                rectCoord = value;
+                if(value != null)
                 rectCoord.PropertyChanged += RectCoordChanged;
             }
         }
@@ -40,6 +41,7 @@ namespace CoordinateConverter.Model
         }
 
         public string Description { get; set; }
+
         public void RectCoordChanged(object sender, EventArgs e)
         {
             RectCoordPropertyChanged?.Invoke(this, EventArgs.Empty);

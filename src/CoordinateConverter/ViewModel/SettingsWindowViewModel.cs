@@ -9,11 +9,12 @@ namespace CoordinateConverter.ViewModel
 {
     public class SettingsWindowViewModel: ViewModelBase
     {
-        public event EventHandler EditEnded;
-
-        protected ICurrentWindowService Service { get { return GetService<ICurrentWindowService>(); } }
+        private ICommand returnCommand;
+        private ICurrentWindowService Service { get { return GetService<ICurrentWindowService>(); } }
 
         public bool ClearCheck { get; set; }
+
+        public event EventHandler EditEnded;
 
 
         public IEnumerable<CoordViewType> CoordTypeValues
@@ -22,6 +23,17 @@ namespace CoordinateConverter.ViewModel
             {
                 return Enum.GetValues(typeof(CoordViewType))
                      .Cast<CoordViewType>();
+            }
+        }
+        public ICommand ReturnCommand
+        {
+            get
+            {
+                return returnCommand ??
+                  (returnCommand = new DelegateCommand(() =>
+                  {
+                      OnEditEnded(ClearCheck, SelectedCoordViewType);
+                  }));
             }
         }
 
@@ -49,8 +61,7 @@ namespace CoordinateConverter.ViewModel
                 return;
             }
         }
-
-        private ICommand returnCommand;
+        
 
         public SettingsWindowViewModel()
         {
@@ -58,16 +69,6 @@ namespace CoordinateConverter.ViewModel
             SelectedCoordViewType = Properties.Settings.Default.CoordView;
         }
 
-        public ICommand ReturnCommand
-        {
-            get
-            {
-                return returnCommand ??
-                  (returnCommand = new DelegateCommand(() =>
-                  {
-                      OnEditEnded(ClearCheck, SelectedCoordViewType);
-                  }));
-            }
-        }      
+           
     }
 }

@@ -14,6 +14,4 @@ namespace CoordinateConverter.ViewModel
         [Description("Y по убыванию")]
         MaxMinY
     }
-
-
 }

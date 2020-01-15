@@ -36,9 +36,9 @@ namespace CoordinateConverter.ViewModel
 
 
 
-        protected IDialogService ClearGridDialogService { get { return this.GetService<IDialogService>("ClearGridDialogService"); } }
+        protected IDialogService ClearGridDialogService { get { return GetService<IDialogService>("ClearGridDialogService"); } }
 
-        protected IDialogService RangeChoiceDialogService { get { return this.GetService<IDialogService>("RangeChoiceDialogService"); } }
+        protected IDialogService RangeChoiceDialogService { get { return GetService<IDialogService>("RangeChoiceDialogService"); } }
 
         public bool ClearRule { get; set; }
 
@@ -672,15 +672,12 @@ namespace CoordinateConverter.ViewModel
                         title: "Открыть",
                         viewModel: clearGridViewmodel);
 
-                    if (clearResult == null)
-                    {
+                    if (clearResult == null)                    
                         return;
-                    }
+                    
                 }
-                if (Properties.Settings.Default.ClearRule == true && i < 1)
-                {
-                    CompleteRows.Clear();
-                }
+                if (Properties.Settings.Default.ClearRule == true && i < 1)                
+                    CompleteRows.Clear();                
                 Busy = true;
                 var rectCoords = await excelImporter.ReadAsync(filepaths[i]);
                 AddRows(filepaths[i++], rectCoords);

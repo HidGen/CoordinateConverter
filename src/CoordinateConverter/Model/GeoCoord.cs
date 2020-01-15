@@ -12,7 +12,8 @@ namespace CoordinateConverter.Model
 
         public double Alt
         {
-            get => alt; set
+            get => alt;
+            set
             {
                 alt = value;
                 RaisePropertiesChanged(nameof(Alt));

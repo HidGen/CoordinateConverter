@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 
 namespace CoordinateConverter
 {
-
-
     public static class ObservableCollectionExstension
     {
         public static void SortAsc<TSource>(this ObservableCollection<TSource> source, Comparison<TSource> comparer)

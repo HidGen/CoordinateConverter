@@ -7,8 +7,7 @@ namespace CoordinateConverter.Model
         public event EventHandler PropertyChanged;
 
         private double x;
-        private double y;
-        private double h;
+        private double y;        
 
         public double X
         {
@@ -28,17 +27,8 @@ namespace CoordinateConverter.Model
                 y = value;
                 OnPropertyChanged();
             }
-        }
+        }       
        
-        public double H
-        {
-            get => h;
-            set
-            {
-                h = value;
-                OnPropertyChanged();
-            }
-        }
 
         public void OnPropertyChanged()
         {

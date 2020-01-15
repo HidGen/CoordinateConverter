@@ -43,7 +43,7 @@ namespace CoordinateConverter.FileInteractions
                                             x = Convert.ToDouble(workSheet.Cells[i, xIndex.Value].Value);
                                             y = Convert.ToDouble(workSheet.Cells[i, xIndex.Value + 1].Value);
                                             description = workSheet.Cells[i, descriptionIndex.Value].Value.ToString();
-                                            completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                                            completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y }, Description = description });
                                             break;
                                         }
                                         else
@@ -52,7 +52,7 @@ namespace CoordinateConverter.FileInteractions
                                             x = Convert.ToDouble(workSheet.Cells[i, xIndex.Value].Value);
                                             y = Convert.ToDouble(workSheet.Cells[i, xIndex.Value + 1].Value);
                                             description = string.Empty;
-                                            completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                                            completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y }, Description = description });
                                             break;
                                         }
                                     }
@@ -78,7 +78,7 @@ namespace CoordinateConverter.FileInteractions
                             y = Convert.ToDouble(workSheet.Cells[i, xIndex.Value + 1].Value);
                             if(descriptionIndex.HasValue)
                             description = workSheet.Cells[i, descriptionIndex.Value].Value.ToString();
-                            completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                            completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y }, Description = description });
                             spaceCount = 0;
                         }
                         catch { }
@@ -133,7 +133,7 @@ namespace CoordinateConverter.FileInteractions
                                                 x = Convert.ToDouble(data[i, xIndex.Value]);
                                                 y = Convert.ToDouble(data[i, xIndex.Value + 1]);
                                                 description = data[i, descriptionIndex.Value].ToString();
-                                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y }, Description = description });
                                                 break;
                                             }
                                             else
@@ -142,7 +142,7 @@ namespace CoordinateConverter.FileInteractions
                                                 x = Convert.ToDouble(data[i, xIndex.Value]);
                                                 y = Convert.ToDouble(data[i, xIndex.Value + 1]);
                                                 description = string.Empty;
-                                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y }, Description = description });
                                                 break;
                                             }
                                         }
@@ -168,7 +168,7 @@ namespace CoordinateConverter.FileInteractions
                                 y = Convert.ToDouble(data[i, xIndex.Value + 1]);
                                 if (descriptionIndex.HasValue)
                                     description = data[i, descriptionIndex.Value].ToString();
-                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y, H = 0 }, Description = description });
+                                completeRows.Add(new CompleteRow { RectCoord = new RectCoord { X = x, Y = y }, Description = description });
                                 spaceCount = 0;
                             }
                             catch { }
